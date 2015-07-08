@@ -52,7 +52,7 @@
         // define all entities at the top to allow references between them
         var formation = nga.entity('formation'); // the API endpoint for posts will be http://localhost:3000/posts/:id
 
-        var category = nga.entity('category  ')
+        var category = nga.entity('category')
             .identifier(nga.field('id')); // you can optionally customize the identifier used in the api ('id' by default)
 
 
