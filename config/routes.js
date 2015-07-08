@@ -47,9 +47,6 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/dashboard': {
-    view: 'admin/dashboard',
-    locals: {
-      layout: 'layout/admin'
-    }
+    view: 'admin/dashboard'
   }
 };
