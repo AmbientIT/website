@@ -40,6 +40,10 @@ module.exports.routes = {
     controller: 'Site',
     action: 'formationsPage'
   },
+  'get /formations/search': {
+    controller: 'Site',
+    action: 'formationSearch'
+  },
   '/formation/:slug': {
     controller: 'Site',
     action: 'formationPage'
