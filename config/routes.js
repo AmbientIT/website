@@ -34,9 +34,16 @@ module.exports.routes = {
 
   '/': {
     controller: 'Site',
-    action: 'getHomeFormations'
+    action: 'homePage'
   },
-
+  '/formations': {
+    controller: 'Site',
+    action: 'formationsPage'
+  },
+  '/formation/:slug': {
+    controller: 'Site',
+    action: 'formationPage'
+  },
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

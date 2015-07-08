@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-	getHomeFormations: function(req,res){
+	homePage: function(req,res){
     Formation
       .find({
         home: true
@@ -17,6 +17,20 @@ module.exports = {
           formations : data
         })
       })
+  },
+  formationsPage: function(req,res){
+    Category
+      .find()
+      .populate('formations')
+      .then(function(data){
+        console.log(data);
+        res.view('site/formations',{
+          categories : data
+        })
+      })
+  },
+  formationPage: function(req,res){
+
   }
 };
 
