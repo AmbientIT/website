@@ -19,15 +19,14 @@ module.exports = {
       query[req.query._sort] = req.query._sortDir; // or 'asc'
     }
 
-
-      Category
-      .find()
-      .then(function(data){
-        res.json(data);
-      })
-      .catch(function(err){
-        console.log(err);
-      })
+    Category
+    .find()
+    .then(function(data){
+      res.json(data);
+    })
+    .catch(function(err){
+      console.log(err);
+    })
   }
 };
 

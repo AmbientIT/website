@@ -15,7 +15,7 @@ module.exports = {
     category: {
       model: 'category'
     },
-    brief : {
+    description : {
       type: 'string'
     },
     program : {

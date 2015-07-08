@@ -9,7 +9,6 @@ module.exports = {
   find: function(req, res){
     var query = {};
 
-
     if(req.query._end && req.query._start){
       query.limit = req.query._end;
       query.skip = req.query.start;
