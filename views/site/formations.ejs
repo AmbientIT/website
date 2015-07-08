@@ -1,0 +1,57 @@
+<div class="bg">
+  <div class="banner" style="position:relative;">
+    <div class="container">
+      <div class="banner-info text-center">
+        <h1>
+          Formations
+        </h1>
+        <br/>
+        <span> </span>
+        <p>Animée par des formateurs expèrimenté</p>
+        <p>Programme à jour des des dernieres évolutions des languages</p>
+        <form id="search-form" class="form-inline" action="/formations" method="get" style="position:absolute; bottom:5px;right:100px;">
+          <div class="input-group">
+            <input type="search" placeholder="Que cherchez vous ?" name="q" class="form-control" id="exampleInputAmount" placeholder="Amount">
+            <a href="javascript:{}" onclick="document.getElementById('search-form').submit();" class="btn btn-default input-group-addon">Search</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<section class="container">
+  <div class="row container-fluid" >
+    <% if (categories.length === 0) %>
+      <div style="text-align:center; transform: rotate(90deg); font-size: 3em;">
+         :(
+      </div>
+      <p style="text-align: center;">
+        Aucune formation ne correspond à votre recherche
+      </p>
+      <a href="" class="btn btn-block btn-default" style="margin-top:100px;">Suggérez nous la formation que vous souhaitez</a>
+    <% } %>
+    <% categories.forEach(function(category){ %>
+      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+        <h3 style="text-align:center;">
+          <%= category.name %>
+        </h3>
+
+        <ul class="media-list">
+          <% category.formations.forEach(function(formation){ %>
+            <li class="media">
+              <div class="media-left">
+                <img class="media-object" src="<% formation.image.url || 'images/formation/logo.jpg' %>" alt="<% formation.name %> logo">
+              </div>
+              <div class="media-body">
+                <a href="/formation/<% formation.slug %>">
+                  <h4 class="media-heading"><% formation.name %></h4>
+                </a>
+                <% formation.description %>
+              </div>
+            </li>
+          <% }) %>
+        </ul>
+      </div>
+    <% }) %>
+  </div>
+</section>
