@@ -47,6 +47,19 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/dashboard': {
-    view: 'admin/dashboard'
+    view: 'admin/dashboard',
+    locals: {
+      layout: 'layout/admin'
+    }
+  },
+
+  'get /api/category': {
+    controller: 'Category',
+    action : 'find'
+  },
+  'get /api/formation': {
+    controller: 'Formation',
+    action : 'find'
   }
+
 };

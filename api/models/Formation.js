@@ -9,8 +9,8 @@ module.exports = {
   attributes: {
     name: {
       type: 'string',
-      require: true,
-      unique: true
+      unique: true,
+      required: true
     },
     category: {
       model: 'category'

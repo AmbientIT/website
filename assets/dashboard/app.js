@@ -47,7 +47,7 @@
         });
 
         var admin = nga.application('AmbientIT Back-Office') // application main title
-            .baseApiUrl('http://localhost:1337/'); // main API endpoint
+            .baseApiUrl('http://localhost:1337/api/'); // main API endpoint
 
         // define all entities at the top to allow references between them
         var formation = nga.entity('formation'); // the API endpoint for posts will be http://localhost:3000/posts/:id
