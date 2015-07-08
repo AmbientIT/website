@@ -33,7 +33,8 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': {
-    view: 'homepage'
+    controller: 'Site',
+    action: 'getHomeFormations'
   },
 
   /***************************************************************************
@@ -49,7 +50,7 @@ module.exports.routes = {
   '/dashboard': {
     view: 'admin/dashboard',
     locals: {
-      layout: 'layout/admin'
+      layout: 'layouts/admin'
     }
   },
 

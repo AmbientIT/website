@@ -1,0 +1,132 @@
+<div style="background:url('images/baner.jpg') no-repeat 0px 0px;	background-size:cover;">
+  <!---- banner ---->
+  <div class="banner wow fadeIn" data-wow-delay="0.5s">
+    <div class="container">
+      <div class="banner-info text-center">
+        <h1>Ambient IT</h1><br/>
+        <span> </span>
+        <h3>
+          Centre de formation, Délégation de formateurs, conseil
+        </h3>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="services" class="services">
+  <div class="container">
+    <div class="service-head text-center">
+      <h2>Nos services</h2>
+      <span> </span>
+    </div>
+    <div class="services-grids text-center">
+      <div class="col-md-4">
+        <div class="service-grid wow bounceIn" data-wow-delay="0.4s">
+          <i class="ion-university"></i>
+          <h3><a href="#">Formations</a></h3>
+          <p>Animation de formations en développement web et graphismes.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="service-grid wow bounceIn" data-wow-delay="0.4s">
+          <i class="{{ article.icon }}"></i>
+          <h3><a href="#">Developpement d'application sur mesure</a></h3>
+          <p>A l'ecoute de blablabla (todo ecrire un truc mielleux ici)</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="service-grid wow bounceIn" data-wow-delay="0.4s">
+          <i class="{{ article.icon }}"></i>
+          <h3><a href="#">Graphisme</a></h3>
+          <p>du coloriage lalala</p>
+        </div>
+      </div>
+      <div class="clearfix"> </div>
+    </div>
+  </div>
+</div>
+<div class="clearfix"> </div>
+<div id="port" class="formations">
+  <div class="formations-grids">
+    <div class="col-md-8 formations-left-grid wow fadeInLeft" data-wow-delay="0.4s">
+      <div class="formations-head">
+        <h3>Nos Formations</h3>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi cum dolor dolorem doloremque harum ipsum, magni non obcaecati optio perferendis quisquam quo repudiandae tempora! Deleniti ex facilis iusto laborum voluptas?
+        </p>
+      </div>
+      <div class="formations-left-inner-grids">
+        <% for(var i=0; i<formations.length; i++) { %>
+        <div class="e-left-inner-grid">
+          <div class="e-left-inner-grid-left">
+            <i class="ion-social-angular"></i>
+          </div>
+          <div class="e-left-inner-grid-right">
+            <h4><%= formations[i].name %></h4>
+            <p><%= formations[i].description %></p>
+          </div>
+          <div class="clearfix"> </div>
+        </div>
+        <% } %>
+      </div>
+    </div>
+    <div class="col-md-4 formations-right-grid wow fadeInRight" style="  margin: 0;padding: 0;background: url('images/expert.jpg') no-repeat 0px 0px;background-size: cover;min-height: 656px;" data-wow-delay="0.4s">
+    </div>
+    <div class="clearfix"> </div>
+  </div>
+</div>
+<div class="developement">
+  <div class="developement-top">
+    <div class="col-md-8">
+      <div class="developement-top-left wow fadeInLeft" data-wow-delay="0.4s">
+        <h3>yolo</h3>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid architecto beatae consectetur facilis ipsam, labore laborum maiores minima, neque nisi odit placeat provident quae qui quis repellat soluta suscipit voluptate?
+        </p>
+        <div class="developement-top-left-grids">
+          <div class="developement-top-left-grid">
+            <div class="developement-top-left-grid-left" style="font-size:2em">
+              <i class="{{ article.icon }}"></i>
+            </div>
+            <div class="developement-top-left-grid-right">
+              <h5>aaaaaaaa</h5>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda consectetur ducimus fugit molestiae possimus quod vero? Aliquid, atque autem blanditiis, iste laboriosam laborum non perspiciatis provident quaerat quia rerum sit!
+            </div>
+            <div class="clearfix"> </div>
+          </div>
+          <div class="developement-top-left-grid">
+            <div class="developement-top-left-grid-left" style="font-size:2em">
+              <i class="{{ article.icon }}"></i>
+            </div>
+            <div class="developement-top-left-grid-right">
+              <h5>zzzzzzzzzzz</h5>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus accusantium adipisci aliquam aperiam assumenda consequuntur cumque doloribus ducimus eaque, enim eveniet explicabo fugiat iusto molestias non odio porro saepe temporibus.
+            </div>
+            <div class="clearfix"> </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4  wow fadeInRight" data-wow-delay="0.4s" style="  margin: 0;padding: 0;background: url(images/port-right-divice.png) no-repeat 0px 0px;background-size: cover;min-height: 656px;">
+
+    </div>
+  </div>
+</div>
+<div id="team" class="team-members">
+  <div class="wrap">
+
+    <div class="tm-head-grids">
+      <div class="tm-head-grid wow fadeInLeft" data-wow-delay="0.4s">
+        <i class="ion-social-github"></i>
+      </div>
+      <div class="tm-head-grid wow fadeInUp" data-wow-delay="0.4s">
+        <i class="ion-ionic"></i>
+      </div>
+      <div class="tm-head-grid wow fadeInRight" data-wow-delay="0.4s">
+        <i class="ion-social-linkedin"></i>
+      </div>
+      <div class="clearfix"> </div>
+    </div>
+    <p class="team-info"></p>
+  </div>
+</div>
+<a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
