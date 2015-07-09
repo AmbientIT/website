@@ -46,6 +46,11 @@ module.exports = {
     },
     homePage: {
       type: 'boolean'
+    },
+    contacts: {
+      collection: 'contact',
+      via: 'formations',
+      select: false
     }
   },
   beforeCreate: function(obj,cb){

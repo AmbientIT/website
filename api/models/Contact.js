@@ -10,26 +10,37 @@ module.exports = {
     firstName: {
       type: 'string'
     },
-    lastName:{
+    lastName: {
+      type: 'string',
+      required: true
+    },
+    displayName: {
+      type: 'string'
+    },
+    email: {
       type: 'string',
       required: true
     },
     company: {
-      type: 'string',
-      required: true
+      type: 'string'
     },
     tel: {
       type: 'string'
     },
     formations : {
-      type: 'array'
+      collection: 'formation',
+      via: 'contacts',
+      dominant: true
     },
     message : {
       type : 'string',
       required: true
     }
   },
-
+  beforeCreate: function(obj,cb){
+    obj.displayName = obj.firstName + ' ' + obj.lastName;
+    cb(null);
+  },
   afterCreate: function(obj,cb){
     User
       .find()

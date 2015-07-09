@@ -88,8 +88,12 @@
       var admin = nga.application('AmbientIT Back-Office') // application main title
         .baseApiUrl('http://localhost:1337/api/'); // main API endpoint
 
+      var contact = nga.entity('contact')
+        .identifier(nga.field('id'));
+
       // define all entities at the top to allow references between them
-      var formation = nga.entity('formation'); // the API endpoint for posts will be http://localhost:3000/posts/:id
+      var formation = nga.entity('formation') // the API endpoint for posts will be http://localhost:3000/posts/:id
+        .identifier(nga.field('id'));
 
       var category = nga.entity('category')
         .identifier(nga.field('id')); // you can optionally customize the identifier used in the api ('id' by default)
@@ -99,15 +103,28 @@
 
       // set the application entities
       admin
+        .addEntity(contact)
         .addEntity(user)
         .addEntity(category)
         .addEntity(formation);
 
       //// customize entities and views
       //
+
+      contact.dashboardView() // customize the dashboard panel for this entity
+        .title('Derniers contacts')
+        .order(1) // display the post panel first in the dashboard
+        .perPage(10) // limit the panel to the 5 latest posts
+        .fields([
+          nga.field('gender'),
+          nga.field('displayName'),
+          nga.field('email')
+        ]); // fields() called with arguments add fields to the view
+
+
       user.dashboardView() // customize the dashboard panel for this entity
         .title('Us !!!')
-        .order(1) // display the post panel first in the dashboard
+        .order(2) // display the post panel first in the dashboard
         .perPage(10) // limit the panel to the 5 latest posts
         .fields([
           nga.field('displayName'),
@@ -116,7 +133,7 @@
 
       formation.dashboardView() // customize the dashboard panel for this entity
         .title('formations')
-        .order(1) // display the post panel first in the dashboard
+        .order(3) // display the post panel first in the dashboard
         .perPage(10) // limit the panel to the 5 latest posts
         .fields([
           nga.field('name')
@@ -136,7 +153,7 @@
 
       user.editionView()
         .title('Edit user "{{ entry.values.name }}"') // title() accepts a template string, which has access to the entry
-        .actions(['list', 'show', 'delete']) // choose which buttons appear in the top action bar. Show is disabled by default
+        .actions(['list', 'delete']) // choose which buttons appear in the top action bar. Show is disabled by default
         .fields([
           user.listView().fields()// fields() without arguments returns the list of fields. That way you can reuse fields from another view to avoid repetition
         ]);
@@ -262,8 +279,34 @@
       formation.deletionView()
         .title('Deletion confirmation'); // customize the deletion confirmation message
 
+      contact.listView()
+        .title('All Category') // default title is "[Entity_name] list"
+        .description('List of category of formations') // description appears under the title
+        .infinitePagination(true) // load pages as the user scrolls
+        .fields([
+          nga.field('displayName')
+            .label('displayName'),
+          nga.field('email')
+            .label('email'),
+          nga.field('createdAt')
+            .label('date')
+        ])
+        .listActions(['show', 'delete']);
+
+      contact.showView() // a showView displays one entry in full page - allows to display more data than in a a list
+        .fields([
+          nga.field('id'),
+          contact.listView().fields(),
+          nga.field('message')
+            .label('message')
+        ]);
+
+
+      contact.deletionView()
+        .title('Deletion confirmation'); // customize the deletion confirmation message
 
       admin.menu(nga.menu()
+          .addChild(nga.menu(contact).icon('<span class="glyphicon glyphicon-message-full"></span>')) // you can even use utf-8 symbols!
           .addChild(nga.menu(user).icon('<span class="glyphicon glyphicon-user"></span>')) // you can even use utf-8 symbols!
           .addChild(nga.menu(category).icon('<span class="glyphicon glyphicon-file"></span>')) // customize the entity menu icon
           .addChild(nga.menu(formation).icon('<strong style="font-size:1.3em;line-height:1em">✉</strong>')) // you can even use utf-8 symbols!

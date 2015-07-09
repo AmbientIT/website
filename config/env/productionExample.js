@@ -25,22 +25,22 @@ module.exports = {
    * Set the port in the production environment to 80                        *
    ***************************************************************************/
 
-   port: 80,
+  port: 80,
 
   /***************************************************************************
    * Set the log level in production environment to "silent"                 *
    ***************************************************************************/
 
-   log: {
-     level: "silent"
-   },
+  log: {
+    level: "silent"
+  },
 
   TOKEN_SECRET: process.env.TOKEN_SECRET || 'A hard to guess string',
-  GOOGLE_SECRET: process.env.GOOGLE_SECRET || 'lh-ml0swLWA05UW2qUG-s1Dm',
+  GOOGLE_SECRET: process.env.GOOGLE_SECRET || 'qsdqs54sd5fsd4fsdf',
   email: {
     provider: 'Gmail',
-    address: 'charles.jacquin@ambient-it.net',
-    pass: 'ambient4tw'
+    address: 'foo@bar.com',
+    pass: 'foobar'
   }
 
 };
