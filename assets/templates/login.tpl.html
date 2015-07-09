@@ -1,5 +1,5 @@
 <div class="container">
-  <form class="form-signin">
+  <form class="form-signin" ng-submit="ctrl.login()">
     <h2 class="form-signin-heading">Please sign in</h2>
     <label for="inputEmail" class="sr-only">Email address</label>
     <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
@@ -12,4 +12,15 @@
     </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
   </form>
+  <div class="row">
+    <div class="col-xs-4 text-center" style="cursor:pointer;" ng-click="ctrl.authenticate('google')">
+      <i class="ion-social-google" style="font-size: 8em;"></i>
+    </div>
+    <div class="col-xs-4 text-center">
+      <i class="ion-social-github-outline" style="font-size: 8em;"></i>
+    </div>
+    <div class="col-xs-4 text-center">
+      <i class="ion-social-linkedin-outline" style="font-size: 8em;"></i>
+    </div>
+  </div>
 </div>

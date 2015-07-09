@@ -48,6 +48,12 @@ module.exports.routes = {
     controller: 'Site',
     action: 'formationPage'
   },
+  '/403': {
+    view: 'error/403',
+    locals: {
+      layout: false
+    }
+  },
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
@@ -64,7 +70,17 @@ module.exports.routes = {
       layout: 'layouts/admin'
     }
   },
+  'post /auth/login': {
 
+  },
+  'post /auth/google': {
+    controller: 'auth',
+    action: 'google'
+  },
+  'get /api/me': {
+    controller: 'auth',
+    action: 'me'
+  },
   'get /api/category': {
     controller: 'Category',
     action : 'find'

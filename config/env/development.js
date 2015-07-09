@@ -16,7 +16,8 @@ module.exports = {
    * Set the default database connection for models in the development       *
    * environment (see config/connections.js and config/models.js )           *
    ***************************************************************************/
-
+  TOKEN_SECRET: process.env.TOKEN_SECRET || 'A hard to guess string',
+  GOOGLE_SECRET: process.env.GOOGLE_SECRET || 'lh-ml0swLWA05UW2qUG-s1Dm'
   // models: {
   //   connection: 'someMongodbServer'
   // }

@@ -32,8 +32,6 @@ module.exports.http = {
 
      order: [
        'startRequestTimer',
-       'cookieParser',
-       'session',
        'myRequestLogger',
        'bodyParser',
        'handleBodyParserError',
