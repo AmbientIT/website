@@ -40,7 +40,7 @@ module.exports.routes = {
     controller: 'Site',
     action: 'formationsPage'
   },
-  'get /formations/search': {
+  '/formations/search': {
     controller: 'Site',
     action: 'formationSearch'
   },
@@ -58,7 +58,7 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/dashboard': {
+  '/admin': {
     view: 'admin/dashboard',
     locals: {
       layout: 'layouts/admin'

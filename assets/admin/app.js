@@ -9,7 +9,19 @@
     });
   });
 
-  app.config(function (NgAdminConfigurationProvider, RestangularProvider) {
+  app.controller('LoginController', function(){
+    var ctrl = this;
+  });
+
+  app.config(function (NgAdminConfigurationProvider, RestangularProvider, $stateProvider) {
+
+    $stateProvider
+      .state('login', {
+        url: '/login',
+        controller: 'LoginController as ctrl',
+        templateUrl: 'templates/login.tpl.html'
+      });
+
     var nga = NgAdminConfigurationProvider;
 
     function truncate(value) {
