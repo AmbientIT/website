@@ -1,0 +1,97 @@
+<div class="bg">
+  <div class="banner">
+    <div class="container">
+      <div class="banner-info text-center">
+        <h1>
+          Contact
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>
+<section class="container" style="margin-top:50px;">
+  <div class="container-fluid">
+    <div class="row" ng-app="contact">
+      <form name="contactForm" ng-controller="ContactFormController as ctrl" ng-submit="ctrl.submit()" novalidate>
+
+        <!--NOM-->
+        <div class="form-group" ng-class="{ 'has-error': contactForm.name.$invalid && contactForm.name.$touched }">
+          <label>Nom *</label>
+          <input type="text" name="name" ng-model="ctrl.formData.name" required ng-minlength="3" class="form-control"
+                 placeholder="Entrez votre nom">
+
+          <div ng-messages="contactForm.name.$error" ng-if="contactForm.name.$touched">
+            <span ng-message="required">Le nom est obligatoire</span>
+            <span ng-message="minlength">Merci de renseigner un nom d'au moins 3 caractères</span>
+          </div>
+        </div>
+
+        <!--EMAIL-->
+        <div class="form-group" ng-class="{ 'has-error': contactForm.email.$invalid && contactForm.email.$touched }">
+          <label>Email *</label>
+          <input type="email" name="email" ng-model="ctrl.formData.email" required class="form-control"
+                 placeholder="Renseignez votre email pour que nous puissions vous recontacter">
+
+          <div ng-messages="contactForm.email.$error" ng-if="contactForm.email.$touched">
+            <span ng-message="required">Merci de nous indiquer votre adresse email pour que nous puissions vous recontacter</span>
+            <span ng-message="email">Le format de votre adresse email n'est pas valide</span>
+          </div>
+        </div>
+
+        <!--TELEPHONE-->
+        <div class="form-group" ng-class="{ 'has-error': contactForm.phone.$invalid && contactForm.phone.$touched }">
+          <label>Téléphone</label>
+          <input type="number" name="phone" ng-model="ctrl.formData.phone" class="form-control"
+                 minlength="10" maxlength="10"
+                 placeholder="Si vous désirez être recontacté par téléphone, merci de nous indiquer votre numéro">
+
+          <div ng-messages="contactForm.phone.$error" ng-if="contactForm.phone.$touched">
+            <span ng-message="number minlength maxlength">Merci de rentrer un numéro de téléphone de dix chiffres</span>
+          </div>
+        </div>
+
+        <!--SOCIETE-->
+        <div class="form-group"
+             ng-class="{ 'has-error': contactForm.company.$invalid && contactForm.company.$touched }">
+          <label>Société *</label>
+          <input type="text" name="company" ng-model="ctrl.formData.company" required ng-minlength="2"
+                 class="form-control"
+                 placeholder="Entrez le nom de votre société">
+
+          <div ng-messages="contactForm.company.$error" ng-if="contactForm.company.$touched">
+            <span ng-message="required">La société est obligatoire</span>
+            <span ng-message="minlength">Merci de renseigner un nom de société d'au moins 2 caractères</span>
+          </div>
+        </div>
+
+        <!--FORMATIONS-->
+        <div class="form-group"
+             ng-class="{ 'has-error': contactForm.formations.$invalid && contactForm.formations.$touched }">
+          <label>Formations qui peuvent vous intéresser</label>
+          <input type="text" name="formations" ng-model="ctrl.formData.formations" class="form-control"
+                 placeholder="Entrez la liste des formations qui peuvent vous intéresser">
+        </div>
+
+        <!--MESSAGE-->
+        <div class="form-group"
+             ng-class="{ 'has-error': contactForm.message.$invalid && contactForm.message.$touched }">
+          <label>Votre message *</label>
+          <textarea rows="5" name="message" ng-model="ctrl.formData.message" class="form-control" required
+                    ng-minlength="10"
+                    placeholder="Décrivez votre besoin, ou tout autre sujet sur lequel vous désirez communiquer avec nous">
+          </textarea>
+
+          <div ng-messages="contactForm.message.$error" ng-if="contactForm.message.$touched">
+            <span ng-message="required">Merci de décrire la raison pour laquelle vous désirez nous contacter</span>
+            <span ng-message="minlength">Minimum 10 caractères</span>
+          </div>
+        </div>
+
+        <input type="submit" class="btn btn-default" ng-disabled="contactForm.$invalid" value="Envoyer">
+      </form>
+    </div>
+  </div>
+</section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+<script src="https://code.angularjs.org/1.4.2/angular-messages.min.js"></script>
