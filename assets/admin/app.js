@@ -22,8 +22,8 @@
           .then(function(){
             $location.path('/dashboard')
           })
-          .catch(function(){
-
+          .catch(function(err){
+            alert('you\'re not welcome here stranger');
           })
       };
       this.login = function(){
