@@ -49,14 +49,14 @@ module.exports = {
     }
   },
   beforeCreate: function(obj,cb){
-    obj.slug = obj.name.trim().toLowerCase();
+    obj.slug = obj.name.toLowerCase().replace(/ /g,'');
     return cb(null,obj);
   },
   afterCreate: function(obj,cb){
     return Category
       .findOne({id: obj.category})
       .then(function(category) {
-        category.formations.push(obj.id);
+        category.formations.push(obj);
         return category.save();
       })
       .then(function(result){

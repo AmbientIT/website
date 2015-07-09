@@ -23,14 +23,12 @@ module.exports = {
       .find()
       .populate('formations')
       .then(function(result){
-        console.log(result)
         res.view('site/formations',{
           categories : result
         })
       })
   },
   formationSearch: function(req, res){
-    console.log(req.query.q)
     Formation
       .countAndSearch(req.query.q)
       .then(function(result){
@@ -40,7 +38,16 @@ module.exports = {
       });
   },
   formationPage: function(req,res){
-
+    Formation
+      .findOne({slug : req.params.slug})
+      .populate('next')
+      .populate('previous')
+      .then(function(result){
+        console.log(result);
+        res.view('site/formation',{
+          formation: result
+        })
+      })
   }
 };
 

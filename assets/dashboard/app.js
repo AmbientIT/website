@@ -77,9 +77,6 @@
         nga.field('id').label('ID'), // The default displayed name is the camelCase field name. label() overrides id
         nga.field('name'), // the default list field type is "string", and displays as a string
         nga.field('description', 'date'), // Date field type allows date formatting
-        nga.field('formations', 'reference_many') // a Reference is a particular type of field that references another entity
-          .targetEntity(formation) // the tag entity is defined later in this file
-          .targetField(nga.field('name')) // the field to be displayed in this list
       ])
       .listActions(['show', 'edit', 'delete']);
 
@@ -145,7 +142,7 @@
       .fields([
         nga.field('name')
           .label('Name'),
-        nga.field('brief', 'text')
+        nga.field('description', 'text')
           .label('Description'),
         nga.field('category', 'reference')
           .label('Category')
@@ -154,6 +151,10 @@
           .targetField(nga.field('name').map(truncate)),
         nga.field('program', 'wysiwyg')
           .label('Program'),
+        nga.field('duration', 'number')
+          .label('duration'),
+        nga.field('price', 'number')
+          .label('Price'),
         nga.field('slides')
           .label('slides'),
         nga.field('home', 'boolean')

@@ -19,12 +19,11 @@ module.exports = {
     },
     formations: {
       collection: 'formation',
-      via: 'previous'
+      via: 'category'
     }
   },
   beforeCreate: function(obj,cb){
     obj.slug = obj.name.trim().toLowerCase();
-    console.log(obj)
     cb(null,obj);
   }
 };

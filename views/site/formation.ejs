@@ -3,12 +3,12 @@
     <div class="container">
       <div class="banner-info text-center">
         <h1>
-          <% formation.name %>
+          <%= formation.name %>
         </h1>
         <br/>
         <span> </span>
 
-        <p><% formation.brief %></p>
+        <p><%= formation.description %></p>
       </div>
     </div>
   </div>
@@ -17,16 +17,16 @@
   <div class="container-fluid">
     <div class="row">
       <section class="col-xs-12 col-md-8">
-        <% formation.program %>
+        <%- formation.program %>
       </section>
       <aside class="col-xs-12 col-md-4">
         <section class="well">
           <p>
-            durée : <% formation.duration %> jours
+            durée : <%= formation.duration %> jours
           </p>
 
           <p>
-            <% formation.price %> € / participant
+            <%= formation.price %> € / participant
           </p>
         </section>
         <section class="well">
@@ -34,28 +34,23 @@
 
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum est nam odio quis? Dolorum error et fugiat
             laudantium totam vero. Atque consequatur ea excepturi nisi nostrum repellendus sint totam velit.</p>
-          <a href="" class="md-button md-raised">
-            <i class="ion-android-call"></i>
-          </a>
-          <a href="" class="btn btn-info">
-            <i class="ion-at"></i>
-          </a>
 
         </section>
         <section class="well">
           Prérequis :
           <ul class="media-list">
+            <% if(formation.previous){ %>
             <% formation.previous.forEach(function(prev){ %>
             <li class="media">
               <div class="media-left">
                 <img class="media-object" style="border-radius:30%;" height="40px"
-                     src="/images/formation/logo.jpg" alt="<% prev.name %>">
+                     src="../images/formation/logo.jpg" alt="<%= prev.name %>">
               </div>
               <div class="media-body" style="padding-top:8px">
-                <a href="/formation/<% prev.slug %>"><% prev.name %></a>
+                <a href="/formation/<% prev.slug %>"><%= prev.name %></a>
               </div>
             </li>
-            <% }) %>
+            <% })} %>
           </ul>
 
 
@@ -66,17 +61,17 @@
         <section class="well">
           Pour la suite ;) :
           <ul class="media-list">
-            <% formation.next.forEach(function(next){ %>
+            <% if(formation.next){formation.next.forEach(function(next){ %>
             <li class="media">
               <div class="media-left">
                 <img class="media-object" style="border-radius:30%;" height="40px"
-                     src="/images/formation/logo.jpg" alt="<% next.name %>">
+                     src="../images/formation/logo.jpg" alt="<%= next.name %>">
               </div>
               <div class="media-body" style="padding-top:8px">
-                <a href="/formation/<% next.slug %>"><% next.name %></a>
+                <a href="/formation/<% next.slug %>"><%= next.name %></a>
               </div>
             </li>
-            <% }) %>
+            <% })} %>
           </ul>
         </section>
       </aside>

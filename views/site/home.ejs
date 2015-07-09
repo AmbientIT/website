@@ -5,7 +5,7 @@
       <div class="banner-info text-center">
         <h1>Ambient IT</h1><br/>
         <span> </span>
-        <h3>
+        <h3 style="color:white;">
           Centre de formation, Délégation de formateurs, conseil
         </h3>
       </div>
@@ -28,14 +28,14 @@
       </div>
       <div class="col-md-4">
         <div class="service-grid wow bounceIn" data-wow-delay="0.4s">
-          <i class="{{ article.icon }}"></i>
+          <i class="ion-cube"></i>
           <h3><a href="#">Developpement d'application sur mesure</a></h3>
           <p>A l'ecoute de blablabla (todo ecrire un truc mielleux ici)</p>
         </div>
       </div>
       <div class="col-md-4">
         <div class="service-grid wow bounceIn" data-wow-delay="0.4s">
-          <i class="{{ article.icon }}"></i>
+          <i class="ion-paintbrush"></i>
           <h3><a href="#">Graphisme</a></h3>
           <p>du coloriage lalala</p>
         </div>
@@ -55,18 +55,18 @@
         </p>
       </div>
       <div class="formations-left-inner-grids">
-        <% for(var i=0; i<formations.length; i++) { %>
+        <% formations.forEach(function(formation){ %>
         <div class="e-left-inner-grid">
           <div class="e-left-inner-grid-left">
             <i class="ion-social-angular"></i>
           </div>
           <div class="e-left-inner-grid-right">
-            <h4><%= formations[i].name %></h4>
-            <p><%= formations[i].description %></p>
+            <h4><%= formation.name %></h4>
+            <p><%= formation.description %></p>
           </div>
           <div class="clearfix"> </div>
         </div>
-        <% } %>
+        <% }) %>
       </div>
     </div>
     <div class="col-md-4 formations-right-grid wow fadeInRight" style="  margin: 0;padding: 0;background: url('images/expert.jpg') no-repeat 0px 0px;background-size: cover;min-height: 656px;" data-wow-delay="0.4s">
@@ -127,6 +127,6 @@
       <div class="clearfix"> </div>
     </div>
     <p class="team-info"></p>
-  </div>
+  </div>i
 </div>
-<a href="#" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+<a href="#"  style="display: block;"> <i class="ion-chevron-up" id="toTopHover" style="opacity: 1;"> </i></a>
