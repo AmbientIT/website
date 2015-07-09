@@ -12,6 +12,9 @@ module.exports = {
       unique: true,
       required: true
     },
+    slug: {
+      type: 'string'
+    },
     category: {
       model: 'category'
     },
@@ -44,6 +47,24 @@ module.exports = {
     homePage: {
       type: 'boolean'
     }
+  },
+  beforeCreate: function(obj,cb){
+    obj.slug = obj.name.trim().toLowerCase();
+    return cb(null,obj);
+  },
+  afterCreate: function(obj,cb){
+    return Category
+      .findOne({id: obj.category})
+      .then(function(category) {
+        category.formations.push(obj.id);
+        return category.save();
+      })
+      .then(function(result){
+        cb(null,result);
+      })
+      .catch(function(err){
+        cb(err);
+      })
   }
 };
 

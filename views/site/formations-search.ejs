@@ -38,10 +38,10 @@
         <img class="media-object" src="../images/formation/logo.jpg" alt="<% formation.name %> logo">
       </div>
       <div class="media-body">
-        <a href="/formation/<% formation.slug %>">
-          <h4 class="media-heading"><% formation.name %></h4>
+        <a href="/formation/<%= formation.slug %>">
+          <h4 class="media-heading"><%= formation.name %></h4>
         </a>
-        <% formation.description %>
+        <%= formation.description %>
       </div>
     </li>
     <% }) %>

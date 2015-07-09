@@ -14,10 +14,18 @@ module.exports = {
     description : {
       type : 'string'
     },
+    slug: {
+      type: 'string'
+    },
     formations: {
       collection: 'formation',
       via: 'previous'
     }
+  },
+  beforeCreate: function(obj,cb){
+    obj.slug = obj.name.trim().toLowerCase();
+    console.log(obj)
+    cb(null,obj);
   }
 };
 

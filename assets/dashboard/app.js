@@ -109,6 +109,8 @@
       .fields([
         nga.field('id'),
         category.editionView().fields(), // reuse fields from another view in another order
+        nga.field('slug')
+          .label('slug')
       ]);
 
 
@@ -165,12 +167,15 @@
       ]);
 
     formation.editionView()
-      .fields(formation.creationView().fields())
+      .fields(formation.creationView().fields());
+
 
     formation.showView() // a showView displays one entry in full page - allows to display more data than in a a list
       .fields([
         nga.field('id'),
         formation.editionView().fields(), // reuse fields from another view in another order
+        nga.field('slug')
+          .label('slug')
       ]);
 
     formation.deletionView()
