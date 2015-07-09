@@ -17,10 +17,10 @@
         <!--NOM-->
         <div class="form-group" ng-class="{ 'has-error': contactForm.name.$invalid && contactForm.name.$touched }">
           <label>Nom *</label>
-          <input type="text" name="name" ng-model="ctrl.formData.name" required ng-minlength="3" class="form-control"
+          <input type="text" name="lastName" ng-model="ctrl.formData.lastName" required ng-minlength="3" class="form-control"
                  placeholder="Entrez votre nom">
 
-          <div ng-messages="contactForm.name.$error" ng-if="contactForm.name.$touched">
+          <div ng-messages="contactForm.lastName.$error" ng-if="contactForm.name.$touched">
             <span ng-message="required">Le nom est obligatoire</span>
             <span ng-message="minlength">Merci de renseigner un nom d'au moins 3 caractères</span>
           </div>

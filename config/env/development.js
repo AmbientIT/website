@@ -17,7 +17,12 @@ module.exports = {
    * environment (see config/connections.js and config/models.js )           *
    ***************************************************************************/
   TOKEN_SECRET: process.env.TOKEN_SECRET || 'A hard to guess string',
-  GOOGLE_SECRET: process.env.GOOGLE_SECRET || 'lh-ml0swLWA05UW2qUG-s1Dm'
+  GOOGLE_SECRET: process.env.GOOGLE_SECRET || 'lh-ml0swLWA05UW2qUG-s1Dm',
+  email: {
+    provider: 'Gmail',
+    address: 'charles.jacquin@ambient-it.net',
+    pass: 'ambient4tw'
+  }
   // models: {
   //   connection: 'someMongodbServer'
   // }

@@ -6,7 +6,16 @@ angular.module('contact', ['ngMessages'])
     ctrl.formData = {};
 
     ctrl.submit = function () {
-      console.log(ctrl.formData);
+      $http
+        .post('/api/contact',ctrl.formData)
+        .success(function(data){
+          alert('success');
+          console.log(data);
+        })
+        .catch(function(err){
+          alert('ERROR !!!!');
+          console.log(err);
+        })
     };
 
   });
