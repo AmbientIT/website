@@ -47,10 +47,10 @@ module.exports = {
     homePage: {
       type: 'boolean'
     },
-    contacts: {
-      collection: 'contact',
-      via: 'formations'
-    }
+    //contacts: {
+    //  collection: 'contact',
+    //  via: 'formations'
+    //}
   },
   beforeCreate: function(obj,cb){
     obj.slug = obj.name.toLowerCase().replace(/ /g,'');

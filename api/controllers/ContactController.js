@@ -22,23 +22,8 @@ module.exports = {
       .find()
       .populate('formations')
       .then(function(data){
-        //console.log(data)
-        var response = [];
-        data.forEach(function(contact, index){
-          response[index] = {
-            lastName: contact.lastName,
-            firstName: contact.firstName,
-            email: contact.email,
-            phone: contact.phone,
-            message: contact.message
-          };
-          response[index].formations = contact.formations.map(function(formation){
-            return formation.id;
-          });
-
-        });
-        console.log(response);
-        res.json(response);
+        console.log(data)
+        res.json(data);
       })
       .catch(function(err){
         console.log(err);

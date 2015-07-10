@@ -116,11 +116,16 @@
         .order(1) // display the post panel first in the dashboard
         .perPage(10) // limit the panel to the 5 latest posts
         .fields([
-          nga.field('formations', 'reference_many')
-            .label('Formations')
-            .isDetailLink(true)
-            .targetEntity(formation) // Targeted entity
-            .targetField(nga.field('name')),
+          nga.field('formations')
+            .map(function(obj,entry){
+              return obj.map(function(formation){
+                return formation.name
+              })
+            })
+            .map(function(obj){
+              return obj.toString();
+            })
+            .label('Formations'),
 
           nga.field('displayName'),
           nga.field('email'),

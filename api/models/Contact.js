@@ -7,6 +7,10 @@
 
 module.exports = {
   attributes: {
+    gender: {
+      type: 'string',
+      required: true
+    },
     firstName: {
       type: 'string'
     },
@@ -29,7 +33,7 @@ module.exports = {
     },
     formations : {
       collection: 'formation',
-      via: 'contacts'
+      via: 'id'
     },
     message : {
       type : 'string',
@@ -37,7 +41,12 @@ module.exports = {
     }
   },
   beforeCreate: function(obj,cb){
-    obj.displayName = obj.firstName + ' ' + obj.lastName;
+    if(obj.firstName){
+      obj.displayName = obj.gender+ ' ' +obj.firstName + ' ' + obj.lastName;
+    }else{
+      obj.displayName = obj.gender + ' '+ obj.firstName;
+    }
+
     cb(null);
   },
   afterCreate: function(obj,cb){
