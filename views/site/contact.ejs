@@ -1,97 +1,166 @@
-<div class="bg">
-  <div class="banner">
-    <div class="container">
-      <div class="banner-info text-center">
-        <h1>
-          Contact
-        </h1>
+<div class="banner-info text-center" style="height:150px;background-color:darkgrey">
+  <h1 >
+    Contact
+  </h1>
+</div>
+<form name="contactForm" ng-app="contact" ng-controller="ContactFormController as ctrl" class=" container" ng-submit="ctrl.submit(contactForm)" novalidate>
+  <section class="col-xs-12 col-md-7" style="margin-top:50px;">
+    <div class="row">
+      <div class="form-group col-xs-12 col-md-6"
+           ng-class="{ 'has-error': contactForm.lastName.$invalid && (contactForm.lastName.$touched || contactForm.$submitted),'has-success': contactForm.lastName.$valid}">
+        <!--<label>Nom *</label>-->
+        <div class="input-group">
+          <span class="input-group-addon">
+            <i class="ion-person"></i>
+          </span>
+          <input type="text" name="lastName" ng-model="ctrl.formData.lastName" required ng-minlength="3"
+                 class="form-control floating-label"
+                 placeholder="Nom *">
+          <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-show="contactForm.lastName.$valid && (contactForm.lastName.$touched || contactForm.$submitted)"></i>
+          <i class="ion-close-round form-control-feedback" aria-hidden="true" ng-show="contactForm.lastName.$invalid && (contactForm.lastName.$touched || contactForm.$submitted)"></i>
+        </div>
+
+        <div ng-messages="contactForm.lastName.$error" class="help-block" ng-show="contactForm.lastName.$touched || contactForm.$submitted">
+          <span ng-message="required">Le nom est obligatoire</span>
+          <span ng-message="minlength">Merci de renseigner un nom d'au moins 3 caractères</span>
+        </div>
+      </div>
+
+      <div class="form-group  col-xs-12 col-md-6"
+           ng-class="{ 'has-error': contactForm.firstname.$invalid && (contactForm.firstName.$touched || contactForm.$submitted),'has-success': contactForm.firstName.$valid && contactForm.firstName.$touched}">
+        <div class="input-group">
+          <span class="input-group-addon">
+            <i class="ion-person-add"></i>
+          </span>
+          <input type="text" name="firstName" ng-model="ctrl.formData.firstName"
+                 class="form-control"
+                 placeholder="Prénom">
+          <i class="ion-checkmark-round form-control-feedback"  aria-hidden="true" ng-show="contactForm.firstName.$valid && (contactForm.firstName.$touched || contactForm.$submitted)"></i>
+          <i class="ion-close-round form-control-feedback"  aria-hidden="true" ng-show="contactForm.firstName.$invalid && (contactForm.firstName.$touched || contactForm.$submitted)"></i>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-<section class="container" style="margin-top:50px;">
-  <div class="container-fluid">
-    <div class="row" ng-app="contact">
-      <form name="contactForm" ng-controller="ContactFormController as ctrl" ng-submit="ctrl.submit()" novalidate>
+      <!--NOM-->
 
-        <!--NOM-->
-        <div class="form-group" ng-class="{ 'has-error': contactForm.name.$invalid && contactForm.name.$touched }">
-          <label>Nom *</label>
-          <input type="text" name="lastName" ng-model="ctrl.formData.lastName" required ng-minlength="3" class="form-control"
-                 placeholder="Entrez votre nom">
 
-          <div ng-messages="contactForm.lastName.$error" ng-if="contactForm.name.$touched">
-            <span ng-message="required">Le nom est obligatoire</span>
-            <span ng-message="minlength">Merci de renseigner un nom d'au moins 3 caractères</span>
-          </div>
-        </div>
-
-        <!--EMAIL-->
-        <div class="form-group" ng-class="{ 'has-error': contactForm.email.$invalid && contactForm.email.$touched }">
-          <label>Email *</label>
+    <!--EMAIL-->
+      <div class="form-group "
+           ng-class="{ 'has-error': contactForm.email.$invalid && (contactForm.email.$touched || contactForm.$submitted),'has-success': contactForm.email.$valid}">
+        <!--<label>Email *</label>-->
+        <div class="input-group">
+          <span class="input-group-addon">
+            <i class="ion-email"></i>
+          </span>
           <input type="email" name="email" ng-model="ctrl.formData.email" required class="form-control"
                  placeholder="Renseignez votre email pour que nous puissions vous recontacter">
-
-          <div ng-messages="contactForm.email.$error" ng-if="contactForm.email.$touched">
-            <span ng-message="required">Merci de nous indiquer votre adresse email pour que nous puissions vous recontacter</span>
-            <span ng-message="email">Le format de votre adresse email n'est pas valide</span>
-          </div>
+          <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-show="contactForm.email.$valid && (contactForm.email.$touched || contactForm.$submitted)"></i>
+          <i class="ion-close-round form-control-feedback" aria-hidden="true" ng-show="contactForm.email.$invalid && (contactForm.email.$touched || contactForm.$submitted)"></i>
         </div>
 
-        <!--TELEPHONE-->
-        <div class="form-group" ng-class="{ 'has-error': contactForm.phone.$invalid && contactForm.phone.$touched }">
-          <label>Téléphone</label>
-          <input type="number" name="phone" ng-model="ctrl.formData.phone" class="form-control"
-                 minlength="10" maxlength="10"
-                 placeholder="Si vous désirez être recontacté par téléphone, merci de nous indiquer votre numéro">
-
-          <div ng-messages="contactForm.phone.$error" ng-if="contactForm.phone.$touched">
-            <span ng-message="number minlength maxlength">Merci de rentrer un numéro de téléphone de dix chiffres</span>
-          </div>
+        <div ng-messages="contactForm.email.$error" class="help-block" ng-show="contactForm.email.$touched || contactForm.$submitted">
+          <span ng-message="required">Merci de nous indiquer votre adresse email pour que nous puissions vous recontacter</span>
+          <span ng-message="email">Le format de votre adresse email n'est pas valide</span>
         </div>
+      </div>
 
-        <!--SOCIETE-->
-        <div class="form-group"
-             ng-class="{ 'has-error': contactForm.company.$invalid && contactForm.company.$touched }">
-          <label>Société *</label>
-          <input type="text" name="company" ng-model="ctrl.formData.company" required ng-minlength="2"
-                 class="form-control"
-                 placeholder="Entrez le nom de votre société">
-
-          <div ng-messages="contactForm.company.$error" ng-if="contactForm.company.$touched">
-            <span ng-message="required">La société est obligatoire</span>
-            <span ng-message="minlength">Merci de renseigner un nom de société d'au moins 2 caractères</span>
-          </div>
-        </div>
-
-        <!--FORMATIONS-->
-        <div class="form-group"
-             ng-class="{ 'has-error': contactForm.formations.$invalid && contactForm.formations.$touched }">
-          <label>Formations qui peuvent vous intéresser</label>
-          <input type="text" name="formations" ng-model="ctrl.formData.formations" class="form-control"
-                 placeholder="Entrez la liste des formations qui peuvent vous intéresser">
-        </div>
-
-        <!--MESSAGE-->
-        <div class="form-group"
-             ng-class="{ 'has-error': contactForm.message.$invalid && contactForm.message.$touched }">
-          <label>Votre message *</label>
-          <textarea rows="5" name="message" ng-model="ctrl.formData.message" class="form-control" required
-                    ng-minlength="10"
-                    placeholder="Décrivez votre besoin, ou tout autre sujet sur lequel vous désirez communiquer avec nous">
-          </textarea>
-
-          <div ng-messages="contactForm.message.$error" ng-if="contactForm.message.$touched">
-            <span ng-message="required">Merci de décrire la raison pour laquelle vous désirez nous contacter</span>
-            <span ng-message="minlength">Minimum 10 caractères</span>
-          </div>
-        </div>
-
-        <input type="submit" class="btn btn-default" ng-disabled="contactForm.$invalid" value="Envoyer">
-      </form>
+    <!--TELEPHONE-->
+    <div class="form-group"
+         ng-class="{ 'has-error': contactForm.phone.$invalid && (contactForm.phone.$touched || contactForm.$submitted),'has-success': contactForm.phone.$valid && contactForm.phone.$touched}">
+      <div class="input-group">
+        <span class="input-group-addon">
+          <i class="ion-iphone"></i>
+        </span>
+        <input type="text" name="phone" ng-model="ctrl.formData.phone" class="form-control"
+               pattern="^(?:0|\(?\+33\)?\s?|0033\s?)[1-79](?:[\.\-\s]?\d\d){4}$"
+               placeholder="Si vous désirez être recontacté par téléphone">
+        <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-show="contactForm.phone.$valid && contactForm.phone.$touched"></i>
+        <i class="ion-close-round form-control-feedback" aria-hidden="true" ng-show="contactForm.phone.$invalid && (contactForm.phone.$touched || contactForm.$submitted)"></i>
+      </div>
+      <div ng-messages="contactForm.phone.$error" class="help-block" ng-show="contactForm.phone.$touched || contactForm.$submitted">
+        <span ng-message="pattern">Merci de rentrer un numéro de téléphone français valide</span>
+      </div>
     </div>
-  </div>
-</section>
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+    <!--SOCIETE-->
+    <div class="form-group "
+         ng-class="{ 'has-error': contactForm.company.$invalid && (contactForm.company.$touched || contactForm.$submitted),'has-success': contactForm.company.$valid}">
+      <!--<label>Société *</label>-->
+      <div class="input-group">
+        <span class="input-group-addon">
+          <i class="ion-earth"></i>
+        </span>
+        <input type="text" name="company" ng-model="ctrl.formData.company" required ng-minlength="2"
+               class="form-control"
+               placeholder="Entrez le nom de votre société">
+        <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-show="contactForm.company.$valid && (contactForm.company.$touched || contactForm.$submitted)"></i>
+        <i class="ion-close-round form-control-feedback" aria-hidden="true" ng-show="contactForm.company.$invalid && (contactForm.company.$touched || contactForm.$submitted)"></i>
+      </div>
+
+      <div ng-messages="contactForm.company.$error" class="help-block" ng-show="contactForm.company.$touched || contactForm.$submitted">
+        <span ng-message="required">La société est obligatoire</span>
+        <span ng-message="minlength">Merci de renseigner un nom de société d'au moins 2 caractères</span>
+      </div>
+    </div>
+
+    <!--FORMATIONS-->
+    <div class="form-group "
+         ng-class="{ 'has-error': contactForm.formations.$invalid && (contactForm.formations.$touched || contactForm.$submitted)}">
+      <!--&lt;!&ndash;<label>Formations qui peuvent vous intéresser</label>&ndash;&gt;-->
+      <div class="input-group">
+        <span class="input-group-addon">
+          <i class="ion-university"></i>
+        </span>
+        <!--<input type="text" name="formations" ng-model="ctrl.formData.formations" class="form-control"-->
+               <!--placeholder="Entrez la liste des formations qui peuvent vous intéresser">-->
+      <!--</div>-->
+      <ui-select multiple ng-model="ctrl.formData.formations"  style="width: 100%;">
+        <ui-select-match placeholder="Choisissez parmis nos formations...">{{$item.name}}</ui-select-match>
+        <ui-select-choices repeat="formation in ctrl.formations | propsFilter: {name: $select.search, description: $select.search}">
+          <div ng-bind-html="formation.name | highlight: $select.search"></div>
+          <small>
+            {{ formation.name }}
+            <span ng-bind-html="''+formation.name | highlight: $select.search"></span>
+          </small>
+        </ui-select-choices>
+      </ui-select>
+        </div>
+    </div>
+
+    <!--MESSAGE-->
+
+
+  </section>
+  <aside class="col-xs-12 col-md-5">
+    <div class="form-group row"
+         style="margin-top:45px; height:auto!important;"
+         ng-class="{ 'has-error': contactForm.message.$invalid && (contactForm.message.$touched || contactForm.$submitted),'has-success': contactForm.message.$valid}" >
+      <div class="input-group">
+        <span class="input-group-addon">
+          <i class="ion-information"></i>
+        </span>
+        <textarea rows="10" name="message" ng-model="ctrl.formData.message" class="form-control" required
+                  ng-minlength="10"
+                  placeholder="Décrivez votre besoin, ou tout autre sujet sur lequel vous désirez communiquer avec nous">
+        </textarea>
+        <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-show="contactForm.message.$valid && (contactForm.message.$touched || contactForm.$submitted)"></i>
+        <i class="ion-close-round form-control-feedback" aria-hidden="true" ng-show="contactForm.message.$invalid && (contactForm.message.$touched || contactForm.$submitted)"></i>
+      </div>
+
+
+      <div ng-messages="contactForm.message.$error" class="help-block" ng-show="contactForm.message.$touched || contactForm.$submitted">
+        <span ng-message="required">Merci de décrire la raison pour laquelle vous désirez nous contacter</span>
+        <span ng-message="minlength">Minimum 10 caractères</span>
+      </div>
+    </div>
+
+    <div class="row">
+      <button type="submit" class="btn btn-default btn-block" value="Envoyer">Submit</button>
+    </div>
+
+
+  </aside>
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.js"></script>
 <script src="https://code.angularjs.org/1.4.2/angular-messages.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.12.0/select.min.js"></script>

@@ -116,9 +116,9 @@
         .order(1) // display the post panel first in the dashboard
         .perPage(10) // limit the panel to the 5 latest posts
         .fields([
-          nga.field('gender'),
           nga.field('displayName'),
-          nga.field('email')
+          nga.field('email'),
+          nga.field('createdAt')
         ]); // fields() called with arguments add fields to the view
 
 

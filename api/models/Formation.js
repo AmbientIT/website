@@ -49,8 +49,7 @@ module.exports = {
     },
     contacts: {
       collection: 'contact',
-      via: 'formations',
-      select: false
+      via: 'formations'
     }
   },
   beforeCreate: function(obj,cb){

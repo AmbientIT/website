@@ -29,8 +29,7 @@ module.exports = {
     },
     formations : {
       collection: 'formation',
-      via: 'contacts',
-      dominant: true
+      via: 'contacts'
     },
     message : {
       type : 'string',

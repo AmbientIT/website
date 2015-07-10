@@ -38,7 +38,8 @@ module.exports.policies = {
     me: 'auth'
   },
   FormationController: {
-    '*': 'auth'
+    '*': 'auth',
+    'find': true
   },
   CategoryController: {
     '*': 'auth'
