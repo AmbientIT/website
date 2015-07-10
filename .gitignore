@@ -68,7 +68,7 @@ config/env/production.js
 
 node_modules
 bower_components
-
+assets/admin/lib
 
 
 
