@@ -20,6 +20,7 @@ module.exports = {
 
     Contact
       .find()
+      .populate('formations')
       .then(function(data){
         res.json(data);
       })
