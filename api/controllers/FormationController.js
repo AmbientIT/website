@@ -20,6 +20,8 @@ module.exports = {
 
     Formation
       .find()
+      .populate('next')
+      .populate('previous')
       .then(function(data){
         res.json(data);
       })

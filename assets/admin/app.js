@@ -116,15 +116,11 @@
         .order(1) // display the post panel first in the dashboard
         .perPage(10) // limit the panel to the 5 latest posts
         .fields([
-          nga.field('formations')
-            .map(function(data){
-              return data.map(function(formation){
-                return formation.name
-              });
-              //console.log(data)
-            })// Define a N-1 relationship with the comment entity
-             // Each comment with post_id = post.id (the identifier) will be displayed
-          ,
+          nga.field('formations', 'reference_many')
+            .label('Formations')
+            .isDetailLink(true)
+            .targetEntity(formation) // Targeted entity
+            .targetField(nga.field('name')),
 
           nga.field('displayName'),
           nga.field('email'),
