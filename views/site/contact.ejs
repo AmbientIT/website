@@ -35,8 +35,8 @@
         </div>
 
         <div ng-messages="contactForm.lastName.$error" class="help-block" ng-show="contactForm.lastName.$touched || contactForm.$submitted">
-          <span ng-message="required">Le nom est obligatoire</span>
-          <span ng-message="minlength">Merci de renseigner un nom d'au moins 3 caractères</span>
+          <span class="toto" ng-message="required">Le nom est obligatoire</span>
+          <span class="toto" ng-message="minlength">Merci de renseigner un nom d'au moins 3 caractères</span>
         </div>
       </div>
 
@@ -175,6 +175,3 @@
   </aside>
 </form>
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.js"></script>
-<script src="https://code.angularjs.org/1.4.2/angular-messages.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.12.0/select.min.js"></script>

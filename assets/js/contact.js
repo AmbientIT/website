@@ -1,4 +1,4 @@
-angular.module('contact', ['ngMessages','ui.select'])
+angular.module('contact', ['ngMessages','ngAnimate','ui.select'])
   .controller('ContactFormController', function ($http) {
     var ctrl = this;
     ctrl.formations = [];
