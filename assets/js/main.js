@@ -4,7 +4,7 @@
 	var MQL = 1170;
 
 	//primary navigation slide-in effect
-	if ($(window).width() > MQL) {
+	//if ($(window).width() > MQL) {
 		var headerHeight = $('.navbar-custom').height();
 		$(window).on('scroll', {
 				previousTop: 0
@@ -28,8 +28,8 @@
 				}
 				this.previousTop = currentTop;
 			});
-	}
 
 
+  $.material.init()
 
 }(window, window.jQuery));

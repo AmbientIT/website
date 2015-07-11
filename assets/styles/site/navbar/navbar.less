@@ -1,7 +1,7 @@
 @import "_variables";
 
-.navbar{
-  background-color: transparent;
+.navbar:not(.is-fixed){
+  background-color:transparent;
 }
 
 .navbar-custom {
@@ -10,6 +10,7 @@
   left: 0;
   width: 100%;
   z-index: 3;
+
 }
 .navbar-custom .navbar-brand {
   font-weight: 800;
@@ -20,6 +21,13 @@
   font-weight: 800;
   letter-spacing: 1px;
 
+}
+
+.navbar-brand{
+  h1{
+    font-size:2em;
+    margin-top:0;
+  }
 }
 @media only screen and (min-width: 768px) {
   @import "navbar-md";

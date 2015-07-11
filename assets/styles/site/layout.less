@@ -16,10 +16,13 @@ html, body{
 
 
 .banner-info {
-  padding: 2em 0 3em;
-  h1 {
-    font-size: 1.2em;
+  padding: 4em 0 3em;
+  h2 {
+    color: #c3bcbe;
     width: 100%;
+  }
+  img{
+    width: 350px;
   }
   p {
     width: 100%;
@@ -27,4 +30,13 @@ html, body{
   }
 }
 
-
+@media screen and (min-width: 992px){
+  .banner-info {
+    img{
+      width: 800px;
+    }
+    p {
+      font-size: 1em;
+    }
+  }
+}
