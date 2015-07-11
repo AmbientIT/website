@@ -116,16 +116,17 @@
         .order(1) // display the post panel first in the dashboard
         .perPage(10) // limit the panel to the 5 latest posts
         .fields([
-          nga.field('formations')
+          nga.field('formations', 'template')
             .map(function(obj,entry){
               return obj.map(function(formation){
                 return formation.name
               })
             })
-            .map(function(obj){
-              return obj.toString();
+            .map(function(value){
+              return value.toString();
             })
-            .label('Formations'),
+            .template('<span>{{this.}}</span>')
+           ,
 
           nga.field('displayName'),
           nga.field('email'),
