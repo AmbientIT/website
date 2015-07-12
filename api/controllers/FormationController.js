@@ -22,6 +22,7 @@ module.exports = {
       .find()
       .populate('next')
       .populate('previous')
+      .populate('image')
       .then(function(data){
         res.json(data);
       })

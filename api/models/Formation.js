@@ -42,11 +42,11 @@ module.exports = {
       via: 'next'
     },
     image: {
-      type: 'string'
+      model: 'media'
     },
     homePage: {
       type: 'boolean'
-    },
+    }
     //contacts: {
     //  collection: 'contact',
     //  via: 'formations'
