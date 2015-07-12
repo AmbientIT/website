@@ -42,19 +42,31 @@
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi cum dolor dolorem doloremque harum ipsum, magni non obcaecati optio perferendis quisquam quo repudiandae tempora! Deleniti ex facilis iusto laborum voluptas?
         </p>
       </div>
-      <div class="formations-left-inner-grids">
-        <% formations.forEach(function(formation){ %>
-        <div>
-          <div >
-            <i class="ion-social-angular"></i>
+      <div class="row">
+        <div class="col-md-5">
+          <div class="list-group">
+            <% formations.forEach(function(formation){ %>
+            <div class="list-group-item">
+              <div class="row-picture">
+                <img class="circle" src="/images/formation/logo.jpg"  alt="<%= formation.name %> logo">
+              </div>
+              <div class="row-content">
+                <a href="/formation/<%= formation.slug %>">
+                  <h4 class="list-group-item-heading">
+                    <%= formation.name %>
+                  </h4>
+                </a>
+                <p class="list-group-item-text">
+                  <%= formation.description %>
+                </p>
+              </div>
+            </div>
+            <% }) %>
           </div>
-          <div >
-            <h4><%= formation.name %></h4>
-            <p><%= formation.description %></p>
-          </div>
-          <div class="clearfix"> </div>
         </div>
-        <% }) %>
+        <div class="col-xs-12 col-md-7">
+         ici bientot, un superbe carousel avec des photos de nos formations
+        </div>
       </div>
     </div>
     <div class="clearfix"> </div>
@@ -97,18 +109,17 @@
     </div>
   </div>
 </div>
-<div class="social">
-    <div class="social-head-grids">
-      <div class="social-head-grid wow fadeInLeft" data-wow-delay="0.4s">
-        <i class="ion-social-github"></i>
-      </div>
-      <div class="social-head-grid wow fadeInUp" data-wow-delay="0.4s">
-        <i class="ion-social-googleplus"></i>
-      </div>
-      <div class="social-head-grid wow fadeInRight" data-wow-delay="0.4s">
-        <i class="ion-social-linkedin"></i>
-      </div>
-      <div class="clearfix"> </div>
-    </div>
-</div>
-<!--<a href="#"  style="display: block;"> <i class="ion-chevron-up" id="toTopHover" style="opacity: 1;"> </i></a>-->
+<!--<div class="social">-->
+    <!--<div class="social-head-grids">-->
+      <!--<div class="social-head-grid wow fadeInLeft" data-wow-delay="0.4s">-->
+        <!--<i class="ion-social-github"></i>-->
+      <!--</div>-->
+      <!--<div class="social-head-grid wow fadeInUp" data-wow-delay="0.4s">-->
+        <!--<i class="ion-social-googleplus"></i>-->
+      <!--</div>-->
+      <!--<div class="social-head-grid wow fadeInRight" data-wow-delay="0.4s">-->
+        <!--<i class="ion-social-linkedin"></i>-->
+      <!--</div>-->
+      <!--<div class="clearfix"> </div>-->
+    <!--</div>-->
+<!--</div>-->

@@ -14,6 +14,9 @@ module.exports = {
       .then(function(result){
         res.locals.layout = 'layouts/default';
         res.view('site/home',{
+          content: {
+            title: 'Centre de formation, Délégation de formateurs, conseil'
+          },
           formations : result
         })
       })
@@ -23,8 +26,10 @@ module.exports = {
       .find()
       .populate('formations')
       .then(function(result){
-        console.log(result)
         res.view('site/formations',{
+          content: {
+            title: 'Nos formations'
+          },
           categories : result
         })
       })
@@ -34,6 +39,7 @@ module.exports = {
       .countAndSearch(req.query.q)
       .then(function(result){
         res.view('site/formations-search',{
+          title: 'Resultats de la recherche',
           formations : result.data
         })
       });
@@ -46,6 +52,9 @@ module.exports = {
       .then(function(result){
         console.log(result);
         res.view('site/formation',{
+          content: {
+            title: result.name
+          },
           formation: result
         })
       })

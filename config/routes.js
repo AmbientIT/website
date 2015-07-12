@@ -70,7 +70,12 @@ module.exports.routes = {
     action: 'formationPage'
   },
   '/contact': {
-    view: 'site/contact'
+    view: 'site/contact',
+    locals: {
+      content: {
+        title : 'Formulaire de contact'
+      }
+    }
   },
 
   ////////////////
