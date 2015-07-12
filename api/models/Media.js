@@ -6,12 +6,24 @@
 */
 
 module.exports = {
-
   attributes: {
     file: {
-      type: 'string',
-      name: 'string'
-
+      type: 'string'
+    },
+    type: {
+      type: 'strind'
+    },
+    name: {
+      type: 'string'
+    },
+    size: {
+      type: 'number'
+    },
+    originalName: {
+      type: 'string'
+    },
+    description: {
+      type: 'string'
     }
   }
 };

@@ -205,7 +205,7 @@
         .actions(['list', 'delete']) // choose which buttons appear in the top action bar. Show is disabled by default
         .fields([
           nga.field('file','file')
-            .uploadInformation({ 'url': 'http://localhost:1337/api/upload', 'fileFormDataName': 'file' })
+            .uploadInformation({ 'url': 'http://localhost:1337/api/upload/media', 'fileFormDataName': 'file' })
         ]);
 
       media.editionView()

@@ -109,9 +109,13 @@ module.exports.routes = {
     controller: 'Formation',
     action: 'find'
   },
-  'post /api/upload': {
+  'get /api/media': {
     controller: 'Media',
-    action: 'base64AndCreate'
+    action: 'find'
+  },
+  'post /api/upload/media': {
+    controller: 'upload',
+    action: 'base64AndCreateMedia'
   }
 
 };
