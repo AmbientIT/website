@@ -47,6 +47,7 @@ module.exports = {
   formationPage: function(req,res){
     Formation
       .findOne({slug : req.params.slug})
+      .populate('category')
       .populate('next')
       .populate('previous')
       .then(function(result){

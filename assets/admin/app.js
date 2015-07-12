@@ -101,30 +101,42 @@
       var user = nga.entity('user')
         .identifier(nga.field('id'));
 
+      var media = nga.entity('media')
+        .identifier(nga.field('id'));
+
       // set the application entities
       admin
         .addEntity(contact)
         .addEntity(user)
         .addEntity(category)
-        .addEntity(formation);
+        .addEntity(formation)
+        .addEntity(media);
 
       //// customize entities and views
       //
+
+      media.dashboardView()
+        .title('derniers uploads')
+        .fields([
+          nga.field('name'),
+          nga.field('size')
+        ]);
 
       contact.dashboardView() // customize the dashboard panel for this entity
         .title('Derniers contacts')
         .order(1) // display the post panel first in the dashboard
         .perPage(10) // limit the panel to the 5 latest posts
         .fields([
-          nga.field('formations')
-            .map(function(obj,entry){
-              return obj.map(function(formation){
-                return formation.name
-              })
-            })
-            .map(function(value){
-              return value.toString();
-            })
+          nga.field('formations', 'template')
+            .template('<ul style="list-style: none"><li><a href="http://localhost:1337/admin#/formation/show/{{formation.id}}" ng-repeat="formation in entry.values.formations">{{formation.name}}<a/></li></ul>')
+            //.map(function(obj,entry){
+            //  return obj.map(function(formation){
+            //    return formation.name
+            //  })
+            //})
+            //.map(function(value){
+            //  return value.toString();
+            //})
             //.template('<span>{{value}}</span>')
            ,
 
@@ -150,6 +162,56 @@
         .fields([
           nga.field('name')
         ]); // fields() called with arguments add fields to the view
+
+      media.listView()
+        .title('All media') // default title is "[Entity_name] list"
+        .description('List of media') // description appears under the title
+        .infinitePagination(true) // load pages as the user scrolls
+        .fields([
+          nga.field('id').label('ID'), // The default displayed name is the camelCase field name. label() overrides id
+          nga.field('name'), // the default list field type is "string", and displays as a string
+          nga.field('description'), // Date field type allows date formatting
+          nga.field('size'),
+          nga.field('file','template')
+            .template('<img height="100px" src="data:image/png;base64,{{ entry.values.file }}"/>')
+
+      ])
+        .listActions(['show', 'edit', 'delete']);
+
+      media.creationView()
+        .title('Edit media "{{ entry.values.name }}"') // title() accepts a template string, which has access to the entry
+        .actions(['list', 'delete']) // choose which buttons appear in the top action bar. Show is disabled by default
+        .fields([
+          nga.field('file','file')
+            .uploadInformation({ 'url': 'http://localhost:1337/api/upload', 'fileFormDataName': 'file' })
+        ]);
+
+      media.editionView()
+        .title('Edit media "{{ entry.values.name }}"') // title() accepts a template string, which has access to the entry
+        .actions(['list', 'delete']) // choose which buttons appear in the top action bar. Show is disabled by default
+        .fields([
+          nga.field('name'), // the default list field type is "string", and displays as a string
+          nga.field('description'), // Date field type allows date formatting
+
+        ]);
+
+      media.showView() // a showView displays one entry in full page - allows to display more data than in a a list
+        .fields([
+          nga.field('id').label('ID'), // The default displayed name is the camelCase field name. label() overrides id
+          nga.field('name'), // the default list field type is "string", and displays as a string
+          nga.field('description'), // Date field type allows date formatting
+          nga.field('originalName'),
+          nga.field('size'),
+          nga.field('file','template')
+            .template('<img src="data:image/png;base64,{{ entry.values.file }}"/>')
+        ]);
+
+      user.editionView()
+        .title('Edit user "{{ entry.values.name }}"') // title() accepts a template string, which has access to the entry
+        .actions(['list', 'delete']) // choose which buttons appear in the top action bar. Show is disabled by default
+        .fields([
+          user.listView().fields()// fields() without arguments returns the list of fields. That way you can reuse fields from another view to avoid repetition
+        ]);
 
       user.listView()
         .title('All user') // default title is "[Entity_name] list"
@@ -258,8 +320,6 @@
             .map(truncate)
             .targetEntity(category)
             .targetField(nga.field('name').map(truncate)),
-          nga.field('program', 'wysiwyg')
-            .label('Program'),
           nga.field('duration', 'number')
             .label('duration'),
           nga.field('price', 'number')
@@ -273,7 +333,9 @@
             .targetField(nga.field('name')),
           nga.field('previous', 'reference_many')
             .targetEntity(formation)
-            .targetField(nga.field('name'))
+            .targetField(nga.field('name')),
+          nga.field('program', 'wysiwyg')
+            .label('Program'),
         ]);
 
       formation.editionView()
@@ -298,6 +360,8 @@
         .description('List of category of formations') // description appears under the title
         .infinitePagination(true) // load pages as the user scrolls
         .fields([
+          nga.field('formations', 'template')
+            .template('<ul style="list-style: none"><li><a href="http://localhost:1337/admin#/formation/show/{{formation.id}}" ng-repeat="formation in entry.values.formations">{{formation.name}}<a/></li></ul>'),
           nga.field('displayName')
             .label('displayName'),
           nga.field('email')
@@ -324,6 +388,8 @@
           .addChild(nga.menu(user).icon('<span class="glyphicon glyphicon-user"></span>')) // you can even use utf-8 symbols!
           .addChild(nga.menu(category).icon('<span class="glyphicon glyphicon-file"></span>')) // customize the entity menu icon
           .addChild(nga.menu(formation).icon('<strong style="font-size:1.3em;line-height:1em">✉</strong>')) // you can even use utf-8 symbols!
+          .addChild(nga.menu(media).icon('<span class="glyphicon glyphicon-file"></span>')) // you can even use utf-8 symbols!
+
 
       );
 

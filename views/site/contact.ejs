@@ -1,17 +1,20 @@
 <form name="contactForm" ng-app="contact" ng-controller="ContactFormController as ctrl" ng-cloak class="container" ng-submit="ctrl.submit(contactForm)" novalidate>
   <section class="col-xs-12 col-md-7" style="margin-top:50px;">
-    <div class="form-group">
-      <div class="radio radio-success" style="display:inline-block;">
+    <div class="form-group" ng-class="{'radio-success' : contactForm.gender.$valid, 'has-error': contactForm.gender.$invalid && (contactForm.gender.$touched || contactForm.$submitted)}">
+      <div class="radio"  style="display:inline-block;">
         <label>
-          <input type="radio" name="mister" ng-model="ctrl.formData.gender" value="M" checked=""><span class="circle"></span><span class="check"></span>
+          <input type="radio" required name="gender" ng-model="ctrl.formData.gender" value="M" checked=""><span class="circle"></span><span class="check"></span>
           M
         </label>
       </div>
       <div class="radio radio-success" style="display:inline-block;">
         <label>
-          <input type="radio" name="miss" ng-model="ctrl.formData.gender" value="Mme" checked=""><span class="circle"></span><span class="check"></span>
+          <input type="radio" required name="gender" ng-model="ctrl.formData.gender" value="Mme" checked=""><span class="circle"></span><span class="check"></span>
           Mme
         </label>
+      </div>
+      <div ng-messages="contactForm.gender.$error" class="help-block" ng-show=" contactForm.$submitted">
+        <span class="toto" ng-message="required">Veuillez préciser votre civilité </span>
       </div>
     </div>
     <div class="row">

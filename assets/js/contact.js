@@ -1,5 +1,8 @@
-angular.module('contact', ['ngMessages','ngAnimate','ui.select'])
-  .controller('ContactFormController', function ($http) {
+angular.module('contact', ['ngMessages','ngAnimate','ui.select','ui.bootstrap'])
+  .config(function($sceProvider){
+    $sceProvider.enabled(false);
+  })
+  .controller('ContactFormController', function ($http, $modal) {
     var ctrl = this;
     ctrl.formations = [];
 
@@ -21,12 +24,36 @@ angular.module('contact', ['ngMessages','ngAnimate','ui.select'])
         $http
           .post('/api/contact',data)
           .success(function(data){
-            alert('success');
-            console.log(data);
+            $modal.open({
+              animation: true,
+              templateUrl: 'templates/after-contact-dialog.tpl.html',
+              controller: function($modalInstance){
+                this.close = function(){
+                  $modalInstance.close();
+                };
+                this.message = 'Nous avons bien reçus votre demande, nous vous recontacterons dans les plus bref delais.'
+              },
+              controllerAs: 'dialog',
+              size: 'sm'
+            })
+              .result.then(function(){
+                window.location.href = 'http://localhost:1337/'
+              })
           })
           .catch(function(err){
-            alert('ERROR !!!!');
-            console.log(err);
+            $modal.open({
+              animation: true,
+              templateUrl: 'after-contact-dialog.tpl.html',
+              controller: function($modalInstance){
+                this.close = function(){
+                  $modalInstance.close();
+                };
+                this.isError = true;
+                this.message = 'Notre serveur rencontre des difficultés, merci de recommencer plus tard.'
+              },
+              controllerAs: 'dialog',
+              size: 'sm'
+            })
           })
       }
     };
