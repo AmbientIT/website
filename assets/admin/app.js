@@ -277,7 +277,9 @@
         ]);
 
       formation.editionView()
-        .fields(formation.creationView().fields());
+        .fields([
+          formation.creationView().fields()
+        ]);
 
 
       formation.showView() // a showView displays one entry in full page - allows to display more data than in a a list
