@@ -68,16 +68,42 @@ module.exports = {
     Formation
       .findOne({slug : req.params.slug})
       .populate('category')
+      .populate('image')
       .populate('next')
       .populate('previous')
       .then(function(result){
-        console.log(result);
-        res.view('site/formation',{
-          content: {
-            title: result.name
-          },
-          formation: result
-        })
+        //console.log(result);
+        result.image = 'data:image/png;base64,' + result.image.file;
+        var nextPromises = [];
+        var previousPromise = [];
+        result.previous.forEach(function(formation){
+          previousPromise.push(Formation.findOne({id:formation.id}).populate('image'))
+        });
+        result.next.forEach(function(formation){
+          nextPromises.push(Formation.findOne({id:formation.id}).populate('image'))
+        });
+        Promise
+          .all([Promise.all(previousPromise),Promise.all(nextPromises)])
+          .then(function(data){
+            result.previous = data[0];
+            result.next = data[1];
+
+            result.previous.forEach(function(formation){
+              formation.image = 'data:image/png;base64,' + formation.image.file;
+            });
+
+            result.next.forEach(function(formation){
+              formation.image = 'data:image/png;base64,' + formation.image.file;
+            });
+
+            console.log(result)
+            res.view('site/formation',{
+              content: {
+                title: result.name
+              },
+              formation: result
+            })
+          });
       })
   }
 };

@@ -355,9 +355,6 @@
             .label('slides'),
           nga.field('home', 'boolean')
             .label('homePage'),
-          nga.field('next', 'reference_many')
-            .targetEntity(formation)
-            .targetField(nga.field('name')),
           nga.field('previous', 'reference_many')
             .targetEntity(formation)
             .targetField(nga.field('name')),
@@ -374,8 +371,9 @@
       formation.showView() // a showView displays one entry in full page - allows to display more data than in a a list
         .fields([
           formation.editionView().fields(), // reuse fields from another view in another order
-          nga.field('slug')
-            .label('slug')
+          nga.field('previous', 'reference_many')
+            .targetEntity(formation)
+            .targetField(nga.field('name'))
         ]);
 
       formation.deletionView()

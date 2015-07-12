@@ -7,11 +7,6 @@
 
 module.exports = {
   attributes: {
-    id: {
-      type: 'integer',
-      autoIncrement: true,
-      primaryKey: true
-    },
     name: {
       type: 'string',
       unique: true,
@@ -60,7 +55,29 @@ module.exports = {
   },
   beforeCreate: function(obj,cb){
     obj.slug = obj.name.toLowerCase().replace(/ /g,'');
-    return cb(null,obj);
+    var promises = [];
+    if(obj.previous){
+      obj.previous.forEach(function(formation){
+        console.log(formation)
+        promises.push(Formation.findOne({id:formation}))
+      });
+    }
+    return Promise
+      .all(promises)
+      .then(function(result){
+        promises = [];
+        result.forEach(function(formation){
+          formation.next.push(obj.id);
+          promises.push(formation.save());
+        });
+        return Promise.all(promises);
+      })
+      .then(function(result){
+        return cb(null,obj);
+      })
+      .catch(function(err){
+        return cb(err);
+      })
   },
   afterCreate: function(obj,cb){
     return Category
