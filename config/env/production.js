@@ -38,9 +38,12 @@ module.exports = {
   TOKEN_SECRET: process.env.TOKEN_SECRET || 'A hard to guess string',
   GOOGLE_SECRET: process.env.GOOGLE_SECRET || 'lh-ml0swLWA05UW2qUG-s1Dm',
   email: {
-    provider: 'Gmail',
-    address: 'charles.jacquin@ambient-it.net',
-    pass: 'ambient4tw'
+    service: 'Gmail',
+    auth:{
+      user: 'charles.jacquin@ambient-it.net',
+      pass: 'ambient4tw'
+    },
+    from: 'no-reply@ambient-it.net'
   }
 
 };

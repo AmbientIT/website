@@ -50,7 +50,7 @@ module.exports = {
     cb(null);
   },
   afterCreate: function(obj,cb){
-    User
+    return User
       .find()
       .then(function(users){
         var usersMail = _.map(users, function(user){
@@ -60,15 +60,12 @@ module.exports = {
           to: usersMail,
           subject: "Nouveau contact sur le site"
         };
-        emailer
-          .send(options)
-          .then(function(){
-            cb(null);
-          })
-          .catch(function(err){
-            console.log('mail err',err)
-            cb(err);
-          });
+        return sails.hooks.email.send('./contact', obj, options, function(err,data){
+          if(err){
+            return cb(err)
+          }
+          return cb(null,data);
+        })
 
       });
   }

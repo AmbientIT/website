@@ -15,11 +15,17 @@ angular.module('contact', ['ngMessages','ngAnimate','ui.select','ui.bootstrap'])
     ctrl.formData = {};
 
     ctrl.submit = function (form) {
-      var formationsId = ctrl.formData.formations.map(function(formation){
-        return formation.id
-      });
-      var data = angular.copy(ctrl.formData);
-      data.formations = formationsId;
+      var data;
+      if(ctrl.formData.formations){
+        var formationsId = ctrl.formData.formations.map(function(formation){
+          return formation.id
+        });
+        data = angular.copy(ctrl.formData);
+        data.formations = formationsId;
+      }else{
+        data = ctrl.formData;
+      }
+
       if(form.$valid){
         $http
           .post('/api/contact',data)

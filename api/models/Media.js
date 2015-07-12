@@ -11,13 +11,13 @@ module.exports = {
       type: 'string'
     },
     type: {
-      type: 'strind'
+      type: 'string'
     },
     name: {
       type: 'string'
     },
     size: {
-      type: 'number'
+      type: 'integer'
     },
     originalName: {
       type: 'string'

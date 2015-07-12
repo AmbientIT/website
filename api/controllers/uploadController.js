@@ -1,4 +1,3 @@
-
 /**
  * MediaController
  *
@@ -6,7 +5,7 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
-var fs = require('fs');
+var fs = require('fs-promise');
 
 module.exports = {
   base64AndCreateMedia : function(req,res){
@@ -14,22 +13,21 @@ module.exports = {
       if(err){
         return res.serverError(err);
       }
-      var base64;
-      try{
-        base64 = fs.readFileSync(data[0].fd).toString("base64");
-      }catch(e){
-        return res.serverError(err)
-      }
-      Media.create({
-        file: base64,
-        size: data[0].size,
-        type: data[0].type,
-        originalName: data[0].filename
-      })
+      return fs.readFile(data[0].fd)
+        .then(function(file){
+          return Media.create({
+            file: file,
+            size: data[0].size,
+            type: data[0].type,
+            originalName: data[0].filename
+          })
+        })
         .then(function(media){
-          res.json(media)
-        });
-
+          return res.json(media)
+        })
+        .catch(function(err){
+          return res.serverError(err);
+        })
     })
   }
 };

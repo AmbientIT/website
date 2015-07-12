@@ -25,7 +25,7 @@ module.exports = {
         res.json(data);
       })
       .catch(function (err) {
-        console.log(err);
+        res.status(400).json(err);
       })
   }
 };
