@@ -4,7 +4,7 @@
       <div class="radio radio-success" style="display:inline-block;">
         <label>
           <input type="radio" name="mister" ng-model="ctrl.formData.gender" value="M" checked=""><span class="circle"></span><span class="check"></span>
-          M
+          M.
         </label>
       </div>
       <div class="radio radio-success" style="display:inline-block;">
@@ -22,7 +22,7 @@
           <span class="input-group-addon">
             <i class="ion-person"></i>
           </span>
-          <input type="text" name="lastName" ng-model="ctrl.formData.lastName" required ng-minlength="3"
+          <input type="text" name="lastName" ng-model="ctrl.formData.lastName" required ng-minlength="2"
                  class="form-control floating-label"
                  placeholder="Nom *">
           <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-show="contactForm.lastName.$valid && (contactForm.lastName.$touched || contactForm.$submitted)"></i>
@@ -31,7 +31,7 @@
 
         <div ng-messages="contactForm.lastName.$error" class="help-block" ng-show="contactForm.lastName.$touched || contactForm.$submitted">
           <span class="toto" ng-message="required">Le nom est obligatoire</span>
-          <span class="toto" ng-message="minlength">Merci de renseigner un nom d'au moins 3 caractères</span>
+          <span class="toto" ng-message="minlength">Merci de renseigner un nom d'au moins 2 caractères</span>
         </div>
       </div>
 
@@ -61,7 +61,7 @@
             <i class="ion-email"></i>
           </span>
           <input type="email" name="email" ng-model="ctrl.formData.email" required class="form-control floating-label"
-                 placeholder="Renseignez votre email pour que nous puissions vous recontacter">
+                 placeholder="Email *">
           <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-show="contactForm.email.$valid && (contactForm.email.$touched || contactForm.$submitted)"></i>
           <i class="ion-close-round form-control-feedback" aria-hidden="true" ng-show="contactForm.email.$invalid && (contactForm.email.$touched || contactForm.$submitted)"></i>
         </div>
@@ -81,7 +81,7 @@
         </span>
         <input type="text" name="phone" ng-model="ctrl.formData.phone" class="form-control floating-label"
                pattern="^(?:0|\(?\+33\)?\s?|0033\s?)[1-79](?:[\.\-\s]?\d\d){4}$"
-               placeholder="Si vous désirez être recontacté par téléphone">
+               placeholder="N° de téléphone (si vous désirez être recontacté par ce moyen)">
         <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-show="contactForm.phone.$valid && contactForm.phone.$touched"></i>
         <i class="ion-close-round form-control-feedback" aria-hidden="true" ng-show="contactForm.phone.$invalid && (contactForm.phone.$touched || contactForm.$submitted)"></i>
       </div>
@@ -93,20 +93,19 @@
     <!--SOCIETE-->
     <div class="form-group "
          ng-class="{ 'has-error': contactForm.company.$invalid && (contactForm.company.$touched || contactForm.$submitted),'has-success': contactForm.company.$valid}">
-      <!--<label>Société *</label>-->
       <div class="input-group">
         <span class="input-group-addon">
           <i class="ion-earth"></i>
         </span>
         <input type="text" name="company" ng-model="ctrl.formData.company" required ng-minlength="2"
                class="form-control floating-label"
-               placeholder="Entrez le nom de votre société">
+               placeholder="Société *">
         <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-show="contactForm.company.$valid && (contactForm.company.$touched || contactForm.$submitted)"></i>
         <i class="ion-close-round form-control-feedback" aria-hidden="true" ng-show="contactForm.company.$invalid && (contactForm.company.$touched || contactForm.$submitted)"></i>
       </div>
 
       <div ng-messages="contactForm.company.$error" class="help-block" ng-show="contactForm.company.$touched || contactForm.$submitted">
-        <span ng-message="required">La société est obligatoire</span>
+        <span ng-message="required">Un nom de société est obligatoire</span>
         <span ng-message="minlength">Merci de renseigner un nom de société d'au moins 2 caractères</span>
       </div>
     </div>
@@ -114,7 +113,6 @@
     <!--FORMATIONS-->
     <div class="form-group "
          ng-class="{ 'has-error': contactForm.formations.$invalid && (contactForm.formations.$touched || contactForm.$submitted)}">
-      <!--&lt;!&ndash;<label>Formations qui peuvent vous intéresser</label>&ndash;&gt;-->
       <div class="input-group">
         <span class="input-group-addon">
           <i class="ion-university"></i>
@@ -154,7 +152,6 @@
         <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-show="contactForm.message.$valid && (contactForm.message.$touched || contactForm.$submitted)"></i>
         <i class="ion-close-round form-control-feedback" aria-hidden="true" ng-show="contactForm.message.$invalid && (contactForm.message.$touched || contactForm.$submitted)"></i>
       </div>
-
 
       <div ng-messages="contactForm.message.$error" class="help-block" ng-show="contactForm.message.$touched || contactForm.$submitted">
         <span ng-message="required">Merci de décrire la raison pour laquelle vous désirez nous contacter</span>
