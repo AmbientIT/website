@@ -180,11 +180,14 @@
         .perPage(10) // limit the panel to the 5 latest posts
         .fields([
           nga.field('name'),
+          nga.field('category','reference')
+            .label('Category')
+            .map(truncate)
+            .targetEntity(category)
+            .targetField(nga.field('name').map(truncate)),
           nga.field('previous', 'template')
             .label('Prérequis')
-            .template('<admin-relation-repeter entityName="formation" data="entry.values.previous"></admin-relation-repeter>'),
-          nga.field('next', 'template')
-            .template('<admin-relation-repeter entityName="formation" data="entry.values.next"></admin-relation-repeter>')
+            .template('<admin-relation-repeter entityName="formation" data="entry.values.previous"></admin-relation-repeter>')
         ]); // fields() called with arguments add fields to the view
 
       media.listView()

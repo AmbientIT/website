@@ -23,8 +23,8 @@ module.exports = {
       .populate('next')
       .populate('previous')
       .populate('image')
-      .then(function(data){
-        res.json(data);
+      .then(function(result){
+        res.json(result);
       })
       .catch(function(err){
         console.log(err);

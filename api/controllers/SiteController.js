@@ -11,7 +11,11 @@ module.exports = {
       .find({
         home: true
       })
+      .populate('image')
       .then(function(result){
+        result.forEach(function(formation,index){
+          formation.image = 'data:image/png;base64,'+formation.image.file;
+        });
         res.locals.layout = 'layouts/default';
         res.view('site/home',{
           content: {
@@ -22,15 +26,31 @@ module.exports = {
       })
   },
   formationsPage: function(req,res) {
-    Category
+    Formation
       .find()
-      .populate('formations')
+      .populate('category')
+      .populate('image')
       .then(function(result){
+        var categories = [];
+        result.forEach(function(formation,index){
+          categories.push(formation.category);
+          categories[index].formations = [];
+        });
+        categories = _.uniq(categories, 'name');
+
+        result.forEach(function(formation){
+          formation.image = 'data:image/png;base64,'+formation.image.file;
+          categories.forEach(function(category){
+            if(category.name === formation.category.name){
+              category.formations.push(formation);
+            }
+          });
+        });
         res.view('site/formations',{
           content: {
             title: 'Nos formations'
           },
-          categories : result
+          categories : categories
         })
       })
   },
