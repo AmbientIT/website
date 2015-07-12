@@ -1,7 +1,7 @@
 /**
- * authService
+ * googleAuthService
  *
- * @description :: Server-side logic for authentication with oauth2
+ * @description :: Server-side logic for authentication with google services
  * @help        :: https://github.com/sahat/satellizer/blob/master/examples/server/node/server.js
  */
 var request = require('request-promise');
@@ -17,20 +17,18 @@ module.exports = {
       redirect_uri: redirectUri,
       grant_type: 'authorization_code'
     };
-      return request.post(accessTokenUrl, { json: true, form: params })
-        .then(function(token) {
-          var accessToken = token.access_token;
-          var headers = {Authorization: 'Bearer ' + accessToken};
-
-          // Step 2. Retrieve profile information about the current user.
-          return request.get({url: peopleApiUrl, headers: headers, json: true})
-            .then(function(profile){
-              if(profile.hd !== 'ambient-it.net'){
-                throw new Error('bad mail sorry bro ;)')
-              }else{
-                return profile;
-              }
-            })
-        })
+    return request.post(accessTokenUrl, { json: true, form: params })
+      .then(function(token) {
+        var accessToken = token.access_token;
+        var headers = {Authorization: 'Bearer ' + accessToken};
+        return request.get({url: peopleApiUrl, headers: headers, json: true})
+      })
+      .then(function(profile){
+        if(profile.hd !== 'ambient-it.net'){
+          throw new Error('bad mail sorry bro ;)')
+        }else{
+          return profile;
+        }
+      })
   }
 };

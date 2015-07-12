@@ -14,12 +14,13 @@ module.exports = {
       query.skip = req.query.start;
     }
 
-    if(req.query._sort){
-      query[req.query._sort] = req.query._sortDir; // or 'asc'
-    }
+    //if(req.query._sort){
+    //  query[req.query._sort] = req.query._sortDir; // or 'asc'
+    //}
 
     Formation
       .find()
+      .where(query)
       .populate('next')
       .populate('previous')
       .populate('image')

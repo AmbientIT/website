@@ -14,14 +14,15 @@ module.exports = {
       query.limit = req.query._end;
       query.skip = req.query.start;
     }
-
-    if(req.query._sort){
-      query[req.query._sort] = req.query._sortDir; // or 'asc'
-    }
+    //
+    //if(req.query._sort){
+    //  query[req.query._sort] = req.query._sortDir; // or 'asc'
+    //}
 
     Category
     .find()
-    .then(function(data){
+      .where(query)
+      .then(function(data){
       res.json(data);
     })
     .catch(function(err){

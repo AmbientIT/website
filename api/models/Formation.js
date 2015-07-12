@@ -7,6 +7,11 @@
 
 module.exports = {
   attributes: {
+    id: {
+      type: 'integer',
+      autoIncrement: true,
+      primaryKey: true
+    },
     name: {
       type: 'string',
       unique: true,
@@ -35,11 +40,12 @@ module.exports = {
     },
     previous: {
       collection: 'formation',
-      via: 'previous'
+      via: 'next',
+      dominant: true
     },
     next: {
       collection: 'formation',
-      via: 'next'
+      via: 'previous'
     },
     image: {
       model: 'media'

@@ -15,12 +15,13 @@ module.exports = {
       query.skip = req.query.start;
     }
 
-    if(req.query._sort){
-      query[req.query._sort] = req.query._sortDir; // or 'asc'
-    }
+    //if(req.query._sort){
+    //  query[req.query._sort] = req.query._sortDir; // or 'asc'
+    //}
 
     User
       .find()
+      .where(query)
       .then(function(data){
         res.json(data);
       })
