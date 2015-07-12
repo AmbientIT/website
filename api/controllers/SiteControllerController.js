@@ -23,6 +23,7 @@ module.exports = {
       .find()
       .populate('formations')
       .then(function(result){
+        console.log(result)
         res.view('site/formations',{
           categories : result
         })

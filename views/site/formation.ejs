@@ -1,80 +1,67 @@
-<div class="bg">
-  <div class="banner">
-    <div class="container">
-      <div class="banner-info text-center">
-        <h1>
-          <%= formation.name %>
-        </h1>
-        <br/>
-        <span> </span>
+<article>
+  <section class="container" style="margin-top:50px;">
+    <div class="container-fluid">
+      <div class="row">
+        <section class="col-xs-12 col-md-8">
+          <%- formation.program %>
+        </section>
+        <aside class="col-xs-12 col-md-4">
+          <section class="well">
+            <p>
+              durée : <%= formation.duration %> jours
+            </p>
 
-        <p><%= formation.description %></p>
+            <p>
+              <%= formation.price %> € / participant
+            </p>
+          </section>
+          <section class="well">
+            <a href="/devis?formation=<% formation.slug %>" class="btn btn-default btn-block">Demande de devis</a>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum est nam odio quis? Dolorum error et fugiat
+              laudantium totam vero. Atque consequatur ea excepturi nisi nostrum repellendus sint totam velit.</p>
+
+          </section>
+          <section class="well">
+            Prérequis :
+            <ul class="media-list">
+              <% if(formation.previous){ %>
+              <% formation.previous.forEach(function(prev){ %>
+              <li class="media">
+                <div class="media-left">
+                  <img class="media-object" style="border-radius:30%;" height="40px"
+                       src="../images/formation/logo.jpg" alt="<%= prev.name %>">
+                </div>
+                <div class="media-body" style="padding-top:8px">
+                  <a href="/formation/<% prev.slug %>"><%= prev.name %></a>
+                </div>
+              </li>
+              <% })} %>
+            </ul>
+
+
+            <div class="list-group">
+
+            </div>
+          </section>
+          <section class="well">
+            Pour la suite ;) :
+            <ul class="media-list">
+              <% if(formation.next){formation.next.forEach(function(next){ %>
+              <li class="media">
+                <div class="media-left">
+                  <img class="media-object" style="border-radius:30%;" height="40px"
+                       src="../images/formation/logo.jpg" alt="<%= next.name %>">
+                </div>
+                <div class="media-body" style="padding-top:8px">
+                  <a href="/formation/<% next.slug %>"><%= next.name %></a>
+                </div>
+              </li>
+              <% })} %>
+            </ul>
+          </section>
+        </aside>
       </div>
     </div>
-  </div>
-</div>
-<section class="container" style="margin-top:50px;">
-  <div class="container-fluid">
-    <div class="row">
-      <section class="col-xs-12 col-md-8">
-        <%- formation.program %>
-      </section>
-      <aside class="col-xs-12 col-md-4">
-        <section class="well">
-          <p>
-            durée : <%= formation.duration %> jours
-          </p>
-
-          <p>
-            <%= formation.price %> € / participant
-          </p>
-        </section>
-        <section class="well">
-          <a href="/devis?formation=<% formation.slug %>" class="btn btn-default btn-block">Demande de devis</a>
-
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum est nam odio quis? Dolorum error et fugiat
-            laudantium totam vero. Atque consequatur ea excepturi nisi nostrum repellendus sint totam velit.</p>
-
-        </section>
-        <section class="well">
-          Prérequis :
-          <ul class="media-list">
-            <% if(formation.previous){ %>
-            <% formation.previous.forEach(function(prev){ %>
-            <li class="media">
-              <div class="media-left">
-                <img class="media-object" style="border-radius:30%;" height="40px"
-                     src="../images/formation/logo.jpg" alt="<%= prev.name %>">
-              </div>
-              <div class="media-body" style="padding-top:8px">
-                <a href="/formation/<% prev.slug %>"><%= prev.name %></a>
-              </div>
-            </li>
-            <% })} %>
-          </ul>
-
-
-          <div class="list-group">
-
-          </div>
-        </section>
-        <section class="well">
-          Pour la suite ;) :
-          <ul class="media-list">
-            <% if(formation.next){formation.next.forEach(function(next){ %>
-            <li class="media">
-              <div class="media-left">
-                <img class="media-object" style="border-radius:30%;" height="40px"
-                     src="../images/formation/logo.jpg" alt="<%= next.name %>">
-              </div>
-              <div class="media-body" style="padding-top:8px">
-                <a href="/formation/<% next.slug %>"><%= next.name %></a>
-              </div>
-            </li>
-            <% })} %>
-          </ul>
-        </section>
-      </aside>
-    </div>
-  </div>
-</section>
+  </section>
+</article>

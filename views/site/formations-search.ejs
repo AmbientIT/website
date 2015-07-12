@@ -1,22 +1,3 @@
-<div class="bg" style="height:350px;">
-  <div class="banner" style="position:relative;">
-    <div class="container">
-      <div class="banner-info text-center">
-        <h1>
-          Recherche de Formations
-        </h1>
-        <br/>
-        <span> </span>
-        <form id="search-form" class="form-inline" action="/formations/search" method="get" style="position:absolute; bottom:5px;right:100px;">
-          <div class="input-group">
-            <input type="search" placeholder="Que cherchez vous ?" name="q" class="form-control" >
-            <a href="javascript:{}" onclick="document.getElementById('search-form').submit();" class="btn input-group-addon" >Search</a>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
 <section class="container">
   <div class="row container-fluid" >
     <% if (formations.length === 0){ %>
