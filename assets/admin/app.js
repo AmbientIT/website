@@ -195,7 +195,7 @@
           nga.field('name'), // the default list field type is "string", and displays as a string
           nga.field('size'),
           nga.field('file','template')
-            .template('<admin-picture base64="{{ entry.values.file }}" height="100px"></admin-picture>')
+            .template('<admin-picture base64="{{ entry.values.file }}" height="50px"></admin-picture>')
 
       ])
         .listActions(['show', 'edit', 'delete']);
@@ -205,7 +205,7 @@
         .actions(['list', 'delete']) // choose which buttons appear in the top action bar. Show is disabled by default
         .fields([
           nga.field('file','file')
-            .uploadInformation({ 'url': 'http://localhost:1337/api/upload/media', 'fileFormDataName': 'file' })
+            .uploadInformation({ 'url': 'http://localhost:1337/api/upload/media?avatar=true', 'fileFormDataName': 'file' })
         ]);
 
       media.editionView()

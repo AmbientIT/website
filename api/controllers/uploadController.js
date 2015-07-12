@@ -13,21 +13,32 @@ module.exports = {
       if(err){
         return res.serverError(err);
       }
-      return fs.readFile(data[0].fd)
-        .then(function(file){
-          return Media.create({
-            file: file,
-            size: data[0].size,
-            type: data[0].type,
-            originalName: data[0].filename
+      if(req.query.avatar){
+        var size;
+        imageManip
+          .resizeAvatar(data[0])
+          .then(function(result){
+            console.log('eee',result);
+            size = result.size;
+            return imageManip
+              .toBase64(result.path);
           })
-        })
-        .then(function(media){
-          return res.json(media)
-        })
-        .catch(function(err){
-          return res.serverError(err);
-        })
+          .then(function(base64){
+            return Media
+              .create({
+                file: base64,
+                size: size,
+                type: data[0].type,
+                originalName: data[0].filename
+              })
+          })
+          .then(function(media){
+            res.json(media);
+          })
+          .catch(function(err){
+            res.serverError(err);
+          })
+      }
     })
   }
 };

@@ -22,7 +22,6 @@ module.exports = {
       .find()
       .populate('formations')
       .then(function(data){
-        console.log(data)
         res.json(data);
       })
       .catch(function(err){

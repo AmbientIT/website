@@ -25,6 +25,12 @@ module.exports = {
       pass: 'ambient4tw'
     },
     from: 'no-reply@ambient-it.net'
+  },
+  image: {
+    avatar: {
+      width: 60,
+      height: 60
+    }
   }
   // models: {
   //   connection: 'someMongodbServer'
