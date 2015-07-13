@@ -26,7 +26,7 @@ html, body{
     width: 100%;
   }
   img{
-    width: 350px;
+    width: 300px;
   }
   p {
     width: 100%;
@@ -34,17 +34,55 @@ html, body{
   }
 }
 
-@media screen and (min-width: 992px){
+.container {
+  width: 100%;
+  padding: 0 0;
+}
+
+@media screen and(min-width: 480px){
+  .container {
+    width:90%;
+  }
+  .banner-info{
+    img{
+      width: 420px;
+    }
+  }
+}
+
+@media screen and (min-width: 778px){
   .banner-info {
     img{
-      width: 800px;
+      width: 650px;
     }
     p {
       font-size: 1em;
     }
   }
-  .main-header{
-    height: 400px;
+  .container {
+    width: 80%;
   }
+}
 
+@media screen and (min-width: 992px){
+  .banner-info{
+    img{
+      width: 800px;
+    }
+  }
+  .main-header{
+    height: 300px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  img{
+    width: 1000px;
+  }
+  .container{
+    width:70%;
+  }
+  .main-header{
+    height: 450px;
+  }
 }

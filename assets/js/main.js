@@ -1,4 +1,4 @@
-(function (window, $) {
+(function (window, $, io) {
 	"use strict";
 
 	var MQL = 1170;
@@ -32,4 +32,5 @@
 
   $.material.init()
 
-}(window, window.jQuery));
+
+}(window, window.jQuery, window.io));

@@ -11,10 +11,40 @@
 var jwt = require('jwt-simple');
 var moment =require('moment');
 module.exports =  function (req, res, next) {
-  if (!req.headers.authorization) {
-    return res.forbidden('Please make sure your request has an Authorization header');
+  var token;
+  if (req.headers && req.headers.authorization) {
+
+    var parts = req.headers.authorization.split(' ');
+
+    if (parts.length == 2) {
+
+      var scheme = parts[0],
+        credentials = parts[1];
+
+      if (/^Bearer$/i.test(scheme)) {
+        token = credentials;
+      }
+
+    } else {
+      return res.json(401, {err: 'Format is Authorization: Bearer [token]'});
+    }
+
+  } else if (req.param('token')) {
+
+    token = req.param('token');
+    delete req.query.token;
+
   }
-  var token = req.headers.authorization.split(' ')[1];
+
+// If connection from socket
+  else if (req.socket && req.socket.handshake && req.socket.handshake.query && req.socket.handshake.query.token) {
+
+    token = req.socket.handshake.query.token;
+
+  } else {
+    sails.log(req.socket.handshake);
+    return res.json(401, {err: 'No Authorization header was found'});
+  }
 
   var payload = null;
   try {
@@ -28,5 +58,5 @@ module.exports =  function (req, res, next) {
     return res.forbidden('Token has expired');
   }
   req.user = payload.sub;
-  next();
+    return next();
 };

@@ -7,13 +7,15 @@
 
 module.exports = {
 	homePage: function(req,res){
-    Formation
-      .find({
-        home: true
-      })
-      .populate('image')
-      .then(function(result){
-        result.forEach(function(formation,index){
+    return Promise.all([
+      Formation
+        .find({
+          home: true
+        })
+        .populate('image'),
+      User.find()
+    ]).then(function(result){
+        result[0].forEach(function(formation,index){
           formation.image = 'data:image/png;base64,'+formation.image.file;
         });
         res.locals.layout = 'layouts/default';
@@ -21,7 +23,8 @@ module.exports = {
           content: {
             title: 'Centre de formation, Délégation de formateurs, conseil'
           },
-          formations : result
+          formations : result[0],
+          users : result[1]
         })
       })
   },
