@@ -38,7 +38,7 @@
   "scripts": {
     "debug": "nodemon debug app.js",
     "start": "nodemon app.js",
-    "afterInstall": "bower i"
+    "postinstall": "bower i"
   },
   "main": "app.js",
   "repository": {
