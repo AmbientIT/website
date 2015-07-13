@@ -1,17 +1,12 @@
+@import '_variables';
+
 html, body{
   font-size: 100%;
-  background: #FFf;
+  font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   width:100%;
   height:100%;
-  //overflow-x: hidden;
-  a{
-    transition:0.5s all;
-    -webkit-transition:0.5s all;
-    -moz-transition:0.5s all;
-    -o-transition:0.5s all;
-    -ms-transition:0.5s all;
-  }
+  background: @background1;
 }
 
 .main-header{
@@ -21,6 +16,7 @@ html, body{
 .banner-info {
   padding: 4em 0 3em;
   height:300px;
+  text-align: center;
   h2 {
     color: #c3bcbe;
     width: 100%;
@@ -34,12 +30,32 @@ html, body{
   }
 }
 
+.small-span{
+  width:25%;
+}
+
+.big-span{
+  width: 50%;
+}
+
+.sexy-span{
+  height:1px;
+  background:@mainColor;
+  display:inline-block;
+  //margin-top: 50px;
+}
+
 .container {
   width: 100%;
   padding: 0 0;
 }
 
-@media screen and(min-width: 480px){
+.row{
+  margin-right: 0;
+  margin-left: 0;
+}
+
+@media screen and(min-width: @xsBreackPoint){
   .container {
     width:90%;
   }
@@ -50,7 +66,7 @@ html, body{
   }
 }
 
-@media screen and (min-width: 778px){
+@media screen and (min-width: @smBreackPoint){
   .banner-info {
     img{
       width: 650px;
@@ -64,7 +80,7 @@ html, body{
   }
 }
 
-@media screen and (min-width: 992px){
+@media screen and (min-width: @mdBreackPoint){
   .banner-info{
     img{
       width: 800px;
@@ -75,9 +91,11 @@ html, body{
   }
 }
 
-@media screen and (min-width: 1200px) {
-  img{
-    width: 1000px;
+@media screen and (min-width: @lgBreakPoint) {
+  .banner-info{
+    img{
+      width: 1000px;
+    }
   }
   .container{
     width:70%;

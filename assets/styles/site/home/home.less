@@ -1,98 +1,68 @@
 @import "_variables";
 
-
-.service-head h2 {
-  font-size: 1.5em;
-  margin: 0.2em 0 0;
-}
-.services {
-  padding: 1em 0;
-}
-.services-grids {
-  padding: 1em 0;
-}
-.service-grid{
-  margin:0 0 1em 0;
+.services{
+  padding:3em 0;
   i{
-    font-size: 3em;
+    font-size: 5em;
+    opacity: 0.7;
   }
-  h3{
-    margin:0 0 0.3em 0;
-    a {
-      font-size: 0.8em;
+}
+
+
+.home-page-panel{
+  article{
+    padding: 1.5em 1.5em 1.5em 1.5em;
+    header{
+      h1{
+        font-weight: 900;
+        font-size: 1.4em;
+        color: #222222;
+        text-transform: uppercase;
+        margin: 0.3em 0 0.6em;
+      }
+    }
+    .brief{
+      font-weight: 400;
+      line-height: 1.1em;
+      color: #777777;
+      text-align: justify;
+      margin:1.5em  0em 0 0em;
+
     }
   }
-}
-
-.formations-left-grid {
-  padding: 1.5em 2em 1.5em 2em;
-}
-
-.formations-head h3 {
-  font-size: 1.3em;
-}
-
-.formations-left-inner-grids {
-  padding: 1em 0;
-}
-
-.formations-left-inner-grids {
-  padding: 1em 0;
-}
-
-.formations-left-grid {
-  padding: 1.5em 3em 1.5em 3em;
-}
-
-.developement-top-left {
-  padding: 1.5em 1em 1.5em 1em;
-  h3 {
-    font-size: 1.5em;
+  .img{
+    margin: 0;
+    padding: 0;
+    min-height: 656px;
   }
 }
 
-.developement-top-left-grid-right {
-  width: 82%;
-  h5 {
-    font-size: 1.1em;
-  }
-  p {
-    width: 100%;
-  }
-}
 
-.social{
-  h3 {
-    text-align: center;
-    font-size: 1.5em;
+.social-item{
+  height: 114px;
+  text-align: center;
+  i{
+    font-size: 5em;
+    color: black;
+    opacity: 0.8;
   }
-}
-
-.social-head-grid {
-  width: 100%;
-  float: none;
-  margin-right: 0;
-}
-
-.social-head {
-  p {
-    width: 80%;
-    margin: 0 auto;
+  img{
+    margin-top:15px;
+    width:70px;
+    height: 80px;
+    opacity: 0.8;
   }
 }
 
-@media (min-width:480px){
+
+
+
+
+@media screen and (min-width: @smBreackPoint){
   @import "home-sm";
 }
 
-@media screen and (min-width: 768px){
-  @import "home-md";
-}
 
-@media screen and (min-width: 992px){
-
-}
-
-@media screen and (min-width: 1200px){
+@media screen and (min-width: @lgBreakPoint){
   @import "home-lg";
 }

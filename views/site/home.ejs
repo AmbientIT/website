@@ -1,61 +1,176 @@
-<section class="services">
-  <div class="container">
-    <div class="service-head text-center">
-      <h3>Nos services</h3>
-      <span> </span>
-    </div>
-    <div class="services-grids text-center">
-      <div class="col-md-4">
-        <div class="service-grid wow bounceIn" data-wow-delay="0.4s">
-          <i class="ion-university"></i>
+<main>
+  <section class="services">
+    <article class="container">
+      <header class="text-center">
+        <h1>Nos services</h1>
+      </header>
+      <br/>
 
-          <h4><a href="#">Formation & Pédagogie</a></h4>
-
-          <p>Avec sa communauté d'experts, Ambient IT vous met à disposition son réseau de formateurs spécialisés dans
-            les nouvelles technologies</p>
-        </div>
+      <div class="text-center">
+        <span class="sexy-span big-span"> </span>
       </div>
-      <div class="col-md-4">
-        <div class="service-grid wow bounceIn" data-wow-delay="0.4s">
-          <i class="ion-cube"></i>
+      <div class="row text-center">
+        <div class="col-md-4">
+          <div class="service-grid wow bounceIn" data-wow-delay="0.4s">
+            <i class="ion-university"></i>
 
-          <h4><a href="#">Developpement d'application sur mesure</a></h4>
+            <h4><a href="/formations">Formation & Pédagogie</a></h4>
 
-          <p>Ambient IT vous propose une démarche rigoureuse et structurée afin de vous délivrer des sites ou
-            applications Internet & Mobiles</p>
+            <p>Avec sa communauté d'experts, Ambient IT vous met à disposition son réseau de formateurs spécialisés dans
+              les nouvelles technologies</p>
+          </div>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="service-grid wow bounceIn" data-wow-delay="0.4s">
-          <i class="ion-paintbrush"></i>
+        <div class="col-md-4">
+          <div class="service-grid wow bounceIn" data-wow-delay="0.4s">
+            <i class="ion-cube"></i>
 
-          <h4><a href="#">Design, WebDesign et Graphisme</a></h4>
+            <h4><a href="#">Developpement d'application sur mesure</a></h4>
 
-          <p>Ambient IT vous accompagne avec une offre de service centrée sur la communication visuelle</p>
+            <p>Ambient IT vous propose une démarche rigoureuse et structurée afin de vous délivrer des sites ou
+              applications Internet & Mobiles</p>
+          </div>
         </div>
+        <div class="col-md-4">
+          <div class="service-grid wow bounceIn" data-wow-delay="0.4s">
+            <i class="ion-paintbrush"></i>
+
+            <h4><a href="#">Design, WebDesign et Graphisme</a></h4>
+
+            <p>Ambient IT vous accompagne avec une offre de service centrée sur la communication visuelle</p>
+          </div>
+        </div>
+        <div class="clearfix"></div>
       </div>
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</section>
-<div class="clearfix"></div>
-<section id="port" class="formations">
-  <div class="formations-grids">
-    <div class="col-md-4 formations-right-grid wow fadeInLeft"
-         style="  margin: 0;padding: 0;background: url('images/expert.jpg') no-repeat 0px 0px;background-size: cover;min-height: 656px;"
-         data-wow-delay="0.4s">
-    </div>
-    <div class="col-md-8 formations-left-grid wow fadeInRight" data-wow-delay="0.4s">
-      <div class="formations-head">
-        <h3>Nos Formations</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi cum dolor dolorem doloremque harum ipsum,
-          magni non obcaecati optio perferendis quisquam quo repudiandae tempora! Deleniti ex facilis iusto laborum
-          voluptas?
+    </article>
+  </section>
+  <section class="home-page-panel row">
+    <article class="wow fadeInLeft col-md-8" data-wow-delay="0.4s">
+      <header>
+        <img class="media-object" src="/images/logo/logos web-06.png" alt="Ambient-it logo"/>
+
+        <p class="brief">
+          Créée en 2015, par 3 associés issus du monde du numérique, avec l’objectif de répondre aux besoins
+          croissants
+          des entreprises dans les technologies de demain.
+          Ambient IT est une société de consulting spécialisée dans les nouvelles technologies. Afin de répondre
+          efficacement à la demande du marché, nous avons constitué un réseau qualifié de collaborateurs,
+          d’ingénieurs,
+          de développeurs et de graphistes, dans le but de fournir un service qui conjugue réactivité et qualité.
         </p>
+      </header>
+      <br/>
+
+      <div class="text-center">
+        <span class="sexy-span big-span"></span>
       </div>
       <div class="row">
-        <div class="col-md-5">
+        <h2>L'équipe</h2>
+
+        <div class="col-xs-12 col-sm-6">
+          <h3>Fondateurs associés</h3>
+
+          <div class="list-group">
+            <% users.forEach(function(user){ %>
+            <div class="list-group-item">
+              <div class="row-picture">
+                <img class="circle" src="<%= user.picture %>" alt="<%= user.name %>">
+              </div>
+              <div class="row-content">
+                <h4 class="list-group-item-heading">
+                  <%= user.displayName %>
+                </h4>
+
+                <p class="list-group-item-text">
+                  <%= user.description %>
+                </p>
+              </div>
+            </div>
+            <div class="list-group-separator"></div>
+            <% }) %>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <h3>Graphistes</h3>
+
+          <div class="list-group">
+            <div class="list-group-item">
+              <div class="row-picture">
+                <img class="circle"
+                     src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg?sz=50"
+                     alt="">
+              </div>
+              <div class="row-content">
+                <h4 class="list-group-item-heading">
+                  Téa DAPAS
+                </h4>
+
+                <p class="list-group-item-text">
+                  Freelance, Graphiste
+                </p>
+              </div>
+            </div>
+            <div class="list-group-separator"></div>
+            <div class="list-group-item">
+              <div class="row-picture">
+                <img class="circle"
+                     src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg?sz=50"
+                     alt="">
+              </div>
+              <div class="row-content">
+                <h4 class="list-group-item-heading">
+                  Elsa SURIEUX
+                </h4>
+
+                <p class="list-group-item-text">
+                  Freelance, Graphiste
+                </p>
+              </div>
+            </div>
+            <div class="list-group-separator"></div>
+          </div>
+        </div>
+      </div>
+    </article>
+    <div class="col-md-4 well wow fadeInRight img hidden-sm hidden-xs" data-wow-delay="0.4s"
+         style="background: url(images/port-right-divice.png) no-repeat 0px 0px;background-size: cover;">
+    </div>
+    <div class="clearfix"></div>
+  </section>
+  <section class="home-page-panel row">
+    <div class="col-md-4 wow fadeInLeft img well"
+         style="background: url(images/expert.jpg) no-repeat 0px 0px;background-size: cover;"
+         data-wow-delay="0.4s">
+    </div>
+    <article class="col-md-8 wow fadeInRight" data-wow-delay="0.4s">
+      <header>
+        <h1>Formations et pédagogie</h1>
+
+        <p class="brief">
+          Animation de formation intra ou inter-entreprises.
+          <br/>
+          Tous nos supports, example et exercices sont maintenus à
+          jour réguliérement et avec le plus grand soin.
+          <br/>
+          Nos formateurs sont des professionnels aguerri, qui travaillent généralement en tant que freelances.
+          <br/>
+          De plus ils ont tous une longue experience de la formation, ils ont en effet animer des formations pour des grands groupes de formations.
+        </p>
+      </header>
+      <br/>
+
+      <div class="text-center">
+        <span class="sexy-span big-span"></span>
+      </div>
+      <div class="row">
+        <h2 style="font-size:0.8em; font-weight: normal; ">
+          <i>Formation éligible au dif, renseignez vous auprés de votre R.H.</i>
+        </h2>
+
+        <div class="col-sm-6 col-xs-12">
+          <h3>
+            Nos Formations :
+          </h3>
+
           <div class="list-group">
             <% formations.forEach(function(formation){ %>
             <div class="list-group-item">
@@ -69,6 +184,7 @@
                     <%= formation.name %>
                   </h4>
                 </a>
+
                 <p class="list-group-item-text">
                   <%= formation.description %>
                 </p>
@@ -77,112 +193,60 @@
             <% }) %>
           </div>
         </div>
-        <div class="col-xs-12 col-md-7">
-          ici bientot, un superbe carousel avec des photos de nos formations
-        </div>
-      </div>
-    </div>
-    <div class="clearfix"></div>
-  </div>
-</section>
-<section class="developement">
-  <article class="developement-top">
-    <div class="col-md-8">
-      <div class="developement-top-left wow fadeInLeft" data-wow-delay="0.4s">
-        <header>
-          <h1>Ambient IT</h1>
-          <p>
-            Créée en 2015, par 3 associés issus du monde du numérique, avec l’objectif de répondre aux besoins croissants
-            des entreprises dans les technologies de demain.
-            Ambient IT est une société de consulting spécialisée dans les nouvelles technologies. Afin de répondre
-            efficacement à la demande du marché, nous avons constitué un réseau qualifié de collaborateurs, d’ingénieurs,
-            de développeurs et de graphistes, dans le but de fournir un service qui conjugue réactivité et qualité.
-          </p>
-        </header>
-        <div class="row">
-          <h2>L'équipe</h2>
-          <div class="col-xs-12 col-md-6">
-            <h3>Fondateurs associés</h3>
-            <div class="list-group">
-              <% users.forEach(function(user){ %>
-              <div class="list-group-item">
-                <div class="row-picture">
-                  <img class="circle" src="<%= user.picture %>"  alt="<%= user.name %>">
-                </div>
-                <div class="row-content">
-                  <h5 class="list-group-item-heading">
-                    <%= user.displayName %>
-                  </h5>
-                  <p class="list-group-item-text">
-                    <%= user.description %>
-                  </p>
-                </div>
-              </div>
-              <div class="list-group-separator"></div>
-              <% }) %>
-            </div>
-          </div>
-          <div class="col-xs-12 col-md-6">
-            <h3>Graphistes</h3>
-            <div class="list-group">
-              <div class="list-group-item">
-                <div class="row-picture">
-                  <img class="circle" src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg?sz=50"  alt="">
-                </div>
-                <div class="row-content">
-                  <h5 class="list-group-item-heading">
-                    <%= user.displayName %>
-                  </h5>
-                  <p class="list-group-item-text">
-                    <%= user.description %>
-                  </p>
-                </div>
-              </div>
-              <div class="list-group-separator"></div>
-            </div>
-          </div>
-        </div>
-        <!--<div class="developement-top-left-grids">-->
-        <!--<div class="developement-top-left-grid">-->
-        <!--<div class="developement-top-left-grid-left" style="font-size:2em">-->
-        <!--<i class="{{ article.icon }}"></i>-->
-        <!--</div>-->
-        <!--<div class="developement-top-left-grid-right">-->
-        <!--<h5>aaaaaaaa</h5>-->
-        <!--Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda consectetur ducimus fugit molestiae possimus quod vero? Aliquid, atque autem blanditiis, iste laboriosam laborum non perspiciatis provident quaerat quia rerum sit!-->
-        <!--</div>-->
-        <!--<div class="clearfix"> </div>-->
-        <!--</div>-->
-        <!--<div class="developement-top-left-grid">-->
-        <!--<div class="developement-top-left-grid-left" style="font-size:2em">-->
-        <!--<i class="{{ article.icon }}"></i>-->
-        <!--</div>-->
-        <!--<div class="developement-top-left-grid-right">-->
-        <!--<h5>zzzzzzzzzzz</h5>-->
-        <!--Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus accusantium adipisci aliquam aperiam assumenda consequuntur cumque doloribus ducimus eaque, enim eveniet explicabo fugiat iusto molestias non odio porro saepe temporibus.-->
-        <!--</div>-->
-        <!--<div class="clearfix"> </div>-->
-        <!--</div>-->
-        <!--</div>-->
-      </div>
-    </div>
-    <div class="col-md-4  wow fadeInRight" data-wow-delay="0.4s"
-         style="  margin: 0;padding: 0;background: url(images/port-right-divice.png) no-repeat 0px 0px;background-size: cover;min-height: 656px;">
+        <div class="col-xs-12 col-sm-6 col-xs-12">
+          <h3>
+            Notre équipe de formateurs:
+          </h3>
 
+          <div class="list-group">
+            <% formations.forEach(function(formation){ %>
+            <div class="list-group-item">
+              <div class="row-picture">
+                <img class="circle" src="<%= formation.image || '/images/formation/logo.jpg' %>"
+                     alt="<%= formation.name %> logo">
+              </div>
+              <div class="row-content">
+                <a href="/formation/<%= formation.slug %>">
+                  <h4 class="list-group-item-heading">
+                    <%= formation.name %>
+                  </h4>
+                </a>
+
+                <p class="list-group-item-text">
+                  <%= formation.description %>
+                </p>
+              </div>
+            </div>
+            <% }) %>
+          </div>
+        </div>
+      </div>
+    </article>
+    <div class="clearfix"></div>
+  </section>
+</main>
+<footer class="social text-center">
+  <h3>
+    Vous pouvez nous retrouver sur :
+  </h3>
+  <br/>
+  <span class="sexy-span big-span"></span>
+  <br/>
+  <div class="row">
+    <div class="social-item wow fadeInLeft col-xs-4" data-wow-delay="0.4s">
+      <a href="https://github.com/AmbientIT" target="_blank">
+        <i class="ion-social-github"></i>
+      </a>
     </div>
-  </article>
-</section>
-<div class="social">
-<div class="social-head-grids">
-<div class="social-head-grid wow fadeInLeft" data-wow-delay="0.4s">
-<i class="ion-social-github"></i>
-</div>
-<div class="social-head-grid wow fadeInUp" data-wow-delay="0.4s">
-<i class="ion-social-googleplus"></i>
-</div>
-<div class="social-head-grid wow fadeInRight" data-wow-delay="0.4s">
-<i class="ion-social-linkedin"></i>
-</div>
-<div class="clearfix"> </div>
-</div>
-</div>
+    <div class="social-item wow fadeInUp col-xs-4" data-wow-delay="0.4s">
+      <a href="https://github.com/AmbientIT" target="_blank">
+        <i class="ion-social-googleplus"></i>
+      </a>
+    </div>
+    <div class="social-item wow fadeInRight col-xs-4" data-wow-delay="0.4s">
+      <a href="http://codepen.io/Ambient-IT/" target="_blank">
+        <img src="images/svg/codepen-logo.svg"/>
+      </a>
+    </div>
+  </div>
+</footer>
