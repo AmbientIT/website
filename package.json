@@ -36,9 +36,9 @@
     "underscore": "^1.8.3"
   },
   "scripts": {
-    "debug": "node debug app.js",
-    "start": "node app.js",
-    "afterInstall": "bower i"
+    "debug": "nodemon debug app.js",
+    "start": "nodemon app.js",
+    "postinstall": "bower i"
   },
   "main": "app.js",
   "repository": {
