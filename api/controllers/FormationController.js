@@ -19,9 +19,10 @@ module.exports = {
           Formation.count()
         ])
           .then(function(results) {
-            res.set('X-Total-Count',results[1])
-            res.json(results[0]);
+            res.set('X-Total-Count',results[1]);
+            return res.json(results[0]);
           })
+        .catch(res.serverError);
     }
 
     return Formation
@@ -34,11 +35,9 @@ module.exports = {
         result.forEach(function(formation){
           formation.image = 'data:image/png;base64,'+formation.image.file;
         });
-        res.json(result);
+        return res.json(result);
       })
-      .catch(function(err){
-        console.log(err);
-      })
+      .catch(res.serverError);
   }
 };
 

@@ -42,6 +42,10 @@ module.exports = {
       collection: 'formation',
       via: 'previous'
     },
+    trainer: {
+      collection: 'trainer',
+      via: 'formations'
+    },
     image: {
       model: 'media'
     },

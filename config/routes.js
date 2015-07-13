@@ -61,10 +61,6 @@ module.exports.routes = {
     controller: 'Site',
     action: 'formationsPage'
   },
-  '/formations/search': {
-    controller: 'Site',
-    action: 'formationSearch'
-  },
   '/formation/:slug': {
     controller: 'Site',
     action: 'formationPage'
@@ -108,6 +104,14 @@ module.exports.routes = {
   'get /api/formation': {
     controller: 'Formation',
     action: 'find'
+  },
+  'get /api/trainer': {
+    controller: 'Trainer',
+    action: 'find'
+  },
+  'get /api/trainer/:id': {
+    controller: 'Trainer',
+    action: 'findOne'
   }
 
 };

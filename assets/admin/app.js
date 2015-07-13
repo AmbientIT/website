@@ -111,16 +111,80 @@
       var media = nga.entity('media')
         .identifier(nga.field('id'));
 
+      var trainer = nga.entity('trainer')
+        .identifier(nga.field('id'));
+
       // set the application entities
       admin
         .addEntity(contact)
         .addEntity(user)
         .addEntity(category)
         .addEntity(formation)
+        .addEntity(trainer)
         .addEntity(media);
 
       //// customize entities and views
       //
+
+      trainer.dashboardView()
+        .title('formateurs')
+        .fields([
+          nga.field('displayName'),
+          nga.field('email'),
+          nga.field('formations','template')
+            .template('<admin-relation-repeter data="entry.values.formations" entity-name="formation"></admin-relation-repeter>'),
+          nga.field('price', 'number').format('€0,0.00')
+        ]);
+
+      trainer.listView()
+        .title('Formateurs')
+        .fields([
+          trainer.dashboardView().fields()
+        ])
+        .listActions(['show', 'edit', 'delete']);
+
+      trainer.creationView()
+        .title('Ajout d\'un nouveau formateur')
+        .fields([
+          nga.field('user', 'reference')
+            .label('associé à un compte ambient-it ?')
+            .map(truncate)
+            .targetEntity(user)
+            .targetField(nga.field('displayName')),
+          nga.field('firstName')
+            .label('Prénom')
+            .attributes({placeholder: 'le prénom du formateur'})
+            .validation({ minlength: 2, maxlength:30}),
+          nga.field('lastName')
+            .label('Prénom')
+            .attributes({placeholder: 'le prénom du formateur'})
+            .validation({ minlength: 2, maxlength:30}),
+          nga.field('email')
+            .label('email')
+            .attributes({placeholder: 'l\'email du formateur'})
+            .validation({ email: true}),
+          nga.field('formations','reference_many')
+            .label('formations')
+            .isDetailLink(true)
+            .targetEntity(formation) // Targeted entity
+            .targetField(nga.field('name')),
+          nga.field('price', 'number')
+            .label('prix')
+            .attributes({placeholder: 'le tarif journalier du formateur'})
+            .validation({number: true})
+            .format('€0,0.00'),
+          nga.field('extrenal', 'boolean')
+            .label('est une resource externe ?'),
+          nga.field('home', 'boolean')
+            .label('affiché en home ? (4 max)')
+        ]);
+
+      trainer.editionView()
+        .title('Edition du formateur "{{ entry.values.displayName }}"')
+        .actions(['list', 'delete'])
+        .fields([
+          trainer.creationView().fields()
+        ]);
 
       media.dashboardView()
         .title('derniers uploads')
@@ -383,6 +447,7 @@
 
       admin.menu(nga.menu()
           .addChild(nga.menu(contact).icon('<span class="glyphicon glyphicon-message-full"></span>')) // you can even use utf-8 symbols!
+          .addChild(nga.menu(trainer).icon('<span class="glyphicon glyphicon-message-full"></span>')) // you can even use utf-8 symbols!
           .addChild(nga.menu(user).icon('<span class="glyphicon glyphicon-user"></span>')) // you can even use utf-8 symbols!
           .addChild(nga.menu(category).icon('<span class="glyphicon glyphicon-file"></span>')) // customize the entity menu icon
           .addChild(nga.menu(formation).icon('<strong style="font-size:1.3em;line-height:1em">✉</strong>')) // you can even use utf-8 symbols!

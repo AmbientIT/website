@@ -19,26 +19,22 @@ module.exports = {
         ])
         .then(function(results) {
           res.set('X-Total-Count',results[1])
-          res.json(results[0]);
+          return res.json(results[0]);
         })
         .catch(res.serverError)
     }
 
     return User
       .find(req.query)
-      .then(function(result){
-        res.json(result);
-      })
+      .then(res.json)
       .catch(res.serverError)
   },
   me: function(req, res){
     res.json(req.user);
   },
   googleAuth: function(req,res){
-
     googleAuth.getProfileInfo(req.body.code,req.body.clientId,req.body.redirectUri)
       .then(function(profile) {
-        console.log(profile);
         if (req.headers.authorization) {
           User.findOne({ google: profile.sub })
             .then(function(existingUser) {
@@ -46,7 +42,12 @@ module.exports = {
                 return res.status(409).send({ message: 'There is already a Google account that belongs to you' });
               }
               var token = req.headers.authorization.split(' ')[1];
-              var payload = jwt.decode(token, sails.config.TOKEN_SECRET);
+              try{
+                var payload = jwt.decode(token, sails.config.TOKEN_SECRET);
+              }catch(e){
+                return res.serverError(e);
+              }
+
               return User.findOne({id:payload.sub})
             })
             .then(function(user) {
@@ -87,9 +88,7 @@ module.exports = {
             })
         }
       })
-      .catch(function(err){
-        res.forbidden(err.message);
-      })
+      .catch(res.forbidden)
   }
 };
 

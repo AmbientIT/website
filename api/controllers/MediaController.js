@@ -19,18 +19,16 @@ module.exports = {
         ])
         .then(function(results) {
           res.set('X-Total-Count',results[1])
-          res.json(results[0]);
+          return res.json(results[0]);
         })
     }
 
     return Media
       .find(req.query)
       .then(function(result){
-        res.json(result);
+        return res.json(result);
       })
-      .catch(function(err){
-        console.log(err);
-      })
+      .catch(res.serverError);
   },
   base64AndCreate : function(req,res){
     req.file('file').upload(function(err,data){
@@ -39,7 +37,7 @@ module.exports = {
       }
       if(req.query.avatar){
         var size;
-        imageManip
+        return imageManip
           .resizeAvatar(data[0])
           .then(function(result){
             size = result.size;
@@ -55,12 +53,8 @@ module.exports = {
                 originalName: data[0].filename
               })
           })
-          .then(function(media){
-            res.json(media);
-          })
-          .catch(function(err){
-            res.serverError(err);
-          })
+          .then(res.json)
+          .catch(res.serverError)
       }
     })
   }

@@ -16,18 +16,14 @@ module.exports = {
           Contact.count()
         ])
         .then(function(results) {
-          res.set('X-Total-Count',results[1])
-          res.json(results[0]);
+          res.set('X-Total-Count',results[1]);
+          return res.json(results[0]);
         })
     }
 
     return Contact
       .find(req.query)
-      .then(function(result){
-        res.json(result);
-      })
-      .catch(function(err){
-        console.log(err);
-      })
+      .then(res.json)
+      .catch(res.serverError);
   }
 };

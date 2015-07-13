@@ -14,12 +14,13 @@ module.exports = {
         })
         .populate('image'),
       User.find()
-    ]).then(function(result){
-        result[0].forEach(function(formation,index){
+    ])
+      .then(function(result){
+        result[0].forEach(function(formation){
           formation.image = 'data:image/png;base64,'+formation.image.file;
         });
         res.locals.layout = 'layouts/default';
-        res.view('site/home',{
+        return res.view('site/home',{
           content: {
             title: 'Centre de formation, Délégation de formateurs, conseil'
           },
@@ -27,9 +28,10 @@ module.exports = {
           users : result[1]
         })
       })
+      .catch(res.serverError);
   },
   formationsPage: function(req,res) {
-    Formation
+    return Formation
       .find()
       .populate('category')
       .populate('image')
@@ -49,26 +51,17 @@ module.exports = {
             }
           });
         });
-        res.view('site/formations',{
+        return res.view('site/formations',{
           content: {
             title: 'Nos formations'
           },
           categories : categories
         })
       })
-  },
-  formationSearch: function(req, res){
-    Formation
-      .countAndSearch(req.query.q)
-      .then(function(result){
-        res.view('site/formations-search',{
-          title: 'Resultats de la recherche',
-          formations : result.data
-        })
-      });
+      .catch(res.serverError);
   },
   formationPage: function(req,res){
-    Formation
+    return Formation
       .findOne({slug : req.params.slug})
       .populate('category')
       .populate('image')
@@ -84,7 +77,7 @@ module.exports = {
         result.next.forEach(function(formation){
           nextPromises.push(Formation.findOne({id:formation.id}).populate('image'))
         });
-        Promise
+        return Promise
           .all([Promise.all(previousPromise),Promise.all(nextPromises)])
           .then(function(data){
             result.previous = data[0];
@@ -98,7 +91,7 @@ module.exports = {
               formation.image = 'data:image/png;base64,' + formation.image.file;
             });
 
-            res.view('site/formation',{
+            return res.view('site/formation',{
               content: {
                 title: result.name
               },
@@ -106,6 +99,7 @@ module.exports = {
             })
           });
       })
+      .catch(res.serverError)
   }
 };
 
