@@ -5,29 +5,64 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
+var fs = require('fs-promise');
 
 module.exports = {
-  find: function(req, res) {
-    var query = {};
-
-    if (req.query._end && req.query._start) {
-      query.limit = req.query._end;
-      query.skip = req.query.start;
+  find: function(req, res){
+    if(req.query._page){
+      return Promise
+        .all([
+          Media
+            .find()
+            .paginate({page: req.query._page , limit: req.query._perPage }),
+          Media.count()
+        ])
+        .then(function(results) {
+          res.set('X-Total-Count',results[1])
+          res.json(results[0]);
+        })
     }
-    //
-    //if (req.query._sort) {
-    //  query[req.query._sort] = req.query._sortDir; // or 'asc'
-    //}
 
-    Media
-      .find()
-      .where(query)
-      .then(function (data) {
-        res.json(data);
+    return Media
+      .find(req.query)
+      .then(function(result){
+        res.json(result);
       })
-      .catch(function (err) {
-        res.status(400).json(err);
+      .catch(function(err){
+        console.log(err);
       })
+  },
+  base64AndCreate : function(req,res){
+    req.file('file').upload(function(err,data){
+      if(err){
+        return res.serverError(err);
+      }
+      if(req.query.avatar){
+        var size;
+        imageManip
+          .resizeAvatar(data[0])
+          .then(function(result){
+            size = result.size;
+            return imageManip
+              .toBase64(result.path);
+          })
+          .then(function(base64){
+            return Media
+              .create({
+                file: base64,
+                size: size,
+                type: data[0].type,
+                originalName: data[0].filename
+              })
+          })
+          .then(function(media){
+            res.json(media);
+          })
+          .catch(function(err){
+            res.serverError(err);
+          })
+      }
+    })
   }
 };
 

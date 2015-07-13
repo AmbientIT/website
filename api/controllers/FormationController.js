@@ -7,24 +7,33 @@
 
 module.exports = {
   find: function(req, res){
-    var query = {};
-
-    if(req.query._end && req.query._start){
-      query.limit = req.query._end;
-      query.skip = req.query.start;
+    if(req.query._page){
+      return Promise
+        .all([
+          Formation
+            .find()
+            .paginate({page: req.query._page , limit: req.query._perPage })
+            .populate('image')
+            .populate('next')
+            .populate('previous'),
+          Formation.count()
+        ])
+          .then(function(results) {
+            res.set('X-Total-Count',results[1])
+            res.json(results[0]);
+          })
     }
 
-    //if(req.query._sort){
-    //  query[req.query._sort] = req.query._sortDir; // or 'asc'
-    //}
-
-    Formation
-      .find()
-      .where(query)
+    return Formation
+      .find(req.query)
+      .populate('category')
       .populate('next')
       .populate('previous')
       .populate('image')
       .then(function(result){
+        result.forEach(function(formation){
+          formation.image = 'data:image/png;base64,'+formation.image.file;
+        });
         res.json(result);
       })
       .catch(function(err){

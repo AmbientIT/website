@@ -19,56 +19,69 @@
           <section class="well">
             <a href="/contact?formation=<% formation.slug %>" class="btn btn-primary btn-block">Demande de devis</a>
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum est nam odio quis? Dolorum error et fugiat
-              laudantium totam vero. Atque consequatur ea excepturi nisi nostrum repellendus sint totam velit.</p>
+            <p>
+              <%= formation.description %>
+            </p>
 
           </section>
-          <section class="well">
-            Prérequis :
-            <div class="list-group">
-              <% formation.previous.forEach(function(formation){ %>
-              <div class="list-group-item">
-                <div class="row-picture">
-                  <img class="circle" src="<%= formation.image || '/images/formation/logo.jpg' %>"  alt="<%= formation.name %> logo">
-                </div>
-                <div class="row-content">
-                  <a href="/formation/<%= formation.slug %>">
-                    <h4 class="list-group-item-heading">
-                      <%= formation.name %>
-                    </h4>
-                  </a>
-                  <p class="list-group-item-text">
-                    <%= formation.description %>
-                  </p>
-                </div>
-              </div>
-              <div class="list-group-separator"></div>
-              <% }) %>
+          <% if(formation.previous.length > 0) { %>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Prérequis :</h3>
             </div>
-          </section>
-          <section class="well">
-            Pour la suite :
-            <div class="list-group">
-              <% formation.next.forEach(function(formation){ %>
-              <div class="list-group-item">
-                <div class="row-picture">
-                  <img class="circle" src="<%= formation.image || '/images/formation/logo.jpg' %>"  alt="<%= formation.name %> logo">
+            <div class="panel-body">
+              <div class="list-group">
+                <% formation.previous.forEach(function(formation){ %>
+                <div class="list-group-item">
+                  <div class="row-picture">
+                    <img class="circle" src="<%= formation.image || '/images/formation/logo.jpg' %>"  alt="<%= formation.name %> logo">
+                  </div>
+                  <div class="row-content">
+                    <a href="/formation/<%= formation.slug %>">
+                      <h4 class="list-group-item-heading">
+                        <%= formation.name %>
+                      </h4>
+                    </a>
+                    <p class="list-group-item-text">
+                      <%= formation.description %>
+                    </p>
+                  </div>
                 </div>
-                <div class="row-content">
-                  <a href="/formation/<%= formation.slug %>">
-                    <h4 class="list-group-item-heading">
-                      <%= formation.name %>
-                    </h4>
-                  </a>
-                  <p class="list-group-item-text">
-                    <%= formation.description %>
-                  </p>
-                </div>
+                <div class="list-group-separator"></div>
+                <% }) %>
               </div>
-              <div class="list-group-separator"></div>
-              <% }) %>
             </div>
-          </section>
+          </div>
+          <% } %>
+          <% if (formation.next.length > 0) { %>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Pour la suite :</h3>
+            </div>
+            <div class="panel-body">
+              <div class="list-group">
+                <% formation.next.forEach(function(formation){ %>
+                <div class="list-group-item">
+                  <div class="row-picture">
+                    <img class="circle" src="<%= formation.image || '/images/formation/logo.jpg' %>"  alt="<%= formation.name %> logo">
+                  </div>
+                  <div class="row-content">
+                    <a href="/formation/<%= formation.slug %>">
+                      <h4 class="list-group-item-heading">
+                        <%= formation.name %>
+                      </h4>
+                    </a>
+                    <p class="list-group-item-text">
+                      <%= formation.description %>
+                    </p>
+                  </div>
+                </div>
+                <div class="list-group-separator"></div>
+                <% }) %>
+              </div>
+            </div>
+          </div>
+          <% } %>
         </aside>
       </div>
     </div>

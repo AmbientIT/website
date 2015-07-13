@@ -72,7 +72,6 @@ module.exports = {
       .populate('next')
       .populate('previous')
       .then(function(result){
-        //console.log(result);
         result.image = 'data:image/png;base64,' + result.image.file;
         var nextPromises = [];
         var previousPromise = [];
@@ -96,7 +95,6 @@ module.exports = {
               formation.image = 'data:image/png;base64,' + formation.image.file;
             });
 
-            console.log(result)
             res.view('site/formation',{
               content: {
                 title: result.name

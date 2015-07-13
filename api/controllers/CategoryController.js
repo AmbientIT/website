@@ -7,27 +7,28 @@
 
 module.exports = {
   find: function(req, res){
-    var query = {};
-
-
-    if(req.query._end && req.query._start){
-      query.limit = req.query._end;
-      query.skip = req.query.start;
+    if(req.query._page){
+      return Promise
+        .all([
+          Category
+            .find()
+            .paginate({page: req.query._page , limit: req.query._perPage }),
+          Category.count()
+        ])
+        .then(function(results) {
+          res.set('X-Total-Count',results[1])
+          res.json(results[0]);
+        })
     }
-    //
-    //if(req.query._sort){
-    //  query[req.query._sort] = req.query._sortDir; // or 'asc'
-    //}
 
-    Category
-    .find()
-      .where(query)
-      .then(function(data){
-      res.json(data);
-    })
-    .catch(function(err){
-      console.log(err);
-    })
+    return Category
+      .find(req.query)
+      .then(function(result){
+        res.json(result);
+      })
+      .catch(function(err){
+        console.log(err);
+      })
   }
 };
 

@@ -34,9 +34,6 @@ module.exports.policies = {
    * and its actions                                                          *
    *                                                                          *
    ***************************************************************************/
-  AuthController: {
-    me: 'auth'
-  },
   FormationController: {
     '*': 'auth',
     'find': true
@@ -46,6 +43,7 @@ module.exports.policies = {
   },
   UserController: {
     '*': 'auth',
+    'me': 'auth',
     'update': 'owner',
     'remove': 'admin'
   }

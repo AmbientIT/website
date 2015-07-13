@@ -94,28 +94,20 @@ module.exports.routes = {
   ////////
 
   'post /auth/google': {
-    controller: 'auth',
-    action: 'google'
+    controller: 'User',
+    action: 'googleAuth'
   },
   'get /api/me': {
-    controller: 'auth',
+    controller: 'User',
     action: 'me'
   },
-  'get /api/category': {
-    controller: 'Category',
-    action: 'find'
+  'post /api/upload/media': {
+    controller: 'Media',
+    action: 'base64AndCreate'
   },
   'get /api/formation': {
     controller: 'Formation',
     action: 'find'
-  },
-  'get /api/media': {
-    controller: 'Media',
-    action: 'find'
-  },
-  'post /api/upload/media': {
-    controller: 'upload',
-    action: 'base64AndCreateMedia'
   }
 
 };
