@@ -44,7 +44,6 @@ module.exports.policies = {
   UserController: {
     '*': 'auth',
     'me': 'auth',
-    'update': 'owner',
     'remove': 'admin'
   }
 };

@@ -13,7 +13,6 @@
     })
 
     .controller('LoginController', function($auth,$location){
-      var ctrl = this;
       if($auth.isAuthenticated()){
         $location.path('/dashboard')
       }
@@ -86,31 +85,12 @@
       }
 
       // use the custom query parameters function to format the API request correctly
-      RestangularProvider.addFullRequestInterceptor(function (element, operation, what, url, headers, params) {
-        if (operation == "getList") {
-          // custom pagination params
-          //if (params._page) {
-          //  params.skip = (params._page - 1) * params._perPage;
-          //  params.limit = params._page * params._perPage;
-          //}
-          //delete params._page;
-          //delete params._perPage;
-          //// custom sort params
-          ////if (params._sortField) {
-          ////  params._sort = params._sortField;
-          //  delete params._sortField;
-          //delete params._sortDir;
-          //}
-          // custom filters
-          //if (params._filters) {
-          //  for (var filter in params._filters) {
-          //    params[filter] = params._filters[filter];
-          //  }
-          //  delete params._filters;
-          //}
-        }
-        return {params: params};
-      });
+      //RestangularProvider.addFullRequestInterceptor(function (element, operation, what, url, headers, params) {
+      //  if (operation == "getList") {
+      //
+      //  }
+      //  return {params: params};
+      //});
 
       var admin = nga.application('AmbientIT Back-Office') // application main title
         .baseApiUrl('http://localhost:1337/api/'); // main API endpoint
@@ -231,12 +211,6 @@
             .template('<admin-picture base64="{{ entry.values.file }}" height="400px"></admin-picture>')
         ]);
 
-      user.editionView()
-        .title('Edit user "{{ entry.values.name }}"') // title() accepts a template string, which has access to the entry
-        .actions(['list', 'delete']) // choose which buttons appear in the top action bar. Show is disabled by default
-        .fields([
-          user.listView().fields()// fields() without arguments returns the list of fields. That way you can reuse fields from another view to avoid repetition
-        ]);
 
       user.listView()
         .title('All user') // default title is "[Entity_name] list"
@@ -254,14 +228,14 @@
         .title('Edit user "{{ entry.values.name }}"') // title() accepts a template string, which has access to the entry
         .actions(['list', 'delete']) // choose which buttons appear in the top action bar. Show is disabled by default
         .fields([
-          user.listView().fields()// fields() without arguments returns the list of fields. That way you can reuse fields from another view to avoid repetition
+          user.listView().fields(),
+          nga.field('description', 'text')// fields() without arguments returns the list of fields. That way you can reuse fields from another view to avoid repetition
         ]);
 
       category.showView() // a showView displays one entry in full page - allows to display more data than in a a list
         .fields([
           category.editionView().fields(), // reuse fields from another view in another order
-          nga.field('slug')
-            .label('slug')
+
         ]);
 
       category.listView()
