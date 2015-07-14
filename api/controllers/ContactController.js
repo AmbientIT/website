@@ -12,6 +12,7 @@ module.exports = {
         .all([
           Contact
             .find()
+            .populate('formations')
             .paginate({page: req.query._page , limit: req.query._perPage }),
           Contact.count()
         ])

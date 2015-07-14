@@ -12,6 +12,7 @@ module.exports = {
         .all([
           Category
             .find()
+            .populate('formations')
             .paginate({page: req.query._page , limit: req.query._perPage }),
           Category.count()
         ])
@@ -24,6 +25,7 @@ module.exports = {
 
     return Category
       .find(req.query)
+      .populate('formations')
       .then(res.json)
       .catch(res.serverError);
   }

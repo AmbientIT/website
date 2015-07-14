@@ -12,10 +12,14 @@ module.exports = {
         .all([
           Trainer
             .find()
+            .populate('formations')
             .paginate({page: req.query._page , limit: req.query._perPage }),
           Trainer.count()
         ])
         .then(function(results) {
+          results[0].forEach(function(trainer){
+            trainer.price = parseInt(trainer.price);
+          });
           res.set('X-Total-Count',results[1]);
           res.json(results[0]);
         })
@@ -31,7 +35,6 @@ module.exports = {
   findOne: function(req,res){
     return Trainer
       .findOne({ id: req.params.id })
-      .populate('user')
       .populate('formations')
       .then(function(trainer){
         trainer.user = trainer.user.id;

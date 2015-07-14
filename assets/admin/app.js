@@ -53,7 +53,10 @@
           data: '=',
           entityName: '@'
         },
-        template: '<ul style="list-style: none"><li><a href="http://localhost:1337/admin#/{{ entityName }}/show/{{item.id}}" ng-repeat="item in data">{{item.name}}<a/></li></ul>'
+        template: '<ul style="list-style: none"><li><a ng-href="http://localhost:1337/admin#/{{ entityName }}/show/{{item.id}}" class="btn btn-primary btn-xs item" ng-repeat="item in data">{{item.name || item.displayName}}<a/></li></ul>',
+        link: function(scope){
+          console.log(scope.entityName)
+        }
       }
     })
     .directive('adminRelationSelect', function($http){
@@ -64,12 +67,13 @@
           data: '='
         },
         templateUrl: '/admin/views/select.tpl.html',
-        link: function(scope,element,attrs,ngModel){
+        link: function(scope){
+          if(!scope.data){
+            scope.data[scope.relationName] = [];
+          }
           $http.get('/api/'+scope.relationName)
-
             .success(function(data){
-              scope.formations = data;
-              scope.data.push({})
+              scope.entities = data;
             })
             .error(function(err){
               console.log(err);
@@ -155,7 +159,9 @@
           nga.field('email'),
           nga.field('formations','template')
             .template('<admin-relation-repeter data="entry.values.formations" entity-name="formation"></admin-relation-repeter>'),
-          nga.field('price', 'number').format('€0,0.00')
+          nga.field('price', 'number')
+            .label('tarif journalier')
+            .format('0,0€')
         ]);
 
       trainer.listView()
@@ -185,12 +191,13 @@
             .label('email')
             .attributes({placeholder: 'l\'email du formateur'})
             .validation({ email: true}),
-
+          nga.field('formations','template')
+            .label('formations')
+            .template('<div admin-relation-select data="entry.values" relation-name="formation"></div>'),
           nga.field('price', 'number')
             .label('prix')
             .attributes({placeholder: 'le tarif journalier du formateur'})
-            .validation({number: true})
-            .format('€0,0.00'),
+            .validation({number: true}),
           nga.field('extrenal', 'boolean')
             .label('est une resource externe ?'),
           nga.field('home', 'boolean')
@@ -201,50 +208,24 @@
         .title('Edition du formateur "{{ entry.values.displayName }}"')
         .actions(['list', 'delete'])
         .fields([
-          trainer.creationView().fields(),
-          nga.field('formations','template')
-            .label('formations')
-            .template('<div admin-relation-select data="entry.values" relation-name="formation"></div>')
+          trainer.creationView().fields()
         ]);
 
-
-
-      contact.dashboardView()
-        .title('Derniers contacts')
-        .perPage(5)
-        .fields([
-          nga.field('formations', 'template')
-            .template('<admin-relation-repeter data="entry.values.formations" entity-name="formation"></admin-relation-repeter>'),
-          nga.field('displayName'),
-          nga.field('email','template')
-            .template('<admin-mailto email="{{ entry.values.email }}"></admin-mailto>'),
-          nga.field('createdAt', 'template')
-            .template('<span>{{ entry.values.createdAt | date }}</span>')
-
-        ]);
-
-
-      formation.dashboardView()
-        .title('formations')
-        .perPage(5)
-        .fields([
-          nga.field('name'),
-          nga.field('category','reference')
-            .label('Category')
-            .map(truncate)
-            .targetEntity(category)
-            .targetField(nga.field('name').map(truncate)),
-          nga.field('previous', 'template')
-            .label('Prérequis')
-            .template('<admin-relation-repeter entityName="formation" data="entry.values.previous"></admin-relation-repeter>')
-        ]); // fields() called with arguments add fields to the view
+      trainer.deletionView()
+        .title('Confirmez vous la suppression du formateur {{ entry.values.displayName }} ?')
+        .description('Attention Toute suppression est definitive');
 
 
       media.dashboardView()
         .title('derniers uploads')
         .fields([
+          nga.field('file','template')
+            .template('<admin-picture base64="{{ entry.values.file }}" height="50px"></admin-picture>'),
           nga.field('name'),
-          nga.field('size')
+          nga.field('size','template')
+            .label('taille')
+            .template('<span>{{ entry.values.size | size }}</span>')
+
         ]);
 
       media.listView()
@@ -252,13 +233,13 @@
         .description('List of media')
         .infinitePagination(true)
         .fields([
+          nga.field('file','template')
+            .template('<admin-picture base64="{{ entry.values.file }}" height="50px"></admin-picture>'),
           nga.field('name')
             .label('nom du média'),
-          nga.field('size','number')
-            .label('taille du média'),
-          nga.field('file','template')
-            .template('<admin-picture base64="{{ entry.values.file }}" height="50px"></admin-picture>')
-
+          nga.field('size','template')
+            .label('taille')
+            .template('<span>{{ entry.values.size | size }}</span>')
       ])
         .listActions(['show', 'edit', 'delete']);
 
@@ -267,6 +248,7 @@
         .description('Pour pouvoir utiliser le fichiers il faudra ensuite le modifier et lui ajouter un nom')
         .fields([
           nga.field('file','file')
+            .label('Le fichier à uploader')
             .uploadInformation({ 'url': 'http://localhost:1337/api/upload/media?avatar=true', 'fileFormDataName': 'file', 'accept': '.png' })
         ]);
 
@@ -274,33 +256,46 @@
         .title('Modifier les informations de votre média "{{ entry.values.name }}"')
         .actions(['list', 'delete'])
         .fields([
-          nga.field('name'),
+          nga.field('name')
+            .label('Nom')
+            .attributes({placeholder: 'le nom du média'})
+            .validation({ required: true, maxlength:30}),
           nga.field('description')
-
+            .label('Descriion')
+            .attributes({placeholder: 'la description du média'})
+            .validation({ maxlength:200})
         ]);
 
       media.showView()
-        .title('Edit media "{{ entry.values.name }}"')
+        .title('"{{ entry.values.name }}"')
         .actions(['list', 'delete', 'create'])
         .fields([
           media.editionView().fields(),
-          nga.field('originalName'),
-          nga.field('size'),
+          nga.field('originalName')
+            .label('nom original'),
+          nga.field('size','template')
+            .label('taille')
+            .template('<span>{{ entry.values.size | size }}</span>'),
           nga.field('file','template')
-            .template('<admin-picture base64="{{ entry.values.file }}" height="400px"></admin-picture>')
+            .label('rendu')
+            .template('<admin-picture base64="{{ entry.values.file }}" ></admin-picture>')
         ]);
 
-
+      media.deletionView()
+        .title('Confirmez vous la suppression du média {{ entry.values.name }} ?')
+        .description('Attention Toute suppression est definitive');
 
 
 
 
       user.dashboardView()
-        .title('Nous !!!')
+        .title('La team')
         .perPage(5)
         .fields([
-          nga.field('displayName'),
+          nga.field('displayName')
+            .label('Nom'),
           nga.field('email','template')
+            .label('Email')
             .template('<admin-mailto email="{{ entry.values.email }}"></admin-mailto>')
         ]);
 
@@ -321,50 +316,90 @@
           nga.field('description', 'text')
         ]);
 
+      user.deletionView()
+        .title('Confirmez vous la suppression de l\' utilisateur {{ entry.values.displayName }} ?')
+        .description('Attention Toute suppression est definitive');
 
+
+
+
+      category.dashboardView()
+        .title('Catégories de formations')
+        .perPage(5)
+        .fields([
+          nga.field('name')
+            .label('Nom')
+            .attributes({placeholder: 'Le nom de la catégorie'})
+            .validation({required: true, minlength: 3, maxlength: 50}),
+          nga.field('description', 'text')
+            .label('Description')
+            .attributes({placeholder: 'Une description de la catégorie'})
+            .validation({required: true, minlength: 10, maxlength: 300})
+        ]);
 
       category.listView()
         .title('Catégories de formations')
         .description('Chaque catégorie regroupe plusieurs formations')
         .fields([
-          nga.field('name')
-            .label('Nom')
-            .attributes({placeholder: 'Le nom de la catégorie'})
-            .validation({required: true, minlength: 3, maxlength: 50}),
-          nga.field('description', 'text')
-            .label('Description')
-            .attributes({placeholder: 'Une description de la catégorie'})
-            .validation({required: true, minlength: 10, maxlength: 300})
+          category.dashboardView().fields()
         ])
         .listActions(['show', 'edit', 'delete']);
 
       category.creationView()
+        .title('Création d\'une nouvelle catégorie de formations')
         .fields([
-          nga.field('name')
-            .label('Nom')
-            .attributes({placeholder: 'Le nom de la catégorie'})
-            .validation({required: true, minlength: 3, maxlength: 50}),
-          nga.field('description', 'text')
-            .label('Description')
-            .attributes({placeholder: 'Une description de la catégorie'})
-            .validation({required: true, minlength: 10, maxlength: 300})
+          category.dashboardView().fields(),
+          nga.field('formations','template')
+            .label('formations')
+            .template('<div admin-relation-select data="entry.values" relation-name="formation"></div>')
         ]);
 
       category.editionView()
-        .title('Edit category "{{ entry.values.name }}"')
+        .title('Modifier la categorie de formation "{{ entry.values.name }}"')
         .actions(['list', 'show', 'delete'])
         .fields([
-          category.creationView().fields(),
-          nga.field('formations', 'reference_many')
-            .targetEntity(formation)
-            .targetField(nga.field('name'))
-            .cssClasses('col-sm-4')
+          category.creationView().fields()
         ]);
 
 
       category.showView()
+        .title('Categorie de formation : {{ entry.values.name }}')
+        .actions(['list', 'show', 'delete'])
         .fields([
-          category.editionView().fields(),
+          category.dashboardView().fields(),
+          nga.field('formations', 'template')
+            .template('<admin-relation-repeter entity-name="formation" data="entry.values.formations"></admin-relation-repeter>')
+        ]);
+
+
+      category.deletionView()
+        .title('Confirmez vous la suppression de la category {{ entry.values.name }} ?')
+        .description('Attention Toute suppression est definitive');
+
+
+
+
+      formation.dashboardView()
+        .title('formations')
+        .perPage(5)
+        .fields([
+          nga.field('name')
+            .label('Nom')
+            .attributes({placeholder: 'Le nom de la formation'})
+            .validation({required: true, minlength: 2, maxlength: 40}),
+          nga.field('category','reference')
+            .label('Categorie')
+            .validation({required: true})
+            .map(truncate)
+            .targetEntity(category)
+            .targetField(nga.field('name').map(truncate)),
+          nga.field('price', 'number')
+            .label('Prix par stagiaire')
+            .attributes({placeholder: 'Le prix de la formation'})
+            .validation({required: true}),
+          nga.field('previous', 'template')
+            .label('Prérequis')
+            .template('<admin-relation-repeter entity-name="formation" data="entry.values.previous"></admin-relation-repeter>')
         ]);
 
 
@@ -372,91 +407,96 @@
         .title('Formations')
         .perPage(10)
         .fields([
-          nga.field('name')
-            .label('Name'),
+          formation.dashboardView().fields(),
           nga.field('description', 'text')
-            .label('Description'),
+            .label('Description')
+            .attributes({placeholder: 'La description de la formation'})
+            .validation({required: true, minlength: 50, maxlength: 500}),
           nga.field('duration', 'number')
-            .label('duration'),
-          nga.field('price', 'template')
-            .template('<span>{{ entry.values.price | currency:"€" }}</span>')
-            .label('price'),
-          nga.field('category', 'reference')
-            .label('Category')
-            .map(truncate)
-            .targetEntity(category)
-            .targetField(nga.field('name').map(truncate)),
+            .label('Durée')
+            .attributes({placeholder: 'La durée en jour de la formation'})
+            .validation({required: true, min: 1, max: 30}),
           nga.field('home', 'boolean')
             .label('homePage')
-        ])
-        .filters([
-          nga.field('name')
-            .label('Name')
-            .attributes({'placeholder': 'Filter by name'})
+
         ])
         .listActions(['show', 'edit', 'delete']);
 
+      formation.showView()
+        .title('Formation {{ entry.values.name }}')
+        .fields([
+          nga.field('image', 'template')
+            .template('<admin-picture base64="{{ entry.values.image.file }}" height="100px"></admin-picture>'),
+          nga.field('trainer', 'template')
+            .label('Les formateurs')
+            .template('<admin-relation-repeter entity-name="trainer" data="entry.values.trainer"></admin-relation-repeter>'),
+          formation.listView().fields(),
+          nga.field('next', 'template')
+            .label('Les formations suivantes')
+            .template('<admin-relation-repeter entity-name="formation" data="entry.values.next"></admin-relation-repeter>'),
+          nga.field('slides')
+            .label('support de cours')
+            .validation({url: true, minlength: 15, maxlength: 100})
+        ]);
+
       formation.creationView()
         .fields([
-          nga.field('name')
-            .label('Name'),
-          nga.field('description', 'text')
-            .label('Description'),
-          nga.field('category', 'reference')
-            .label('Category')
-            .map(truncate)
-            .targetEntity(category)
-            .targetField(nga.field('name').map(truncate)),
+         formation.listView().fields(),
           nga.field('image', 'reference')
             .label('image')
             .map(truncate)
             .targetEntity(media)
             .targetField(nga.field('name').map(truncate)),
-          nga.field('duration', 'number')
-            .label('duration'),
-          nga.field('price', 'number')
-            .label('Price'),
           nga.field('slides')
-            .label('slides'),
-          nga.field('home', 'boolean')
-            .label('homePage'),
-          nga.field('previous', 'reference_many')
-            .targetEntity(formation)
-            .targetField(nga.field('name')),
+            .label('support de cours')
+            .validation({url: true, minlength: 15, maxlength: 100}),
+          nga.field('previous','template')
+            .label('Prérequis')
+            .template('<div admin-relation-select data="entry.values" relation-name="formation"></div>'),
           nga.field('program', 'wysiwyg')
-            .label('Program')
+            .label('Programme de cours')
+            .attributes({placeholder: 'Programme détaillé de la formation'})
+            .validation({required: true, min: 200, max: 10000})
         ]);
 
       formation.editionView()
+        .title('Edition de la formation {{ entry.values.name }}')
         .fields([
           formation.creationView().fields()
         ]);
 
+      formation.deletionView()
+        .title('Confirmez vous la suppression de la formation {{ entry.values.name }} ?')
+        .description('Attention Toute suppression est definitive');
 
-      formation.showView()
+
+
+
+      contact.dashboardView()
+        .title('Derniers contacts')
+        .perPage(5)
         .fields([
-          formation.editionView().fields(),
-          nga.field('previous', 'reference_many')
-            .targetEntity(formation)
-            .targetField(nga.field('name'))
+          nga.field('displayName')
+            .label('Nom'),
+          nga.field('company')
+            .label('Société'),
+          nga.field('email','template')
+            .label('Email')
+            .template('<admin-mailto email="{{ entry.values.email }}"></admin-mailto>'),
+          nga.field('formations', 'template')
+            .label('est intéréssé par')
+            .template('<admin-relation-repeter data="entry.values.formations" entity-name="formation"></admin-relation-repeter>'),
+          nga.field('createdAt', 'template')
+            .template('<span>{{ entry.values.createdAt | date }}</span>')
+
         ]);
 
-      formation.deletionView()
-        .title('Deletion confirmation');
-
       contact.listView()
-        .title('All Contacts')
-        .description('List of contacts')
+        .title('Tous les  Contacts')
+        .description('La liste de toutes les personnes nous ayant contacter via le site')
         .infinitePagination(true)
         .fields([
-          nga.field('formations', 'template')
-            .template('<ul style="list-style: none"><li><a href="http://localhost:1337/admin#/formation/show/{{formation.id}}" ng-repeat="formation in entry.values.formations">{{formation.name}}<a/></li></ul>'),
-          nga.field('displayName')
-            .label('displayName'),
-          nga.field('email', 'template')
-            .template('<admin-mailto email="{{ entry.values.email }}"></admin-mailto>'),
-          nga.field('createdAt')
-            .label('date')
+          contact.dashboardView().fields()
         ])
         .listActions(['show', 'delete']);
 
@@ -469,15 +509,16 @@
 
 
       contact.deletionView()
-        .title('Deletion confirmation');
+        .title('Confirmez vous la suppression du contact {{ entry.values.displayName }} de la société {{ entry.values.displayName }} ?')
+        .description('Attention Toute suppression est definitive');
 
       admin.menu(nga.menu()
-          .addChild(nga.menu(contact).icon('<span class="glyphicon glyphicon-message-full"></span>'))
-          .addChild(nga.menu(trainer).icon('<span class="glyphicon glyphicon-message-full"></span>'))
-          .addChild(nga.menu(user).icon('<span class="glyphicon glyphicon-user"></span>'))
-          .addChild(nga.menu(category).icon('<span class="glyphicon glyphicon-file"></span>'))
-          .addChild(nga.menu(formation).icon('<strong style="font-size:1.3em;line-height:1em">✉</strong>'))
-          .addChild(nga.menu(media).icon('<span class="glyphicon glyphicon-file"></span>'))
+          .addChild(nga.menu(contact).icon('<i class="ion-person-stalker"></i>'))
+          .addChild(nga.menu(trainer).icon('<i class="ion-person-add"></i>'))
+          .addChild(nga.menu(user).icon('<i class="ion-person"></i>'))
+          .addChild(nga.menu(category).icon('<i class="ion-pricetag"></i>'))
+          .addChild(nga.menu(formation).icon('<i class="ion-university"></i>'))
+          .addChild(nga.menu(media).icon('<i class="ion-images"></i>'))
 
 
       );
@@ -513,5 +554,20 @@
 
         return out;
       };
+    })
+    .filter('size', function() {
+      return function(input) {
+        var out = "";
+        var size = parseInt(input);
+        if (isNaN(size)) return "0";
+        var unit = ["o","Ko","Mo","Go","To"];
+        var i = 0;
+        while (size >= 1024) {
+          i++;
+          size = size/1024;
+        }
+        out = size.toFixed(2) + ' ' + unit[i];
+        return out;
+      }
     });
 })();

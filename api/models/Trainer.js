@@ -21,14 +21,15 @@ module.exports = {
       type: 'string'
     },
     price: {
-      type: 'number'
+      type: 'integer'
     },
     user: {
       model: 'User'
     },
     formations: {
       collection: 'formation',
-      via: 'trainer'
+      via: 'trainer',
+      dominant: true
     },
     external: {
       type: 'boolean'

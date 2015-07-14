@@ -15,7 +15,8 @@ module.exports = {
             .paginate({page: req.query._page , limit: req.query._perPage })
             .populate('image')
             .populate('next')
-            .populate('previous'),
+            .populate('previous')
+            .populate('trainer'),
           Formation.count()
         ])
           .then(function(results) {
@@ -31,6 +32,7 @@ module.exports = {
       .populate('next')
       .populate('previous')
       .populate('image')
+      .populate('trainer')
       .then(function(result){
         result.forEach(function(formation){
           formation.image = 'data:image/png;base64,'+formation.image.file;
