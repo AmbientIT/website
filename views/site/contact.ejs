@@ -175,8 +175,14 @@
       </div>
     </div>
 
-    <div class="row">
-      <button type="submit" class="btn btn-primary btn-block" value="Envoyer">Envoyer</button>
+    <div class="row text-center">
+      <button type="submit" class="btn btn-primary btn-block" value="Envoyer">
+        <span ng-hide="ctrl.isPending">
+          Envoyer
+        </span>
+        <i class="ion-load-c" style="font-size:1.5em;" ng-class="{ 'rotate-icon': ctrl.isPending }" ng-show="ctrl.isPending"></i>
+      </button>
+
     </div>
 
   </aside>

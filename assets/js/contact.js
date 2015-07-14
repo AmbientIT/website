@@ -27,9 +27,11 @@ angular.module('contact', ['ngMessages','ngAnimate','ui.select','ui.bootstrap'])
       }
 
       if(form.$valid){
+        ctrl.isPending = true;
         $http
           .post('/api/contact',data)
           .success(function(data){
+            ctrl.isPending = false;
             $modal.open({
               animation: true,
               templateUrl: 'templates/after-contact-dialog.tpl.html',
