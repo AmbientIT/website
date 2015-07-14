@@ -487,7 +487,7 @@
             .label('est intéréssé par')
             .template('<admin-relation-repeter data="entry.values.formations" entity-name="formation"></admin-relation-repeter>'),
           nga.field('createdAt', 'template')
-            .template('<span>{{ entry.values.createdAt | date }}</span>')
+            .template('<span>{{ entry.values.createdAt | date : "dd/mm/yyyy" }}</span>')
 
         ]);
 
