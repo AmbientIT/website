@@ -159,9 +159,9 @@
           nga.field('email'),
           nga.field('formations','template')
             .template('<admin-relation-repeter data="entry.values.formations" entity-name="formation"></admin-relation-repeter>'),
-          nga.field('price', 'number')
+          nga.field('price', 'template')
             .label('tarif journalier')
-            .format('0,0€')
+            .template('<span>{{ entry.values.price | currency:"€":2:true }}</span>')
         ]);
 
       trainer.listView()
@@ -393,10 +393,9 @@
             .map(truncate)
             .targetEntity(category)
             .targetField(nga.field('name').map(truncate)),
-          nga.field('price', 'number')
-            .label('Prix par stagiaire')
-            .attributes({placeholder: 'Le prix de la formation'})
-            .validation({required: true}),
+          nga.field('price', 'template')
+            .label('Le prix de la formation')
+            .template('<span>{{ entry.values.price | currency:"€":0:true }}</span>'),
           nga.field('previous', 'template')
             .label('Prérequis')
             .template('<admin-relation-repeter entity-name="formation" data="entry.values.previous"></admin-relation-repeter>')

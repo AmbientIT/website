@@ -13,7 +13,6 @@ angular.module('contact', ['ngMessages','ngAnimate','ui.select','ui.bootstrap'])
       });
 
     ctrl.formData = {};
-
     ctrl.submit = function (form) {
       var data;
       if(ctrl.formData.formations){
