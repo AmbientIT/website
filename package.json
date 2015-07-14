@@ -36,8 +36,8 @@
     "underscore": "^1.8.3"
   },
   "scripts": {
-    "debug": "nodemon debug app.js",
-    "start": "nodemon app.js",
+    "debug": "nodemon --ignore node_modules/* --ignore assets/* --ignore bower.json --ignore package.json debug app.js",
+    "start": "nodemon --ignore node_modules/* --ignore assets/* --ignore bower.json --ignore package.json  app.js",
     "postinstall": "bower i"
   },
   "main": "app.js",
