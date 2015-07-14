@@ -3,7 +3,8 @@
 
   angular.module('myApp', [
     'ng-admin',
-    'satellizer'
+    'satellizer',
+    'ui.select'
   ])
 
     .controller('main', function ($scope, $rootScope, $location) {
@@ -55,6 +56,27 @@
         template: '<ul style="list-style: none"><li><a href="http://localhost:1337/admin#/{{ entityName }}/show/{{item.id}}" ng-repeat="item in data">{{item.name}}<a/></li></ul>'
       }
     })
+    .directive('adminRelationSelect', function($http){
+      return {
+        //replace:true,
+        scope: {
+          relationName: '@',
+          data: '='
+        },
+        templateUrl: '/admin/views/select.tpl.html',
+        link: function(scope,element,attrs,ngModel){
+          $http.get('/api/'+scope.relationName)
+
+            .success(function(data){
+              scope.formations = data;
+              scope.data.push({})
+            })
+            .error(function(err){
+              console.log(err);
+            })
+        }
+      }
+    })
     .run(function($auth,$location){
       if($auth.isAuthenticated()){
         $location.path('/dashboard')
@@ -92,18 +114,17 @@
       //  return {params: params};
       //});
 
-      var admin = nga.application('AmbientIT Back-Office') // application main title
-        .baseApiUrl('http://localhost:1337/api/'); // main API endpoint
+      var admin = nga.application('AmbientIT Back-Office')
+        .baseApiUrl('http://localhost:1337/api/');
 
       var contact = nga.entity('contact')
         .identifier(nga.field('id'));
 
-      // define all entities at the top to allow references between them
-      var formation = nga.entity('formation') // the API endpoint for posts will be http://localhost:3000/posts/:id
+      var formation = nga.entity('formation')
         .identifier(nga.field('id'));
 
       var category = nga.entity('category')
-        .identifier(nga.field('id')); // you can optionally customize the identifier used in the api ('id' by default)
+        .identifier(nga.field('id'));
 
       var user = nga.entity('user')
         .identifier(nga.field('id'));
@@ -128,6 +149,7 @@
 
       trainer.dashboardView()
         .title('formateurs')
+        .perPage(5)
         .fields([
           nga.field('displayName'),
           nga.field('email'),
@@ -163,11 +185,7 @@
             .label('email')
             .attributes({placeholder: 'l\'email du formateur'})
             .validation({ email: true}),
-          nga.field('formations','reference_many')
-            .label('formations')
-            .isDetailLink(true)
-            .targetEntity(formation) // Targeted entity
-            .targetField(nga.field('name')),
+
           nga.field('price', 'number')
             .label('prix')
             .attributes({placeholder: 'le tarif journalier du formateur'})
@@ -183,20 +201,17 @@
         .title('Edition du formateur "{{ entry.values.displayName }}"')
         .actions(['list', 'delete'])
         .fields([
-          trainer.creationView().fields()
+          trainer.creationView().fields(),
+          nga.field('formations','template')
+            .label('formations')
+            .template('<div admin-relation-select data="entry.values" relation-name="formation"></div>')
         ]);
 
-      media.dashboardView()
-        .title('derniers uploads')
-        .fields([
-          nga.field('name'),
-          nga.field('size')
-        ]);
 
-      contact.dashboardView() // customize the dashboard panel for this entity
+
+      contact.dashboardView()
         .title('Derniers contacts')
-        .order(1) // display the post panel first in the dashboard
-        .perPage(10) // limit the panel to the 5 latest posts
+        .perPage(5)
         .fields([
           nga.field('formations', 'template')
             .template('<admin-relation-repeter data="entry.values.formations" entity-name="formation"></admin-relation-repeter>'),
@@ -206,23 +221,12 @@
           nga.field('createdAt', 'template')
             .template('<span>{{ entry.values.createdAt | date }}</span>')
 
-        ]); // fields() called with arguments add fields to the view
+        ]);
 
 
-      user.dashboardView() // customize the dashboard panel for this entity
-        .title('Us !!!')
-        .order(2) // display the post panel first in the dashboard
-        .perPage(10) // limit the panel to the 5 latest posts
-        .fields([
-          nga.field('displayName'),
-          nga.field('email','template')
-            .template('<admin-mailto email="{{ entry.values.email }}"></admin-mailto>')
-        ]); // fields() called with arguments add fields to the view
-
-      formation.dashboardView() // customize the dashboard panel for this entity
+      formation.dashboardView()
         .title('formations')
-        .order(3) // display the post panel first in the dashboard
-        .perPage(10) // limit the panel to the 5 latest posts
+        .perPage(5)
         .fields([
           nga.field('name'),
           nga.field('category','reference')
@@ -235,13 +239,23 @@
             .template('<admin-relation-repeter entityName="formation" data="entry.values.previous"></admin-relation-repeter>')
         ]); // fields() called with arguments add fields to the view
 
-      media.listView()
-        .title('All media') // default title is "[Entity_name] list"
-        .description('List of media') // description appears under the title
-        .infinitePagination(true) // load pages as the user scrolls
+
+      media.dashboardView()
+        .title('derniers uploads')
         .fields([
-          nga.field('name'), // the default list field type is "string", and displays as a string
-          nga.field('size'),
+          nga.field('name'),
+          nga.field('size')
+        ]);
+
+      media.listView()
+        .title('Bibliothèque de multimédia')
+        .description('List of media')
+        .infinitePagination(true)
+        .fields([
+          nga.field('name')
+            .label('nom du média'),
+          nga.field('size','number')
+            .label('taille du média'),
           nga.field('file','template')
             .template('<admin-picture base64="{{ entry.values.file }}" height="50px"></admin-picture>')
 
@@ -249,26 +263,27 @@
         .listActions(['show', 'edit', 'delete']);
 
       media.creationView()
-        .title('upload a media "{{ entry.values.name }}"') // title() accepts a template string, which has access to the entry
-        .actions(['list', 'delete']) // choose which buttons appear in the top action bar. Show is disabled by default
+        .title('upload un nouveau fichier')
+        .description('Pour pouvoir utiliser le fichiers il faudra ensuite le modifier et lui ajouter un nom')
         .fields([
           nga.field('file','file')
-            .uploadInformation({ 'url': 'http://localhost:1337/api/upload/media?avatar=true', 'fileFormDataName': 'file' })
+            .uploadInformation({ 'url': 'http://localhost:1337/api/upload/media?avatar=true', 'fileFormDataName': 'file', 'accept': '.png' })
         ]);
 
       media.editionView()
-        .title('Edit media "{{ entry.values.name }}"') // title() accepts a template string, which has access to the entry
-        .actions(['list', 'delete']) // choose which buttons appear in the top action bar. Show is disabled by default
+        .title('Modifier les informations de votre média "{{ entry.values.name }}"')
+        .actions(['list', 'delete'])
         .fields([
-          nga.field('name'), // the default list field type is "string", and displays as a string
-          nga.field('description'), // Date field type allows date formatting
+          nga.field('name'),
+          nga.field('description')
 
         ]);
 
-      media.showView() // a showView displays one entry in full page - allows to display more data than in a a list
+      media.showView()
+        .title('Edit media "{{ entry.values.name }}"')
+        .actions(['list', 'delete', 'create'])
         .fields([
-          nga.field('name'), // the default list field type is "string", and displays as a string
-          nga.field('description'), // Date field type allows date formatting
+          media.editionView().fields(),
           nga.field('originalName'),
           nga.field('size'),
           nga.field('file','template')
@@ -276,75 +291,86 @@
         ]);
 
 
-      user.listView()
-        .title('All user') // default title is "[Entity_name] list"
-        .description('List of users') // description appears under the title
-        .infinitePagination(true) // load pages as the user scrolls
+
+
+
+
+      user.dashboardView()
+        .title('Nous !!!')
+        .perPage(5)
         .fields([
-          nga.field('email', 'template')
-            .template('<admin-mailto email="{{ entry.values.email }}"></admin-mailto>'), // the default list field type is "string", and displays as a string
-          nga.field('displayName'), // Date field type allows date formatting
+          nga.field('displayName'),
+          nga.field('email','template')
+            .template('<admin-mailto email="{{ entry.values.email }}"></admin-mailto>')
+        ]);
+
+      user.listView()
+        .title('La team ')
+        .description('Tous les utilisateurs enregistrés via google avec leur compte ambient-it.net')
+        .fields([
+          user.dashboardView().fields()
         ])
         .listActions(['show', 'edit', 'delete']);
 
 
       user.editionView()
-        .title('Edit user "{{ entry.values.name }}"') // title() accepts a template string, which has access to the entry
-        .actions(['list', 'delete']) // choose which buttons appear in the top action bar. Show is disabled by default
+        .title('Edit user "{{ entry.values.name }}"')
+        .actions(['list', 'delete'])
         .fields([
           user.listView().fields(),
-          nga.field('description', 'text')// fields() without arguments returns the list of fields. That way you can reuse fields from another view to avoid repetition
+          nga.field('description', 'text')
         ]);
 
-      category.showView() // a showView displays one entry in full page - allows to display more data than in a a list
-        .fields([
-          category.editionView().fields(), // reuse fields from another view in another order
 
-        ]);
 
       category.listView()
-        .title('All Category') // default title is "[Entity_name] list"
-        .description('List of category of formations') // description appears under the title
-        .infinitePagination(true) // load pages as the user scrolls
+        .title('Catégories de formations')
+        .description('Chaque catégorie regroupe plusieurs formations')
         .fields([
-          nga.field('name'), // the default list field type is "string", and displays as a string
-          nga.field('description', 'date'), // Date field type allows date formatting
+          nga.field('name')
+            .label('Nom')
+            .attributes({placeholder: 'Le nom de la catégorie'})
+            .validation({required: true, minlength: 3, maxlength: 50}),
+          nga.field('description', 'text')
+            .label('Description')
+            .attributes({placeholder: 'Une description de la catégorie'})
+            .validation({required: true, minlength: 10, maxlength: 300})
         ])
         .listActions(['show', 'edit', 'delete']);
 
       category.creationView()
         .fields([
-          nga.field('name') // the default edit field type is "string", and displays as a text input
-            .attributes({placeholder: 'the category title'}) // you can add custom attributes, too
-            .validation({required: true, minlength: 3, maxlength: 50}), // add validation rules for fields
-          nga.field('description', 'text')// text field type translates to a textarea
-            .attributes({placeholder: 'category description'})
-            .validation({required: true, minlength: 10, maxlength: 300}), // add validation rules for fields
-
+          nga.field('name')
+            .label('Nom')
+            .attributes({placeholder: 'Le nom de la catégorie'})
+            .validation({required: true, minlength: 3, maxlength: 50}),
+          nga.field('description', 'text')
+            .label('Description')
+            .attributes({placeholder: 'Une description de la catégorie'})
+            .validation({required: true, minlength: 10, maxlength: 300})
         ]);
 
       category.editionView()
-        .title('Edit category "{{ entry.values.name }}"') // title() accepts a template string, which has access to the entry
-        .actions(['list', 'show', 'delete']) // choose which buttons appear in the top action bar. Show is disabled by default
+        .title('Edit category "{{ entry.values.name }}"')
+        .actions(['list', 'show', 'delete'])
         .fields([
-          category.creationView().fields(), // fields() without arguments returns the list of fields. That way you can reuse fields from another view to avoid repetition
-          nga.field('formations', 'reference_many') // ReferenceMany translates to a select multiple
+          category.creationView().fields(),
+          nga.field('formations', 'reference_many')
             .targetEntity(formation)
             .targetField(nga.field('name'))
-            .cssClasses('col-sm-4'), // customize look and feel through CSS classes
+            .cssClasses('col-sm-4')
         ]);
 
-      category.showView() // a showView displays one entry in full page - allows to display more data than in a a list
+
+      category.showView()
         .fields([
-          category.editionView().fields(), // reuse fields from another view in another order
-          nga.field('slug')
-            .label('slug')
+          category.editionView().fields(),
         ]);
 
 
       formation.listView()
         .title('Formations')
-        .perPage(10) // limit the number of elements displayed per page. Default is 30.
+        .perPage(10)
         .fields([
           nga.field('name')
             .label('Name'),
@@ -407,21 +433,21 @@
         ]);
 
 
-      formation.showView() // a showView displays one entry in full page - allows to display more data than in a a list
+      formation.showView()
         .fields([
-          formation.editionView().fields(), // reuse fields from another view in another order
+          formation.editionView().fields(),
           nga.field('previous', 'reference_many')
             .targetEntity(formation)
             .targetField(nga.field('name'))
         ]);
 
       formation.deletionView()
-        .title('Deletion confirmation'); // customize the deletion confirmation message
+        .title('Deletion confirmation');
 
       contact.listView()
-        .title('All Contacts') // default title is "[Entity_name] list"
-        .description('List of contacts') // description appears under the title
-        .infinitePagination(true) // load pages as the user scrolls
+        .title('All Contacts')
+        .description('List of contacts')
+        .infinitePagination(true)
         .fields([
           nga.field('formations', 'template')
             .template('<ul style="list-style: none"><li><a href="http://localhost:1337/admin#/formation/show/{{formation.id}}" ng-repeat="formation in entry.values.formations">{{formation.name}}<a/></li></ul>'),
@@ -434,7 +460,7 @@
         ])
         .listActions(['show', 'delete']);
 
-      contact.showView() // a showView displays one entry in full page - allows to display more data than in a a list
+      contact.showView()
         .fields([
           contact.listView().fields(),
           nga.field('message')
@@ -443,19 +469,49 @@
 
 
       contact.deletionView()
-        .title('Deletion confirmation'); // customize the deletion confirmation message
+        .title('Deletion confirmation');
 
       admin.menu(nga.menu()
-          .addChild(nga.menu(contact).icon('<span class="glyphicon glyphicon-message-full"></span>')) // you can even use utf-8 symbols!
-          .addChild(nga.menu(trainer).icon('<span class="glyphicon glyphicon-message-full"></span>')) // you can even use utf-8 symbols!
-          .addChild(nga.menu(user).icon('<span class="glyphicon glyphicon-user"></span>')) // you can even use utf-8 symbols!
-          .addChild(nga.menu(category).icon('<span class="glyphicon glyphicon-file"></span>')) // customize the entity menu icon
-          .addChild(nga.menu(formation).icon('<strong style="font-size:1.3em;line-height:1em">✉</strong>')) // you can even use utf-8 symbols!
-          .addChild(nga.menu(media).icon('<span class="glyphicon glyphicon-file"></span>')) // you can even use utf-8 symbols!
+          .addChild(nga.menu(contact).icon('<span class="glyphicon glyphicon-message-full"></span>'))
+          .addChild(nga.menu(trainer).icon('<span class="glyphicon glyphicon-message-full"></span>'))
+          .addChild(nga.menu(user).icon('<span class="glyphicon glyphicon-user"></span>'))
+          .addChild(nga.menu(category).icon('<span class="glyphicon glyphicon-file"></span>'))
+          .addChild(nga.menu(formation).icon('<strong style="font-size:1.3em;line-height:1em">✉</strong>'))
+          .addChild(nga.menu(media).icon('<span class="glyphicon glyphicon-file"></span>'))
 
 
       );
 
       nga.configure(admin);
+    })
+    .filter('propsFilter', function() {
+      return function(items, props) {
+        var out = [];
+
+        if (angular.isArray(items)) {
+          items.forEach(function(item) {
+            var itemMatches = false;
+
+            var keys = Object.keys(props);
+            for (var i = 0; i < keys.length; i++) {
+              var prop = keys[i];
+              var text = props[prop].toLowerCase();
+              if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+                itemMatches = true;
+                break;
+              }
+            }
+
+            if (itemMatches) {
+              out.push(item);
+            }
+          });
+        } else {
+          // Let the output be the input untouched
+          out = items;
+        }
+
+        return out;
+      };
     });
 })();

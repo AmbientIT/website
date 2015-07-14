@@ -34,17 +34,8 @@ module.exports = {
       .populate('user')
       .populate('formations')
       .then(function(trainer){
-        var data = {};
-        Object.keys(trainer).forEach(function (val) {
-          data[val] = trainer[val];
-        });
-        data.user = trainer.user.id;
-        data.formations.forEach(function(formation,index){
-          data.formations[index] = data.id;
-          console.log(trainer.formations[index])
-        });
-        console.log(data);
-        return res.json(data);
+        trainer.user = trainer.user.id;
+        return res.json(trainer);
       })
       .catch(res.serverError);
   }
