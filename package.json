@@ -1,7 +1,7 @@
 {
   "name": "AmbientIT",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.8.0",
   "description": "AmbientIT website",
   "keywords": [],
   "dependencies": {
@@ -56,8 +56,7 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/charl/AmbientIT.git"
+    "url": "git://github.com/AmbientIT/website.git"
   },
-  "author": "charl",
-  "license": ""
+  "author": "charl"
 }
