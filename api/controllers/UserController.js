@@ -37,8 +37,14 @@ module.exports = {
     res.json(req.user);
   },
   googleAuth: function(req,res){
+    console.log('beginnig !!!!')
+    console.log('beginnig !!!!')
+    console.log('beginnig !!!!')
+    console.log('beginnig !!!!')
+    console.log('beginnig !!!!')
     googleAuth.getProfileInfo(req.body.code,req.body.clientId,req.body.redirectUri)
       .then(function(profile) {
+        console.log('profile', profile);
         if (req.headers.authorization) {
           User.findOne({ google: profile.sub })
             .then(function(existingUser) {

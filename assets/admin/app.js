@@ -528,9 +528,9 @@
             .map(truncate)
             .targetEntity(category)
             .targetField(nga.field('name')),
-          nga.field('price', 'template')
+          nga.field('price', 'number')
             .label('Le prix de la formation')
-            .template('<span>{{ entry.values.price | currency:"€":0:true }}</span>'),
+            .format('$0,0.00'),
           nga.field('image', 'reference')
             .label('Image (petit rond)')
             .map(truncate)

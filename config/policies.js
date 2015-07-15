@@ -43,6 +43,7 @@ module.exports.policies = {
   },
   UserController: {
     '*': 'auth',
+    'googleAuth': true,
     'me': 'auth',
     'remove': 'admin'
   }

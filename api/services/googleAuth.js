@@ -10,6 +10,7 @@ var peopleApiUrl = 'https://www.googleapis.com/plus/v1/people/me/openIdConnect';
 
 module.exports = {
   getProfileInfo: function(code, clientId, redirectUri){
+    console.log('serviccccuh')
     var params = {
       code: code,
       client_id: clientId,
