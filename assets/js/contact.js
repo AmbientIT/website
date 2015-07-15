@@ -1,8 +1,8 @@
 angular.module('contact', ['ngMessages','ngAnimate','ui.select','ui.bootstrap'])
-  .config(function($sceProvider){
+  .config(['$sceProvider',function($sceProvider){
     $sceProvider.enabled(false);
-  })
-  .controller('ContactFormController', function ($http, $modal) {
+  }])
+  .controller('ContactFormController', ['$http','$modal',function ($http, $modal) {
     var ctrl = this;
     ctrl.formations = [];
 
@@ -65,7 +65,7 @@ angular.module('contact', ['ngMessages','ngAnimate','ui.select','ui.bootstrap'])
       }
     };
 
-  })
+  }])
   .filter('propsFilter', function() {
     return function(items, props) {
       var out = [];

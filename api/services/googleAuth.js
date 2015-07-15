@@ -31,5 +31,8 @@ module.exports = {
           return profile;
         }
       })
+      .catch(function(err){
+        console.log('lolololololol',err)
+      })
   }
 };

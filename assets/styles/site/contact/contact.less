@@ -15,20 +15,20 @@ form {
   display: none !important;
 }
 
-//[ng-messages]{
-//  transition:1s linear all;
-//}
-[ng-message].ng-enter{
-  animation: flipInX ease;
-}
-[ng-message].ng-leave{
-  animation: flipOutX ease;
-}
-
 .ui-select-bootstrap .ui-select-choices-row.active>a {
   background-color: @mainColor;
+  h4{
+    font-size:1em;
+  }
+  p{
+    font-size:0.7em;
+    opacity:0.8;
+  }
 }
 
+.ui-select-choices-row{
+  height:65px;
+}
 .form-group{
   padding-left:0;
 }
