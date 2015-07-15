@@ -1,4 +1,8 @@
 {
+  "hooks": {
+    "grunt": false,
+    "session": false
+  },
   "generators": {
     "modules": {}
   }

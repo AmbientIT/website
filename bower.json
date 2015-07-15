@@ -18,5 +18,8 @@
     "ng-admin": "~0.7.0",
     "satellizer": "~0.11.2",
     "angular-ui-select": "~0.12.0"
+  },
+  "resolutions": {
+    "angular": "~1.4.2"
   }
 }
