@@ -53,7 +53,7 @@
           data: '=',
           entityName: '@'
         },
-        template: '<ul style="list-style: none"><li><a ng-href="http://localhost:1337/admin#/{{ entityName }}/show/{{item.id}}" class="btn btn-primary btn-xs item" ng-repeat="item in data">{{item.name || item.displayName}}<a/></li></ul>',
+        template: '<ul style="list-style: none"><li><a ng-href="/admin#/{{ entityName }}/show/{{item.id}}" class="btn btn-primary btn-xs item" ng-repeat="item in data">{{item.name || item.displayName}}<a/></li></ul>',
         link: function(scope){
           console.log(scope.entityName)
         }
@@ -120,7 +120,7 @@
       //});
 
       var admin = nga.application('AmbientIT Back-Office')
-        .baseApiUrl('http://localhost:1337/api/');
+        .baseApiUrl('/api/');
 
       var contact = nga.entity('contact')
         .identifier(nga.field('id'));
@@ -282,7 +282,7 @@
         .fields([
           nga.field('file','file')
             .label('Le fichier à uploader')
-            .uploadInformation({ 'url': 'http://localhost:1337/api/upload/media?avatar=true', 'fileFormDataName': 'file', 'accept': '.png' })
+            .uploadInformation({ 'url': '/api/upload/media?avatar=true', 'fileFormDataName': 'file', 'accept': '.png' })
         ]);
 
       media.editionView()
