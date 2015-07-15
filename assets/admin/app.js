@@ -44,7 +44,7 @@
           base64: '@',
           height: '@'
         },
-        template:'<img src="data:image/png;base64,{{base64}}" height="{{height}}"/>'
+        template:'<img style="border-radius:50%;" src="data:image/png;base64,{{base64}}" width="{{height}}" height="{{height}}"/>'
       }
     })
     .directive('adminRelationRepeter', function(){
@@ -210,14 +210,15 @@
         ]);
 
       trainer.editionView()
-        .title('Edition du formateur "{{ entry.values.displayName }}"')
-        .actions(['list', 'delete'])
+        .title('Edition du formateur {{ entry.values.displayName }}')
+        .actions(['list','show', 'delete'])
         .fields([
           trainer.creationView().fields()
         ]);
 
       trainer.showView()
         .title('Formateur {{ entry.values.name }}')
+        .actions(['list','edit', 'delete'])
         .fields([
           nga.field('displayName')
             .label('Nom du formateur')
@@ -285,8 +286,8 @@
         ]);
 
       media.editionView()
-        .title('Modifier les informations de votre média "{{ entry.values.name }}"')
-        .actions(['list', 'delete'])
+        .title('Modifier les informations de votre média {{ entry.values.name }}')
+        .actions(['list','show', 'delete'])
         .fields([
           nga.field('name')
             .label('Nom')
@@ -299,8 +300,8 @@
         ]);
 
       media.showView()
-        .title('"{{ entry.values.name }}"')
-        .actions(['list', 'delete', 'create'])
+        .title('{{ entry.values.name }}')
+        .actions(['list', 'edit', 'delete'])
         .fields([
           media.editionView().fields(),
           nga.field('originalName')
@@ -309,8 +310,8 @@
             .label('taille')
             .template('<span>{{ entry.values.size | size }}</span>'),
           nga.field('file','template')
-            .label('rendu')
-            .template('<admin-picture base64="{{ entry.values.file }}" ></admin-picture>')
+            .label('sans modif')
+            .template('<admin-picture base64="{{ entry.values.file }}"  ></admin-picture>')
         ]);
 
       media.deletionView()
@@ -335,6 +336,7 @@
 
       user.listView()
         .title('La team ')
+        .actions(['export'])
         .sortField('displayName')
         .sortDir('ASC')
         .description('Tous les utilisateurs enregistrés via google avec leur compte ambient-it.net')
@@ -344,9 +346,17 @@
         .listActions(['show', 'edit', 'delete']);
 
 
+      user.showView()
+        .title('utilisateur Ambient-it {{ entry.values.name }}')
+        .actions(['list','edit', 'delete'])
+        .fields([
+          user.listView().fields(),
+          nga.field('description', 'text')
+        ]);
+
       user.editionView()
-        .title('Edit user "{{ entry.values.name }}"')
-        .actions(['list', 'delete'])
+        .title('Edition de l\'utilisateur Ambient-it {{ entry.values.name }}')
+        .actions(['list','show', 'delete'])
         .fields([
           user.listView().fields(),
           nga.field('description', 'text')
@@ -388,14 +398,11 @@
       category.creationView()
         .title('Création d\'une nouvelle catégorie de formations')
         .fields([
-          category.dashboardView().fields(),
-          nga.field('formations','template')
-            .label('formations')
-            .template('<div admin-relation-select attr-name="formations" data="entry.values" relation-name="formation"></div>')
+          category.dashboardView().fields()
         ]);
 
       category.editionView()
-        .title('Modifier la categorie de formation "{{ entry.values.name }}"')
+        .title('Modifier la categorie de formation {{ entry.values.name }}')
         .actions(['list', 'show', 'delete'])
         .fields([
           category.creationView().fields()
@@ -404,7 +411,7 @@
 
       category.showView()
         .title('Categorie de formation : {{ entry.values.name }}')
-        .actions(['list', 'show', 'delete'])
+        .actions(['list', 'edit', 'delete'])
         .fields([
           category.dashboardView().fields(),
           nga.field('formations', 'template')
@@ -467,10 +474,41 @@
 
       formation.showView()
         .title('Formation {{ entry.values.name }}')
+        .actions(['list','edit', 'delete'])
         .fields([
-          nga.field('image', 'template')
-            .template('<admin-picture base64="{{ entry.values.image.file }}" height="100px"></admin-picture>'),
-          formation.listView().fields(),
+          nga.field('name')
+            .label('Nom')
+            .attributes({placeholder: 'Le nom de la formation'})
+            .validation({required: true, minlength: 2, maxlength: 40}),
+          nga.field('category', 'reference')
+            .label('Category')
+            .map(truncate)
+            .targetEntity(category)
+            .targetField(nga.field('name')),
+          nga.field('price', 'template')
+            .label('Le prix de la formation')
+            .template('<span>{{ entry.values.price | currency:"€":0:true }}</span>'),
+          nga.field('previous', 'template')
+            .label('Prérequis')
+            .template('<admin-relation-repeter entity-name="formation" data="entry.values.previous"></admin-relation-repeter>'),
+          nga.field('description', 'text')
+            .label('Description')
+            .attributes({placeholder: 'La description de la formation'})
+            .validation({required: true, minlength: 50, maxlength: 500}),
+          nga.field('duration', 'number')
+            .label('Durée')
+            .attributes({placeholder: 'La durée en jour de la formation'})
+            .validation({required: true, min: 1, max: 30}),
+          nga.field('home', 'boolean')
+            .label('homePage'),
+          nga.field('trainers', 'template')
+            .label('Formateurs')
+            .template('<admin-relation-repeter entity-name="trainer" data="entry.values.trainers"></admin-relation-repeter>'),
+          nga.field('image', 'reference')
+            .label('Image (petit rond)')
+            .map(truncate)
+            .targetEntity(media)
+            .targetField(nga.field('name')),
           nga.field('next', 'template')
             .label('Les formations suivantes')
             .template('<admin-relation-repeter entity-name="formation" data="entry.values.next"></admin-relation-repeter>'),
@@ -515,6 +553,7 @@
 
       formation.editionView()
         .title('Edition de la formation {{ entry.values.name }}')
+        .actions(['list','show', 'delete'])
         .fields([
           formation.creationView().fields()
         ]);
@@ -538,15 +577,17 @@
             .label('Email')
             .template('<admin-mailto email="{{ entry.values.email }}"></admin-mailto>'),
           nga.field('formations', 'template')
-            .label('est intéréssé par')
+            .label('Est intéréssé par')
             .template('<admin-relation-repeter data="entry.values.formations" entity-name="formation"></admin-relation-repeter>'),
           nga.field('createdAt', 'template')
-            .template('<span>{{ entry.values.createdAt | date : "dd/mm/yyyy" }}</span>')
+            .label('Date et heure')
+            .template('<span>{{ entry.values.createdAt | date : "dd/mm/yyyy hh:mm" }}</span>')
 
         ]);
 
       contact.listView()
         .title('Tous les  Contacts')
+        .actions(['export'])
         .sortField('createdAt')
         .sortDir('DESC')
         .description('La liste de toutes les personnes nous ayant contacter via le site')
@@ -557,6 +598,8 @@
         .listActions(['show', 'delete']);
 
       contact.showView()
+        .title('Contact {{ entry.values.displayName }} de la société {{ entry.values.company }} ?')
+        .actions(['list'])
         .fields([
           contact.listView().fields(),
           nga.field('message')

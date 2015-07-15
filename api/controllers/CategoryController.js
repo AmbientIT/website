@@ -25,7 +25,15 @@ module.exports = {
 
     return Category
       .find(req.query)
-      //.populate('formations')
+      .then(function(result){
+        return res.json(result);
+      })
+      .catch(res.serverError);
+  },
+  findOne: function(req, res){
+    return Category
+      .findOne({ id : req.params.id })
+      .populate('formations')
       .then(function(result){
         return res.json(result);
       })

@@ -75,7 +75,7 @@ module.exports.routes = {
   },
 
   ////////////////
-  // DASHBOARD //
+  // ADMIN //
   //////////////
 
   '/admin': {
@@ -100,22 +100,6 @@ module.exports.routes = {
   'post /api/upload/media': {
     controller: 'Media',
     action: 'base64AndCreate'
-  },
-  'get /api/formation': {
-    controller: 'Formation',
-    action: 'find'
-  },
-  'get /api/formation/:id': {
-    controller: 'Formation',
-    action: 'findOne'
-  },
-  'get /api/trainer': {
-    controller: 'Trainer',
-    action: 'find'
-  },
-  'get /api/trainer/:id': {
-    controller: 'Trainer',
-    action: 'findOne'
   }
 
 };

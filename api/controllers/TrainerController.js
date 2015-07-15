@@ -40,7 +40,6 @@ module.exports = {
     return Trainer
       .findOne({ id: req.params.id })
       .populate('formations')
-      .populate('user')
       .then(function(trainer){
         return res.json(trainer);
       })
