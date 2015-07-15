@@ -64,10 +64,11 @@
         //replace:true,
         scope: {
           relationName: '@',
+          attrName: '@',
           data: '='
         },
         templateUrl: '/admin/views/select.tpl.html',
-        link: function(scope){
+        link: function(scope,element,attrs){
           if(!scope.data){
             scope.data[scope.relationName] = [];
           }
@@ -153,6 +154,8 @@
 
       trainer.dashboardView()
         .title('formateurs')
+        .sortField('createdAt')
+        .sortDir('DESC')
         .perPage(5)
         .fields([
           nga.field('displayName'),
@@ -166,6 +169,8 @@
 
       trainer.listView()
         .title('Formateurs')
+        .sortField('displayName')
+        .sortDir('ASC')
         .fields([
           trainer.dashboardView().fields()
         ])
@@ -184,8 +189,8 @@
             .attributes({placeholder: 'le prénom du formateur'})
             .validation({ minlength: 2, maxlength:30}),
           nga.field('lastName')
-            .label('Prénom')
-            .attributes({placeholder: 'le prénom du formateur'})
+            .label('Nom')
+            .attributes({placeholder: 'le nom du formateur'})
             .validation({ minlength: 2, maxlength:30}),
           nga.field('email')
             .label('email')
@@ -193,7 +198,7 @@
             .validation({ email: true}),
           nga.field('formations','template')
             .label('formations')
-            .template('<div admin-relation-select data="entry.values" relation-name="formation"></div>'),
+            .template('<div admin-relation-select attr-name="formations" data="entry.values" relation-name="formation"></div>'),
           nga.field('price', 'number')
             .label('prix')
             .attributes({placeholder: 'le tarif journalier du formateur'})
@@ -211,6 +216,28 @@
           trainer.creationView().fields()
         ]);
 
+      trainer.showView()
+        .title('Formateur {{ entry.values.name }}')
+        .fields([
+          nga.field('displayName')
+            .label('Nom du formateur')
+            .attributes({placeholder: 'le nom du formateur'})
+            .validation({ minlength: 2, maxlength:30}),
+          nga.field('email')
+            .label('email')
+            .attributes({placeholder: 'l\'email du formateur'})
+            .validation({ email: true}),
+          nga.field('formations','template')
+            .label('formations')
+            .template('<div admin-relation-repeter data="entry.values.formations" relation-name="formation"></div>'),
+          nga.field('price', 'number')
+            .label('prix')
+            .attributes({placeholder: 'le tarif journalier du formateur'})
+            .validation({number: true}),
+          nga.field('extrenal', 'boolean')
+            .label('est une resource externe ?'),
+          nga.field('home', 'boolean')
+            .label('affiché en home ? (4 max)')        ]);
       trainer.deletionView()
         .title('Confirmez vous la suppression du formateur {{ entry.values.displayName }} ?')
         .description('Attention Toute suppression est definitive');
@@ -218,6 +245,9 @@
 
       media.dashboardView()
         .title('derniers uploads')
+        .sortField('createdAt')
+        .sortDir('DESC')
+        .perPage(5)
         .fields([
           nga.field('file','template')
             .template('<admin-picture base64="{{ entry.values.file }}" height="50px"></admin-picture>'),
@@ -231,6 +261,8 @@
       media.listView()
         .title('Bibliothèque de multimédia')
         .description('List of media')
+        .sortField('name')
+        .sortDir('ASC')
         .infinitePagination(true)
         .fields([
           nga.field('file','template')
@@ -290,6 +322,8 @@
 
       user.dashboardView()
         .title('La team')
+        .sortField('createdAt')
+        .sortDir('DESC')
         .perPage(5)
         .fields([
           nga.field('displayName')
@@ -301,6 +335,8 @@
 
       user.listView()
         .title('La team ')
+        .sortField('displayName')
+        .sortDir('ASC')
         .description('Tous les utilisateurs enregistrés via google avec leur compte ambient-it.net')
         .fields([
           user.dashboardView().fields()
@@ -325,6 +361,8 @@
 
       category.dashboardView()
         .title('Catégories de formations')
+        .sortField('createdAt')
+        .sortDir('Desc')
         .perPage(5)
         .fields([
           nga.field('name')
@@ -339,6 +377,8 @@
 
       category.listView()
         .title('Catégories de formations')
+        .sortField('name')
+        .sortDir('ASC')
         .description('Chaque catégorie regroupe plusieurs formations')
         .fields([
           category.dashboardView().fields()
@@ -351,7 +391,7 @@
           category.dashboardView().fields(),
           nga.field('formations','template')
             .label('formations')
-            .template('<div admin-relation-select data="entry.values" relation-name="formation"></div>')
+            .template('<div admin-relation-select attr-name="formations" data="entry.values" relation-name="formation"></div>')
         ]);
 
       category.editionView()
@@ -381,18 +421,17 @@
 
       formation.dashboardView()
         .title('formations')
+        .sortField('createdAt')
+        .sortDir('DESC')
         .perPage(5)
         .fields([
           nga.field('name')
             .label('Nom')
             .attributes({placeholder: 'Le nom de la formation'})
             .validation({required: true, minlength: 2, maxlength: 40}),
-          nga.field('category','reference')
-            .label('Categorie')
-            .validation({required: true})
-            .map(truncate)
-            .targetEntity(category)
-            .targetField(nga.field('name').map(truncate)),
+          nga.field('category', 'template')
+            .label('Catégorie')
+            .template('<admin-relation-repeter entity-name="formation" data="[entry.values.category]"></admin-relation-repeter>'),
           nga.field('price', 'template')
             .label('Le prix de la formation')
             .template('<span>{{ entry.values.price | currency:"€":0:true }}</span>'),
@@ -404,6 +443,8 @@
 
       formation.listView()
         .title('Formations')
+        .sortField('name')
+        .sortDir('ASC')
         .perPage(10)
         .fields([
           formation.dashboardView().fields(),
@@ -416,7 +457,10 @@
             .attributes({placeholder: 'La durée en jour de la formation'})
             .validation({required: true, min: 1, max: 30}),
           nga.field('home', 'boolean')
-            .label('homePage')
+            .label('homePage'),
+          nga.field('trainers', 'template')
+            .label('Formateurs')
+            .template('<admin-relation-repeter entity-name="trainer" data="entry.values.trainers"></admin-relation-repeter>')
 
         ])
         .listActions(['show', 'edit', 'delete']);
@@ -426,9 +470,6 @@
         .fields([
           nga.field('image', 'template')
             .template('<admin-picture base64="{{ entry.values.image.file }}" height="100px"></admin-picture>'),
-          nga.field('trainer', 'template')
-            .label('Les formateurs')
-            .template('<admin-relation-repeter entity-name="trainer" data="entry.values.trainer"></admin-relation-repeter>'),
           formation.listView().fields(),
           nga.field('next', 'template')
             .label('Les formations suivantes')
@@ -440,18 +481,32 @@
 
       formation.creationView()
         .fields([
-         formation.listView().fields(),
+          nga.field('name')
+            .label('Nom')
+            .attributes({placeholder: 'Le nom de la formation'})
+            .validation({required: true, minlength: 2, maxlength: 40}),
+          nga.field('category', 'reference')
+            .label('Categorie')
+            .map(truncate)
+            .targetEntity(category)
+            .targetField(nga.field('name')),
+          nga.field('price', 'template')
+            .label('Le prix de la formation')
+            .template('<span>{{ entry.values.price | currency:"€":0:true }}</span>'),
           nga.field('image', 'reference')
-            .label('image')
+            .label('Image (petit rond)')
             .map(truncate)
             .targetEntity(media)
-            .targetField(nga.field('name').map(truncate)),
+            .targetField(nga.field('name')),
           nga.field('slides')
             .label('support de cours')
             .validation({url: true, minlength: 15, maxlength: 100}),
           nga.field('previous','template')
             .label('Prérequis')
-            .template('<div admin-relation-select data="entry.values" relation-name="formation"></div>'),
+            .template('<div admin-relation-select attr-name="previous" data="entry.values" relation-name="formation"></div>'),
+          nga.field('trainers', 'template')
+            .label('Formateurs')
+            .template('<admin-relation-select attr-name="trainers" relation-name="trainer" data="entry.values"></admin-relation-select>'),
           nga.field('program', 'wysiwyg')
             .label('Programme de cours')
             .attributes({placeholder: 'Programme détaillé de la formation'})
@@ -492,6 +547,8 @@
 
       contact.listView()
         .title('Tous les  Contacts')
+        .sortField('createdAt')
+        .sortDir('DESC')
         .description('La liste de toutes les personnes nous ayant contacter via le site')
         .infinitePagination(true)
         .fields([
@@ -508,7 +565,7 @@
 
 
       contact.deletionView()
-        .title('Confirmez vous la suppression du contact {{ entry.values.displayName }} de la société {{ entry.values.displayName }} ?')
+        .title('Confirmez vous la suppression du contact {{ entry.values.displayName }} de la société {{ entry.values.company }} ?')
         .description('Attention Toute suppression est definitive');
 
       admin.menu(nga.menu()
@@ -536,9 +593,11 @@
             for (var i = 0; i < keys.length; i++) {
               var prop = keys[i];
               var text = props[prop].toLowerCase();
-              if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
-                itemMatches = true;
-                break;
+              if(item[prop]){
+                if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+                  itemMatches = true;
+                  break;
+                }
               }
             }
 

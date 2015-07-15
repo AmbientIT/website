@@ -13,6 +13,7 @@ module.exports = {
           Contact
             .find()
             .populate('formations')
+            .sort(req.query._sortField + ' '+req.query._sortDir)
             .paginate({page: req.query._page , limit: req.query._perPage }),
           Contact.count()
         ])
@@ -24,7 +25,9 @@ module.exports = {
 
     return Contact
       .find(req.query)
-      .then(res.json)
+      .then(function(result){
+        return res.json(result);
+      })
       .catch(res.serverError);
   }
 };

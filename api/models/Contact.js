@@ -42,9 +42,9 @@ module.exports = {
   },
   beforeCreate: function(obj,cb){
     if(obj.firstName){
-      obj.displayName = obj.gender+ ' ' +obj.firstName + ' ' + obj.lastName;
+      obj.displayName = obj.firstName + ' ' + obj.lastName;
     }else{
-      obj.displayName = obj.gender + ' '+ obj.firstName;
+      obj.displayName =obj.lastName;
     }
 
     cb(null);

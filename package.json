@@ -5,7 +5,6 @@
   "description": "AmbientIT website",
   "keywords": [],
   "dependencies": {
-    "bcryptjs": "^2.2.0",
     "easyimage": "^2.0.3",
     "ejs": "~0.8.4",
     "fs-promise": "^0.3.1",
@@ -35,9 +34,12 @@
     "skipper": "^0.5.5",
     "underscore": "^1.8.3"
   },
+  "devDependencies": {
+    "mocha": "^2.2.5",
+    "supertest": "^1.0.1"
+  },
   "scripts": {
-    "debug": "nodemon debug app.js --ignore node_modules/* --ignore assets/* --ignore bower.json --ignore package.json",
-    "start": "nodemon app.js --ignore node_modules/* --ignore assets/* --ignore bower.json --ignore package.json",
+    "start": "nodemon app.js  --ignore package.json --ignore node_modules/* --ignore assets/* --ignore bower.json",
     "postinstall": "bower i"
   },
   "main": "app.js",

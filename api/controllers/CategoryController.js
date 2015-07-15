@@ -12,7 +12,7 @@ module.exports = {
         .all([
           Category
             .find()
-            .populate('formations')
+            .sort(req.query._sortField + ' '+req.query._sortDir)
             .paginate({page: req.query._page , limit: req.query._perPage }),
           Category.count()
         ])
@@ -25,8 +25,10 @@ module.exports = {
 
     return Category
       .find(req.query)
-      .populate('formations')
-      .then(res.json)
+      //.populate('formations')
+      .then(function(result){
+        return res.json(result);
+      })
       .catch(res.serverError);
   }
 };

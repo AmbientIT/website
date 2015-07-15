@@ -9,11 +9,13 @@ var jwt = require('jwt-simple');
 
 module.exports = {
   find: function(req, res){
+    console.log(req.query);
     if(req.query._page){
       return Promise
         .all([
           User
             .find()
+            .sort(req.query._sortField + ' '+req.query._sortDir)
             .paginate({page: req.query._page , limit: req.query._perPage }),
           User.count()
         ])
@@ -26,7 +28,9 @@ module.exports = {
 
     return User
       .find(req.query)
-      .then(res.json)
+      .then(function(result){
+        return res.json(result)
+      })
       .catch(res.serverError)
   },
   me: function(req, res){

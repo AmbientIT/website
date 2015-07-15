@@ -105,6 +105,10 @@ module.exports.routes = {
     controller: 'Formation',
     action: 'find'
   },
+  'get /api/formation/:id': {
+    controller: 'Formation',
+    action: 'findOne'
+  },
   'get /api/trainer': {
     controller: 'Trainer',
     action: 'find'

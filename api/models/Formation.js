@@ -42,7 +42,7 @@ module.exports = {
       collection: 'formation',
       via: 'previous'
     },
-    trainer: {
+    trainers: {
       collection: 'trainer',
       via: 'formations'
     },

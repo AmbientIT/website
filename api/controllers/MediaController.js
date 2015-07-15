@@ -14,6 +14,7 @@ module.exports = {
         .all([
           Media
             .find()
+            .sort(req.query._sortField + ' '+req.query._sortDir)
             .paginate({page: req.query._page , limit: req.query._perPage }),
           Media.count()
         ])

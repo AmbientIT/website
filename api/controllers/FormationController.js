@@ -12,11 +12,13 @@ module.exports = {
         .all([
           Formation
             .find()
+            .sort(req.query._sortField + ' '+req.query._sortDir)
             .paginate({page: req.query._page , limit: req.query._perPage })
             .populate('image')
+            .populate('category')
             .populate('next')
             .populate('previous')
-            .populate('trainer'),
+            .populate('trainers'),
           Formation.count()
         ])
           .then(function(results) {
@@ -32,11 +34,22 @@ module.exports = {
       .populate('next')
       .populate('previous')
       .populate('image')
-      .populate('trainer')
+      .populate('trainers')
       .then(function(result){
         result.forEach(function(formation){
           formation.image = 'data:image/png;base64,'+formation.image.file;
         });
+        return res.json(result);
+      })
+      .catch(res.serverError);
+  },
+  findOne: function(req, res){
+    return Formation
+      .findOne({ id : req.params.id })
+      .populate('next')
+      .populate('previous')
+      .populate('trainers')
+      .then(function(result){
         return res.json(result);
       })
       .catch(res.serverError);

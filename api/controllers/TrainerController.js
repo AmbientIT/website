@@ -13,6 +13,7 @@ module.exports = {
           Trainer
             .find()
             .populate('formations')
+            .sort(req.query._sortField + ' '+req.query._sortDir)
             .paginate({page: req.query._page , limit: req.query._perPage }),
           Trainer.count()
         ])
@@ -28,16 +29,19 @@ module.exports = {
 
     return Trainer
       .find(req.query)
-      .populate('formations')
-      .then(res.json)
+      //.populate('formations')
+      .then(function(result){
+        console.log(result);
+        return res.json(result);
+      })
       .catch(res.serverError)
   },
   findOne: function(req,res){
     return Trainer
       .findOne({ id: req.params.id })
       .populate('formations')
+      .populate('user')
       .then(function(trainer){
-        trainer.user = trainer.user.id;
         return res.json(trainer);
       })
       .catch(res.serverError);

@@ -28,7 +28,7 @@ module.exports = {
     },
     formations: {
       collection: 'formation',
-      via: 'trainer',
+      via: 'trainers',
       dominant: true
     },
     external: {
