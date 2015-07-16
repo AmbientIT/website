@@ -533,6 +533,13 @@
             .map(truncate)
             .targetEntity(category)
             .targetField(nga.field('name')),
+          nga.field('description','text')
+            .label('Description')
+            .attributes({placeholder: 'description de la fomation'})
+            .validation({ minlength: 10, maxlength: 200}),
+          nga.field('price', 'number')
+            .label('Le prix de la formation')
+            .format('0 jours'),
           nga.field('price', 'number')
             .label('Le prix de la formation')
             .format('$0,0.00'),

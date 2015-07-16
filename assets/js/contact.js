@@ -34,12 +34,12 @@ angular.module('contact', ['ngMessages','ngAnimate','ui.select','ui.bootstrap'])
             $modal.open({
               animation: true,
               templateUrl: 'templates/after-contact-dialog.tpl.html',
-              controller: function($modalInstance){
+              controller: ['$modalInstance',function($modalInstance){
                 this.close = function(){
                   $modalInstance.close();
                 };
                 this.message = 'Nous avons bien reçus votre demande, nous vous recontacterons dans les plus bref delais.'
-              },
+              }],
               controllerAs: 'dialog',
               size: 'sm'
             })
