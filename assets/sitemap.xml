@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+<url>
+  <loc>http://ambientpreprod.cloudapp.net/</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://ambientpreprod.cloudapp.net/formations</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://ambientpreprod.cloudapp.net/contact</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://ambientpreprod.cloudapp.net/formation/nodejs</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://ambientpreprod.cloudapp.net/formation/javascript(ecma5)</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://ambientpreprod.cloudapp.net/formation/angularjs</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://ambientpreprod.cloudapp.net/formation/java8</loc>
+  <changefreq>weekly</changefreq>
+</url>
+<url>
+  <loc>http://ambientpreprod.cloudapp.net/contact?formation=</loc>
+  <changefreq>weekly</changefreq>
+</url>
+</urlset>

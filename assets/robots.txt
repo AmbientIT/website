@@ -1,7 +1,7 @@
 # The robots.txt file is used to control how search engines index your live URLs.
 # See http://www.robotstxt.org/wc/norobots.html for more information.
 
-
+Sitemap: http://ambientpreprod.cloudapp.net/sitemap.xml
 
 # To prevent search engines from seeing the site altogether, uncomment the next two lines:
 # User-Agent: *

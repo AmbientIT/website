@@ -1,0 +1,10 @@
+{
+  "username": "",
+  "host": "",
+  "port": "",
+  "destination": "",
+  "incremental": true,
+  "progress": true,
+  "recursive": true,
+  "exclude": ["node_modules/**", "assets/admin/lib",".tmp/**"]
+}

@@ -73,6 +73,14 @@ module.exports.routes = {
       }
     }
   },
+  '/mentions-legales': {
+    view: 'site/legal',
+    locals: {
+      content: {
+        title : 'Mentions legales'
+      }
+    }
+  },
 
   ////////////////
   // ADMIN //

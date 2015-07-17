@@ -42,7 +42,7 @@
 config/local.js
 config/env/development.js
 config/env/production.js
-
+deployconfig.json
 
 
 ################################################

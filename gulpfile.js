@@ -88,3 +88,21 @@ var gulp = require('gulp'),
 	invokeConfigFn(registerDefinitions);
 
 //};
+
+var rsync = require('gulp-rsync');
+
+gulp.task('deploy', function() {
+  gulp.src('./')
+    .pipe(rsync({
+      "host": "SitePreProd@40.114.241.204",
+      "port": "25015",
+      "root": "../../../",
+      "destination": "/home/SitePreProd/ambient-it-website/",
+      incremental: true,
+      progress: true,
+      relative: true,
+      emptyDirectories: true,
+      recursive: true,
+      "exclude": ["node_modules/**", "assets/admin/lib",".tmp/**"]
+    }));
+});
