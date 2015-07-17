@@ -35,16 +35,19 @@ angular.module('contact', ['ngMessages','ngAnimate','ui.select','ui.bootstrap'])
               animation: true,
               templateUrl: 'templates/after-contact-dialog.tpl.html',
               controller: ['$modalInstance',function($modalInstance){
-                this.close = function(){
+                var dialog = this;
+                dialog.close = function(){
                   $modalInstance.close();
                 };
-                this.message = 'Nous avons bien reçus votre demande, nous vous recontacterons dans les plus bref delais.'
+                dialog.message = 'Nous avons bien reçus votre demande, nous vous recontacterons dans les plus bref delais.';
               }],
               controllerAs: 'dialog',
-              size: 'sm'
+              size: 'sm',
+              keyboard: false,
+              backdrop: 'static'
             })
               .result.then(function(){
-                window.location.href = 'http://localhost:1337/'
+                window.location.href = 'http://localhost:1337/';
               })
           })
           .catch(function(err){
@@ -56,10 +59,12 @@ angular.module('contact', ['ngMessages','ngAnimate','ui.select','ui.bootstrap'])
                   $modalInstance.close();
                 };
                 this.isError = true;
-                this.message = 'Notre serveur rencontre des difficultés, merci de recommencer plus tard.'
+                this.message = 'Notre serveur rencontre des difficultés, merci de recommencer plus tard.';
               },
               controllerAs: 'dialog',
-              size: 'sm'
+              size: 'sm',
+              keyboard: false,
+              backdrop: 'static'
             })
           })
       }
