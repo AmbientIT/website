@@ -89,33 +89,55 @@ var gulp = require('gulp'),
 
 //};
 
-var rsync = require('gulp-rsync');
-fs = require('fs');
+  var rsync = require('gulp-rsync');
+  fs = require('fs');
+  var exec = require('gulp-exec');
+  var runSequence = require('run-sequence');
 
-gulp.task('deploy', function() {
-  gulp.src(["."])
-    .pipe(rsync(require('./deployconfig.json')));
-});
 
-//var GulpSSH = require('gulp-ssh');
-//
-//var config = {
-//  host: '40.114.241.204',
-//  port: 25015,
-//  username: 'SitePreProd',
-//  privateKey: fs.readFileSync('/home/charl/.ssh/AmbientPreProd')
-//};
-//
-//
-//var gulpSSH = new GulpSSH({
-//  ignoreErrors: false,
-//  sshConfig: config
-//});
-//
-//
-//gulp.task('deploy',function () {
-//  return gulpSSH
-//    .shell(['cd /home/SitePreProd/ambient-it-website', 'npm install', 'npm update', 'pm2 restart app.js'], {filePath: 'shell.log'})
-//    .pipe(gulp.dest('logs'))
-//});
+  gulp.task('rsync', function(){
+    gulp.src(["."])
+      .pipe(rsync(require('./deployconfig.json')));
+  });
 
+  gulp.task('deploy', function(done) {
+    runSequence('rsync','install-dep')
+  });
+
+//todo error with ng-admin :'(
+  gulp.task('build-admin', function(){
+    gulp.src('./')
+      .pipe(exec('jspm bundle-sfx src/main main.js', {
+        continueOnError: false,
+        pipeStdout: false,
+        customTemplatingThing: "test"
+      }))
+      .pipe(exec.reporter({
+        err: true,
+        stderr: true,
+        stdout: true
+      }));
+  });
+
+
+if(process.env !== 'production'){
+  var GulpSSH = require('gulp-ssh');
+
+  gulp.task('install-dep',function () {
+    var config = {
+      host: '40.114.241.204',
+      port: 25015,
+      username: 'SitePreProd',
+      privateKey: fs.readFileSync('/home/charl/.ssh/AmbientPreProd')
+    };
+
+    var gulpSSH = new GulpSSH({
+      ignoreErrors: false,
+      sshConfig: config
+    });
+
+    return gulpSSH
+      .shell(['cd /home/SitePreProd/ambient-it-website', 'npm install', 'npm update', 'jspm install','pm2 restart app.js'], {filePath: 'shell.log'})
+      .pipe(gulp.dest('logs'))
+  });
+}

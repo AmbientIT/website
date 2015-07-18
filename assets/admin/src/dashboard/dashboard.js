@@ -1,3 +1,5 @@
+import './dashboard.css!';
+
 import angular from 'angular';
 import directives from './directives/directives';
 import filters from './filters/filters';

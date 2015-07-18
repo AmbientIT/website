@@ -8,8 +8,8 @@
  */
 
 import 'github:marmelab/ng-admin@0.7.0/build/ng-admin.min.css!';
-//import 'github:FezVrasta/bootstrap-material-design@0.3.0/dist/css/material-fullpalette.min.css!';
-//import 'github:driftyco:ionicons@2.0.1/css/ionicons.min.css!';
+import 'github:angular-ui/ui-select@0.12.0/dist/select.min.css!';
+import 'github:FezVrasta/bootstrap-material-design@0.3.0/dist/css/material-fullpalette.min.css!';
 
 import angular from 'angular';
 import 'github:sahat/satellizer@0.11.2'

@@ -1,7 +1,7 @@
 export default class LoginController{
   constructor($auth,$location){
     this.$auth = $auth;
-    this.location = $location;
+    this.$location = $location;
     if($auth.isAuthenticated()){
       $location.path('/dashboard');
     }

@@ -5,6 +5,6 @@ export default ($stateProvider)=>{
     .state('login', {
       url: '/login',
       controller: 'LoginController as ctrl',
-      templateUrl: 'admin/app/login/login.tpl.html'
+      template: template
     });
 }

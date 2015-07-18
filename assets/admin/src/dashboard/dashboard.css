@@ -1,0 +1,10 @@
+
+.ui-select-bootstrap .ui-select-choices-row.active>a {
+  background-color: #009688;
+}
+
+.item{
+  text-transform: lowercase;
+  padding-left:5px!important;
+  padding-right:5px!important;
+}
