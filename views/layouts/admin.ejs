@@ -4,9 +4,7 @@
   <meta charset="utf-8">
   <title>AmbientIT Dashboard</title>
   <meta name="viewport" content="width=device-width">
-  <link rel="stylesheet" href="admin/lib/ng-admin/build/ng-admin.min.css">
-  <link rel="stylesheet" href="admin/lib/angular-ui-select/dist/select.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.css"/>
+  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material-fullpalette.css"/>-->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>
   <style>
 
@@ -23,13 +21,10 @@
 </head>
 <body>
 <%- body %>
-<!--TEMPLATES-->
-<script type="text/javascript" src="/jst.js"></script>
-<!--TEMPLATES END-->
-<script src="admin/lib/angular/angular.js" type="text/javascript"></script>
-<script src="admin/lib/ng-admin/build/ng-admin.min.js" type="text/javascript"></script>
-<script src="admin/lib/satellizer/satellizer.js"></script>
-<script src="admin/lib/angular-ui-select/dist/select.js"></script>
-<script src="admin/app.js" type="text/javascript"></script>
+<script src="admin/jspm_packages/system.js"></script>
+<script src="admin/config.js"></script>
+<script>
+  System.import('app/app');
+</script>
 </body>
 </html>

@@ -1,57 +1,59 @@
-<article>
-  <section class="container">
-    <div class="container-fluid">
-      <h1><%= formation.name%></h1>
-      <div class="row">
-        <section class="col-xs-12 col-md-8">
-          <%- formation.program %>
+<main class="container">
+  <article class="well">
+    <h1><%= formation.name %></h1>
+
+    <div class="row">
+      <section class="col-xs-12 col-md-8">
+        <%- formation.program %>
+      </section>
+      <aside class="col-xs-12 col-md-4">
+        <!--<section class="well">-->
+        <!--<p>-->
+        <!--durée : <%= formation.duration %> jours-->
+        <!--</p>-->
+
+        <!--<p>-->
+        <!--<%= formation.price %> € / participant-->
+        <!--</p>-->
+        <!--</section>-->
+        <section class="well">
+          <a href="/contact?formation=<% formation.slug %>" class="btn btn-primary btn-block">Demande de devis</a>
+
+          <p>
+            <%= formation.description %>
+          </p>
+
         </section>
-        <aside class="col-xs-12 col-md-4">
-          <!--<section class="well">-->
-            <!--<p>-->
-              <!--durée : <%= formation.duration %> jours-->
-            <!--</p>-->
-
-            <!--<p>-->
-              <!--<%= formation.price %> € / participant-->
-            <!--</p>-->
-          <!--</section>-->
-          <section class="well">
-            <a href="/contact?formation=<% formation.slug %>" class="btn btn-primary btn-block">Demande de devis</a>
-
-            <p>
-              <%= formation.description %>
-            </p>
-
-          </section>
-          <% if(formation.previous.length > 0) { %>
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title">Prérequis :</h3>
-            </div>
-            <div class="panel-body">
-              <div class="list-group">
-                <% formation.previous.forEach(function(formation){ %>
-                <div class="list-group-item">
-                  <div class="row-picture">
-                    <img class="circle" src="<%= formation.image || '/images/formation/logo.jpg' %>"  alt="<%= formation.name %> logo">
-                  </div>
-                  <div class="row-content">
-                    <a href="/formation/<%= formation.slug %>">
-                      <h4 class="list-group-item-heading">
-                        <%= formation.name %>
-                      </h4>
-                    </a>
-                    <p class="list-group-item-text">
-                      <%= formation.description %>
-                    </p>
-                  </div>
+        <% if(formation.previous.length > 0) { %>
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Prérequis :</h3>
+          </div>
+          <div class="panel-body">
+            <div class="list-group">
+              <% formation.previous.forEach(function(formation){ %>
+              <div class="list-group-item">
+                <div class="row-picture">
+                  <img class="circle" src="<%= formation.image || '/images/formation/logo.jpg' %>"
+                       alt="<%= formation.name %> logo">
                 </div>
-                <div class="list-group-separator"></div>
-                <% }) %>
+                <div class="row-content">
+                  <a href="/formation/<%= formation.slug %>">
+                    <h4 class="list-group-item-heading">
+                      <%= formation.name %>
+                    </h4>
+                  </a>
+
+                  <p class="list-group-item-text">
+                    <%= formation.description %>
+                  </p>
+                </div>
               </div>
+              <div class="list-group-separator"></div>
+              <% }) %>
             </div>
           </div>
+        </div>
           <% } %>
           <% if (formation.next.length > 0) { %>
           <div class="panel panel-primary">
@@ -63,7 +65,8 @@
                 <% formation.next.forEach(function(formation){ %>
                 <div class="list-group-item">
                   <div class="row-picture">
-                    <img class="circle" src="<%= formation.image || '/images/formation/logo.jpg' %>"  alt="<%= formation.name %> logo">
+                    <img class="circle" src="<%= formation.image || '/images/formation/logo.jpg' %>"
+                         alt="<%= formation.name %> logo">
                   </div>
                   <div class="row-content">
                     <a href="/formation/<%= formation.slug %>">
@@ -71,6 +74,7 @@
                         <%= formation.name %>
                       </h4>
                     </a>
+
                     <p class="list-group-item-text">
                       <%= formation.description %>
                     </p>
@@ -82,8 +86,7 @@
             </div>
           </div>
           <% } %>
-        </aside>
-      </div>
+      </aside>
     </div>
-  </section>
-</article>
+  </article>
+</main>

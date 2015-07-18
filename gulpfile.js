@@ -90,19 +90,32 @@ var gulp = require('gulp'),
 //};
 
 var rsync = require('gulp-rsync');
+fs = require('fs');
 
 gulp.task('deploy', function() {
-  gulp.src('./')
-    .pipe(rsync({
-      "host": "SitePreProd@40.114.241.204",
-      "port": "25015",
-      "root": "../../../",
-      "destination": "/home/SitePreProd/ambient-it-website/",
-      incremental: true,
-      progress: true,
-      relative: true,
-      emptyDirectories: true,
-      recursive: true,
-      "exclude": ["node_modules/**", "assets/admin/lib",".tmp/**"]
-    }));
+  gulp.src(["."])
+    .pipe(rsync(require('./deployconfig.json')));
 });
+
+//var GulpSSH = require('gulp-ssh');
+//
+//var config = {
+//  host: '40.114.241.204',
+//  port: 25015,
+//  username: 'SitePreProd',
+//  privateKey: fs.readFileSync('/home/charl/.ssh/AmbientPreProd')
+//};
+//
+//
+//var gulpSSH = new GulpSSH({
+//  ignoreErrors: false,
+//  sshConfig: config
+//});
+//
+//
+//gulp.task('deploy',function () {
+//  return gulpSSH
+//    .shell(['cd /home/SitePreProd/ambient-it-website', 'npm install', 'npm update', 'pm2 restart app.js'], {filePath: 'shell.log'})
+//    .pipe(gulp.dest('logs'))
+//});
+

@@ -68,8 +68,8 @@ deployconfig.json
 
 node_modules
 bower_components
-assets/admin/lib
-
+assets/admin/jspm_packages
+logs
 
 
 ################################################

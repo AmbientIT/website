@@ -1,10 +1,14 @@
 {
+  "hostname": "",
   "username": "",
-  "host": "",
   "port": "",
   "destination": "",
   "incremental": true,
   "progress": true,
+  "relative": true,
+  "emptyDirectories": true,
   "recursive": true,
-  "exclude": ["node_modules/**", "assets/admin/lib",".tmp/**"]
+  "compress": true,
+  "clean": true,
+  "exclude": ["node_modules",".git",".idea",".tmp", "logs","deployconfig.json"]
 }
