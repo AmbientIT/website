@@ -22,6 +22,7 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.7.0",
     "core-js": "npm:core-js@0.9.18",
     "css": "npm:jspm-loader-css@0.1.6",
+    "driftyco/ionicons": "github:driftyco/ionicons@2.0.1",
     "marmelab/ng-admin": "github:marmelab/ng-admin@0.7.0",
     "sahat/satellizer": "github:sahat/satellizer@0.11.2",
     "text": "github:systemjs/plugin-text@0.0.2",

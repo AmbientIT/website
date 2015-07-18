@@ -73,6 +73,7 @@
       "angular": "github:angular/bower-angular@^1.4.3",
       "angular-ui-select": "github:angular-ui/ui-select@^0.12.0",
       "css": "npm:jspm-loader-css@^0.1.6",
+      "driftyco/ionicons": "github:driftyco/ionicons@^2.0.1",
       "marmelab/ng-admin": "github:marmelab/ng-admin@^0.7.0",
       "sahat/satellizer": "github:sahat/satellizer@^0.11.2",
       "text": "github:systemjs/plugin-text@^0.0.2"
