@@ -1,6 +1,8 @@
 {
   "hooks": {
-    "session": false
+    "session": false,
+    "i18n": false,
+    "crsf": false
   },
   "generators": {
     "modules": {}

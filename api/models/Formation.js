@@ -6,6 +6,7 @@
 */
 
 var fs = require('fs-promise');
+var path = require('path');
 
 module.exports = {
   attributes: {
@@ -85,27 +86,13 @@ module.exports = {
       })
   },
   afterCreate: function(obj,cb){
-    return Promise.all([
-      Category
-        .findOne({id: obj.category}),
-      Formation
-        .findOne({id:obj.id})
-        .populate('next')
-        .populate('previous')
-        .populate('image')
-        .populate('trainers')
-      ])
-      .then(function(results) {
-        if(results[1].image.file){
-          results[1].image = 'data:image/png;base64,'+results[1].image.file;
-        }else{
-          results[1].image = '/images/formation.logo.jpg'
-        }
-        results[0].formations.push(obj);
-        return Promise.all([
-          pdfGenerator.fromEjs('formation', results[1], results[1].slug),
-          results[0].save()
-        ])
+    console.log('after create');
+
+    return Category
+      .findOne({id: obj.category})
+      .then(function(result) {
+        result.formations.push(obj);
+        return result.save();
       })
       .then(function(){
         return cb(null,obj);
@@ -115,20 +102,23 @@ module.exports = {
       })
   },
   afterUpdate: function(obj, cb){
-   return  Formation
+    console.log('after update', obj);
+
+    return  Formation
      .findOne({id:obj.id})
      .populate('next')
      .populate('previous')
      .populate('image')
      .populate('trainers')
      .then(function(result) {
-       if(result.image.file){
-         result.image = 'data:image/png;base64,'+result.image.file;
-       }else{
-         result.image = '/images/formation.logo.jpg'
-       }
+        result.image ? result.image = 'data:image/png;base64,'+result.image.file : result.image = '/images/formation.logo.jpg';
+
        return pdfGenerator
-         .fromEjs('formation', result, result.slug);
+           .fromEjs('formation', result, result.slug);
+     })
+     .then(function(){
+       return fs
+         .copy(path.resolve(__dirname,'../../assets/pdf/'+obj.slug+'.pdf'), path.resolve( __dirname,'../../.tmp/public/pdf/'+obj.slug+'.pdf'));
      })
      .then(function(){
        return cb(null,obj);

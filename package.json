@@ -7,6 +7,7 @@
   "dependencies": {
     "easyimage": "^2.0.3",
     "ejs": "~0.8.4",
+    "fs-extra": "^0.22.1",
     "fs-promise": "^0.3.1",
     "grunt": "0.4.2",
     "grunt-contrib-clean": "~0.5.0",
@@ -45,8 +46,9 @@
     "supertest": "^1.0.1"
   },
   "scripts": {
+    "preinstall": "sh ./.admin/prepareServer.sh",
     "start": "nodemon app.js  --ignore package.json --ignore node_modules/* --ignore assets/admin/jspm_packages",
-    "postinstall": "jspm install"
+    "postinstall": "jspm install "
   },
   "main": "app.js",
   "repository": {

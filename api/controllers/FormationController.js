@@ -37,11 +37,7 @@ module.exports = {
       .populate('trainers')
       .then(function(result){
         result.forEach(function(formation){
-          if(formation.image.file){
-            formation.image = 'data:image/png;base64,'+formation.image.file;
-          }else{
-            formation.image = '/images/formation.logo.jpg'
-          }
+          formation.image ? formation.image = 'data:image/png;base64,'+formation.image.file : formation.image = '/images/formation.logo.jpg';
         });
         return res.json(result);
       })

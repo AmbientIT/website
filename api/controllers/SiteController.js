@@ -44,7 +44,7 @@ module.exports = {
         categories = _.uniq(categories, 'name');
 
         result.forEach(function(formation){
-          formation.image = 'data:image/png;base64,'+formation.image.file;
+          formation.image ? formation.image = 'data:image/png;base64,'+formation.image.file : formation.image = 'images/formation/logo.jpg';
           categories.forEach(function(category){
             if(category.name === formation.category.name){
               category.formations.push(formation);
@@ -68,7 +68,7 @@ module.exports = {
       .populate('next')
       .populate('previous')
       .then(function(result){
-        result.image = 'data:image/png;base64,' + result.image.file;
+        result.image ? result.image = 'data:image/png;base64,' + result.image.file : result.image = 'images/formation/logo.jpg';
         var nextPromises = [];
         var previousPromise = [];
         result.previous.forEach(function(formation){
@@ -84,11 +84,11 @@ module.exports = {
             result.next = data[1];
 
             result.previous.forEach(function(formation){
-              formation.image = 'data:image/png;base64,' + formation.image.file;
+              formation.image ? formation.image = 'data:image/png;base64,' + formation.image.file :  formation.image = '/images/formation/logo.jpg';
             });
 
             result.next.forEach(function(formation){
-              formation.image = 'data:image/png;base64,' + formation.image.file;
+              formation.image ? formation.image = 'data:image/png;base64,' + formation.image.file : formation.image = '/images/formation/logo.jpg';
             });
 
             return res.view('site/formation',{
