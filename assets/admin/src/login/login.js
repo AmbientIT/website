@@ -1,7 +1,8 @@
 import angular from 'angular';
 import 'github:sahat/satellizer@0.11.2';
-import LoginController from './LoginController';
 import routing from './routing';
+
+import LoginController from './LoginController';
 
 export default angular.module('ai.login',[
   'satellizer'

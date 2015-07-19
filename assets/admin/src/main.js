@@ -26,6 +26,8 @@ angular.module('ai.admin', [
   dashboard.name
 ])
   .run(($rootScope, $location, $auth)=>{
+    $rootScope.isLoading = false;
+
     $auth.isAuthenticated() ? $location.path('/dashboard') : $location.path('/login');
 
     $rootScope.$on('$stateChangeSuccess', function () {
