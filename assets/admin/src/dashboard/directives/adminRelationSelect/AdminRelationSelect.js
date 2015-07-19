@@ -10,7 +10,7 @@ export default ($http)=>{
     template: template,
     link: function(scope,element,attrs){
       if(!scope.data){
-        scope.data[scope.relationName] = [];
+        scope.data[scope.attrName] = [];
       }
       $http.get('/api/'+scope.relationName)
         .success(function(data){

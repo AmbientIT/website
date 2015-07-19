@@ -53,8 +53,8 @@
     "supertest": "^1.0.1"
   },
   "scripts": {
-    "start": "nodemon app.js  --ignore package.json --ignore node_modules/* --ignore assets/* --ignore bower.json",
-    "postinstall": "bower i"
+    "start": "nodemon app.js  --ignore package.json --ignore node_modules/* --ignore assets/admin/jspm_packages",
+    "postinstall": "jspm install"
   },
   "main": "app.js",
   "repository": {
