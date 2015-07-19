@@ -1,0 +1,19 @@
+var wkhtmltopdf = require('wkhtmltopdf');
+var ejs = require('ejs');
+var fs = require('fs');
+
+module.exports = {
+  fromEjs: function (template, data, output) {
+    return new Promise(function(resolve, reject){
+      try{
+        var file = fs.readFileSync(__dirname + '/../../views/pdf/'+template+'.ejs', 'ascii');
+        var html = ejs.render(file, {locals: data});
+        return wkhtmltopdf(html,{ output: 'assets/pdf/' + output + '.pdf' }, function(){
+          return resolve();
+        });
+      }catch(err){
+        return reject(err);
+      }
+    });
+  }
+};

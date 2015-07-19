@@ -5,8 +5,8 @@
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
 
-var ejs = require('ejs'),
-  fs = require('fs');
+var ejs = require('ejs');
+var fs = require('fs');
 
 module.exports = {
   attributes: {
@@ -60,14 +60,12 @@ module.exports = {
           return user.email;
         });
 
-        console.log(usersMail);
-
         var file = fs.readFileSync(__dirname + '/../../views/email/contact.ejs', 'ascii');
         var html = ejs.render(file, { locals: obj });
         var options = {
           to: usersMail,
           subject: "Nouveau contact sur le site",
-          text: html
+          html: html
         };
         return mailer
           .send(options)

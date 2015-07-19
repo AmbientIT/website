@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+  <style>
+    html, body, main{
+      height:100%;
+    }
+  </style>
+</head>
+<body class="container">
+<header>
+  <div>
+    <img src="http://ambientpreprod.cloudapp.net/images/logo/logos web-04.png" alt="ambient-it logo" height="50px"/>
+  </div>
+</header>
+<main style="position:relative;">
+  <article>
+    <h1 style="text-align:center;">
+      Formation
+      <%= name %>
+    </h1>
+    <br/>
+    <br/>
+    <p style="padding-left:20px;">
+      <%- program %>
+    </p>
+  </article>
+  <section>
+    <% if(previous.length > 0) { %>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Prérequis :</h3>
+      </div>
+      <div class="panel-body">
+        <div class="list-group">
+          <% previous.forEach(function(formation){ %>
+          <div class="list-group-item formation-item">
+            <!--<div class="row-picture">-->
+              <!--<img class="circle" src="<%= formation.image || 'http://ambientpreprod.cloudapp.net/images/formation/logo.jpg' %>"-->
+                   <!--alt="<%= formation.name %> logo">-->
+            <!--</div>-->
+            <div class="row-content">
+              <a href="/formation/<%= formation.slug %>">
+                <h4 class="list-group-item-heading">
+                  <%= formation.name %>
+                </h4>
+              </a>
+              <p class="list-group-item-text">
+                <%= formation.description %>
+              </p>
+            </div>
+          </div>
+          <div class="list-group-separator"></div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+    <% } %>
+    <% if (next.length > 0) { %>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Pour la suite :</h3>
+      </div>
+      <div class="panel-body">
+        <div class="list-group">
+          <% next.forEach(function(formation){ %>
+          <div class="list-group-item formation-item">
+            <div class="row-picture">
+              <img class="circle" src="<%= formation.image || 'http://ambientpreprod.cloudapp.net/images/formation/logo.jpg' %>"
+                   alt="<%= formation.name %> logo">
+            </div>
+            <div class="row-content">
+              <a href="/formation/<%= formation.slug %>">
+                <h4 class="list-group-item-heading">
+                  <%= formation.name %>
+                </h4>
+              </a>
+              <p class="list-group-item-text">
+                <%= formation.description %>
+              </p>
+            </div>
+          </div>
+          <div class="list-group-separator"></div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+    <% } %>
+  </section>
+</main>
+
+</body>
+</html>

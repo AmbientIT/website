@@ -17,8 +17,14 @@
         <!--</p>-->
         <!--</section>-->
         <section class="well">
-          <a href="/contact?formation=<% formation.slug %>" class="btn btn-primary btn-block">Demande de devis</a>
-
+          <a href="/formation/<%= formation.slug %>/pdf" class="btn btn-primary btn-block">Telecharger le pdf</a>
+          <a href="/contact?formation=<%= formation.slug %>" class="btn btn-primary btn-block">Demande de devis</a>
+          <br/>
+          <% if(formation.duration){ %>
+          <p>
+            durée : <%= formation.duration %> jours
+          </p>
+          <% } %>
           <p>
             <%= formation.description %>
           </p>
@@ -63,7 +69,7 @@
             <div class="panel-body">
               <div class="list-group">
                 <% formation.next.forEach(function(formation){ %>
-                <div class="list-group-item">
+                <div class="list-group-item formation-item">
                   <div class="row-picture">
                     <img class="circle" src="<%= formation.image || '/images/formation/logo.jpg' %>"
                          alt="<%= formation.name %> logo">

@@ -108,6 +108,10 @@ module.exports.routes = {
   'post /api/upload/media': {
     controller: 'Media',
     action: 'base64AndCreate'
+  },
+  'get /formation/:slug/pdf': {
+    controller: 'formation',
+    action: 'toPdf'
   }
 
 };

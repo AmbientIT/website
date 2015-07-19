@@ -36,6 +36,7 @@ module.exports.policies = {
    ***************************************************************************/
   FormationController: {
     '*': 'auth',
+    'toPdf':true,
     'find': true
   },
   CategoryController: {
