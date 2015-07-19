@@ -101,7 +101,7 @@ var gulp = require('gulp'),
   });
 
   gulp.task('deploy', function(done) {
-    runSequence('rsync','install-dep',done)
+    runSequence('rsync','install-dep',[done])
   });
 
 //todo error with ng-admin :'(
