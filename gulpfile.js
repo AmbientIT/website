@@ -139,5 +139,5 @@ if(process.env !== 'production'){
     return gulpSSH
       .shell(['cd /home/SitePreProd/ambient-it-website', 'npm install', 'npm update', 'jspm install','pm2 restart app.js'], {filePath: 'shell.log'})
       .pipe(gulp.dest('logs'))
-  });
+  })
 }
