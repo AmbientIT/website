@@ -8,24 +8,27 @@
  * - the `tasks/pipeline.js` file
  * and re-run the appropriate tasks.
  *
+ * For usage docs see:
+ * 		https://github.com/gruntjs/grunt-contrib-watch
  *
  */
-module.exports = function(gulp, plugins, growl) {
-	var server = plugins.livereload();
-	gulp.task('watch:api', function() {
-		// Watch Style files
-		return gulp.watch('api/**/*', ['syncAssets'])
-				.on('change', function(file) {
-					server.changed(file.path);
-				});
+module.exports = function(grunt) {
+
+	grunt.config.set('watch', {
+		api: {
+
+			// API files to watch:
+			files: ['api/**/*', '!**/node_modules/**']
+		},
+		assets: {
+
+			// Assets to watch:
+			files: ['assets/**/*', 'tasks/pipeline.js', '!**/node_modules/**', '!assets/admin/jspm_packages/**'],
+
+			// When assets are changed:
+			tasks: ['syncAssets' , 'linkAssets']
+		}
 	});
 
-	gulp.task('watch:assets', function() {
-		// Watch assets
-		return gulp.watch(['assets/**/*', 'tasks/pipeline.js', '!assets/admin/**/*'], ['syncAssets'])
-				.on('change', function(file) {
-					server.changed(file.path);
-				});
-	});
-
+	grunt.loadNpmTasks('grunt-contrib-watch');
 };

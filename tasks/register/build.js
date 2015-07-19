@@ -1,11 +1,8 @@
-module.exports = function (gulp, plugins) {
-	gulp.task('build', function (cb) {
-		plugins.sequence(
-			'compileAssets',
-			'linkAssetsBuild',
-			'clean:build',
-			'copy:build',
-			cb
-		);
-	});
+module.exports = function (grunt) {
+	grunt.registerTask('build', [
+		'compileAssets',
+		'linkAssetsBuild',
+		'clean:build',
+		'copy:build'
+	]);
 };

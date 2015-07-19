@@ -3,18 +3,18 @@
  *
  * ---------------------------------------------------------------
  *
- * This gulp task is configured to clean out the contents in the .tmp/public of your
+ * This grunt task is configured to clean out the contents in the .tmp/public of your
  * sails project.
  *
+ * For usage docs see:
+ * 		https://github.com/gruntjs/grunt-contrib-clean
  */
- var rimraf = require('rimraf');
-module.exports = function(gulp, plugins, growl) {
-	gulp.task('clean:dev', function(cb) {
-      return rimraf('.tmp/public', cb);
+module.exports = function(grunt) {
+
+	grunt.config.set('clean', {
+		dev: ['.tmp/public/**'],
+		build: ['www']
 	});
-	gulp.task('clean:build', function() {
-		return gulp.src(['www/**/*.*', 'www{,/**}'], {read: false})
-				.pipe(plugins.rimraf({ force: true }))
-				.pipe(plugins.if(growl, plugins.notify({ message: 'Clean task complete' })));
-	});
+
+	grunt.loadNpmTasks('grunt-contrib-clean');
 };

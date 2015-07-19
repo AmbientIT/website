@@ -43,7 +43,7 @@ config/local.js
 config/env/development.js
 config/env/production.js
 deployconfig.json
-
+.admin/uploadSSH.sh
 
 ################################################
 # Dependencies
@@ -67,10 +67,10 @@ deployconfig.json
 ################################################
 
 node_modules
-bower_components
 assets/admin/jspm_packages
 logs
-
+assets/pdf/*
+!assets/pdf/demo.pdf
 
 ################################################
 # Sails.js / Waterline / Grunt

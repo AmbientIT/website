@@ -57,24 +57,6 @@ module.exports = {
         return res.json(result);
       })
       .catch(res.serverError);
-  },
-  toPdf: function(req,res){
-    return Formation
-      .findOne({slug: req.params.slug})
-      .populate('next')
-      .populate('image')
-      .populate('previous')
-      .populate('trainers')
-      .then(function(formation){
-        if(formation.image.file){
-          formation.image = 'data:image/png;base64,'+formation.image.file;
-        }else{
-          formation.image = '/images/formation.logo.jpg'
-        }
-        return pdfGenerator
-          .fromEjs('formation',formation)
-          .pipe(res);
-      }).catch(res.serverError)
   }
 };
 

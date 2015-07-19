@@ -5,6 +5,8 @@
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
 
+var fs = require('fs-promise');
+
 module.exports = {
   attributes: {
     name: {
@@ -134,6 +136,17 @@ module.exports = {
      .catch(function(err){
        return cb(err);
      })
+  },
+  afterDestroy: function(obj,cb){
+    console.log(obj);
+    return fs
+      .unlink(__dirname + '/../../assets/pdf/' + obj[0].slug + '.pdf')
+      .then(function(){
+        return cb(null);
+      })
+      .catch(function(err){
+        return cb(err);
+      })
   }
 };
 

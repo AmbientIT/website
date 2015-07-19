@@ -1,9 +1,10 @@
-module.exports = function (gulp, plugins) {
-	gulp.task('linkAssetsBuildProd', function(cb) {
-		plugins.sequence(
-			'sails-linker-gulp:prodAssetsRelative',
-			'sails-linker-gulp:prodViewsRelative',
-			cb
-		);
-	});
+module.exports = function (grunt) {
+	grunt.registerTask('linkAssetsBuildProd', [
+		'sails-linker:prodJsRelative',
+		'sails-linker:prodStylesRelative',
+		'sails-linker:devTpl',
+		'sails-linker:prodJsRelativeJade',
+		'sails-linker:prodStylesRelativeJade',
+		'sails-linker:devTplJade'
+	]);
 };
