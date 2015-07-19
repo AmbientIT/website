@@ -47,7 +47,7 @@ angular.module('contact', ['ngMessages','ngAnimate','ui.select','ui.bootstrap'])
               backdrop: 'static'
             })
               .result.then(function(){
-                window.location.href = 'http://localhost:1337/';
+                window.location.href = 'http://ambientpreprod.cloudapp.net/';
               })
           })
           .catch(function(err){

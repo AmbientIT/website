@@ -95,13 +95,13 @@ var gulp = require('gulp'),
   var runSequence = require('run-sequence');
 
 
-  gulp.task('rsync', function(){
+  gulp.task('rsync', function(done){
     gulp.src(["."])
       .pipe(rsync(require('./deployconfig.json')));
   });
 
   gulp.task('deploy', function(done) {
-    runSequence('rsync','install-dep')
+    runSequence('rsync','install-dep',done)
   });
 
 //todo error with ng-admin :'(

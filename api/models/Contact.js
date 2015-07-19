@@ -5,6 +5,9 @@
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
 
+var ejs = require('ejs'),
+  fs = require('fs');
+
 module.exports = {
   attributes: {
     gender: {
@@ -53,20 +56,29 @@ module.exports = {
     return User
       .find()
       .then(function(users){
-        var usersMail = _.map(users, function(user){
+        var usersMail = users.map(function(user){
           return user.email;
         });
+
+        console.log(usersMail);
+
+        var file = fs.readFileSync(__dirname + '/../../views/email/contact.ejs', 'ascii');
+        var html = ejs.render(file, { locals: obj });
         var options = {
           to: usersMail,
-          subject: "Nouveau contact sur le site"
+          subject: "Nouveau contact sur le site",
+          text: html
         };
-        return sails.hooks.email.send('./contact', obj, options, function(err,data){
-          if(err){
-            return cb(err)
-          }
-          return cb(null,data);
-        })
-
+        return mailer
+          .send(options)
+      })
+      .then(function(result){
+        console.log(result)
+        return cb(null,result)
+      })
+      .catch(function(err){
+        console.log(err);
+        return cb(err);
       });
   }
 };
