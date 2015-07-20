@@ -40,7 +40,7 @@
               <% formation.previous.forEach(function(formation){ %>
               <div class="list-group-item formation-item">
                 <div class="row-picture">
-                  <img class="circle" src="<%= formation.image || '/images/formation/logo.jpg' %>"
+                  <img class="circle" src="<%= formation.avatar%>"
                        alt="<%= formation.name %> logo">
                 </div>
                 <div class="row-content">
@@ -71,7 +71,7 @@
                 <% formation.next.forEach(function(formation){ %>
                 <div class="list-group-item formation-item">
                   <div class="row-picture">
-                    <img class="circle" src="<%= formation.image || '/images/formation/logo.jpg' %>"
+                    <img class="circle" src="<%= formation.avatar %>"
                          alt="<%= formation.name %> logo">
                   </div>
                   <div class="row-content">

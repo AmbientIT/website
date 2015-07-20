@@ -8,31 +8,27 @@
 module.exports = {
   find: function(req, res){
     if(req.query._page){
-      return Promise
-        .all([
-          Contact
-            .find()
-            .populate('formations')
-            .sort(req.query._sortField + ' '+req.query._sortDir)
-            .paginate({page: req.query._page , limit: req.query._perPage }),
-          Contact.count()
-        ])
-        .then(function(results) {
-          res.set('X-Total-Count',results[1]);
-          return res.json(results[0]);
-        })
+      return Promise.all([
+        Contact.find()
+          .populate('formations')
+          .sort(req.query._sortField + ' '+req.query._sortDir)
+          .paginate({page: req.query._page , limit: req.query._perPage }),
+        Contact.count()
+      ])
+      .then(function(results) {
+        res.set('X-Total-Count',results[1]);
+        return res.json(results[0]);
+      })
     }
 
-    return Contact
-      .find(req.query)
+    return Contact.find(req.query)
       .then(function(result){
         return res.json(result);
       })
       .catch(res.serverError);
   },
   findOne: function(req, res){
-    return Contact
-      .findOne({ id : req.params.id })
+    return Contact.findOne({ id : req.params.id })
       .populate('formations')
       .then(function(result){
         return res.json(result);

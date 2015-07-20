@@ -40,8 +40,7 @@ module.exports = {
   },
   beforeCreate: function(obj,cb){
     if(obj.user){
-      return User
-        .findOne({id:obj.user})
+      return User.findOne({id:obj.user})
         .then(function(user){
           if(user){
             obj.displayName = user.displayName;

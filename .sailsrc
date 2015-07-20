@@ -5,6 +5,8 @@
     "crsf": false
   },
   "generators": {
-    "modules": {}
+    "modules": {
+      "api": "sails-generate-api"
+    }
   }
 }

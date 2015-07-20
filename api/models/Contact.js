@@ -53,13 +53,11 @@ module.exports = {
     cb(null);
   },
   afterCreate: function(obj,cb){
-    return User
-      .find()
+    return User.find()
       .then(function(users){
         var usersMail = users.map(function(user){
           return user.email;
         });
-
         var file = fs.readFileSync(__dirname + '/../../views/email/contact.ejs', 'ascii');
         var html = ejs.render(file, { locals: obj });
         var options = {
@@ -67,15 +65,12 @@ module.exports = {
           subject: "Nouveau contact sur le site",
           html: html
         };
-        return mailer
-          .send(options)
+        return mailer.send(options)
       })
       .then(function(result){
-        console.log(result)
         return cb(null,result)
       })
       .catch(function(err){
-        console.log(err);
         return cb(err);
       });
   }

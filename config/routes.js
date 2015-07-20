@@ -105,8 +105,12 @@ module.exports.routes = {
     controller: 'User',
     action: 'me'
   },
+  'post /api/upload/avatar': {
+    controller: 'Formation',
+    action: 'transformAvatar'
+  },
   'post /api/upload/media': {
     controller: 'Media',
-    action: 'base64AndCreate'
+    action: 'upload'
   }
 };

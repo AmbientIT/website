@@ -5,9 +5,14 @@
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
 
+var fs = require('fs-promise');
+var mime = require('mime');
+var path = require('path');
+
 module.exports = {
+
   attributes: {
-    file: {
+    url: {
       type: 'string'
     },
     type: {
@@ -19,12 +24,35 @@ module.exports = {
     size: {
       type: 'integer'
     },
-    originalName: {
-      type: 'string'
-    },
     description: {
       type: 'string'
     }
+  },
+  beforeCreate: function(obj, cb){
+    try{
+      obj.type = mime.lookup(obj.url);
+    }catch(err){
+      cb(err);
+    }
+    return fs
+      .rename(obj.url, path.resolve(__dirname, '../../assets/images/upload/' + obj.name + '.' + mime.extension(obj.type)))
+      .then(function(){
+        obj.url = sails.config.url + '/assets/images/upload/'+ obj.name + '.' + mime.extension(obj.type);
+        return cb(null, obj);
+      })
+      .catch(function(err){
+        return cb(err);
+      })
+  },
+  afterDestroy: function(obj,cb){
+    return  fs
+      .unlink(obj[0].url.replace(sails.config.url, path.resolve(__dirname,'../../')))
+      .then(function(){
+        return cb(null);
+      })
+      .catch(function(err){
+        return cb(err);
+      })
   }
 };
 

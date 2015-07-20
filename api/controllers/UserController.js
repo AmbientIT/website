@@ -9,25 +9,21 @@ var jwt = require('jwt-simple');
 
 module.exports = {
   find: function(req, res){
-    console.log(req.query);
     if(req.query._page){
-      return Promise
-        .all([
-          User
-            .find()
-            .sort(req.query._sortField + ' '+req.query._sortDir)
-            .paginate({page: req.query._page , limit: req.query._perPage }),
-          User.count()
-        ])
-        .then(function(results) {
-          res.set('X-Total-Count',results[1])
-          return res.json(results[0]);
-        })
-        .catch(res.serverError)
+      return Promise.all([
+        User.find()
+          .sort(req.query._sortField + ' '+req.query._sortDir)
+          .paginate({page: req.query._page , limit: req.query._perPage }),
+        User.count()
+      ])
+      .then(function(results) {
+        res.set('X-Total-Count',results[1])
+        return res.json(results[0]);
+      })
+      .catch(res.serverError)
     }
 
-    return User
-      .find(req.query)
+    return User.find(req.query)
       .then(function(result){
         return res.json(result)
       })
@@ -58,13 +54,12 @@ module.exports = {
               if (!user) {
                 return res.status(400).send({ message: 'User not found' });
               }
-              return User
-                .update({id:user.id},{
-                  google : profile.sub,
-                  picture: user.picture || profile.picture.replace('sz=50', 'sz=200'),
-                  displayName : user.displayName || profile.name,
-                  email: profile.email
-                })
+              return User.update({id:user.id},{
+                google : profile.sub,
+                picture: user.picture || profile.picture.replace('sz=50', 'sz=200'),
+                displayName : user.displayName || profile.name,
+                email: profile.email
+              })
             })
             .then(function(updatedUser){
               res.json({ token:updatedUser.tokenify() })
@@ -73,7 +68,6 @@ module.exports = {
           // Step 3b. Create a new user account or return an existing one.
           User.findOne({ google: profile.sub })
             .then(function(existingUser) {
-              console.log(existingUser)
               if (existingUser) {
                 return res.send({ token: existingUser.tokenify() });
               }else{

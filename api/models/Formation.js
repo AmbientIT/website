@@ -21,6 +21,9 @@ module.exports = {
     category: {
       model: 'category'
     },
+    avatar: {
+      type: 'string'
+    },
     description : {
       type: 'string'
     },
@@ -49,8 +52,8 @@ module.exports = {
       collection: 'trainer',
       via: 'formations'
     },
-    image: {
-      model: 'media'
+    published: {
+      type: 'boolean'
     },
     homePage: {
       type: 'boolean'
@@ -61,7 +64,12 @@ module.exports = {
     //}
   },
   beforeCreate: function(obj,cb){
-    obj.slug = obj.name.toLowerCase().replace(/ /g,'');
+    try{
+      obj.slug = obj.name.toLowerCase().replace(/ /g,'');
+      obj.avatar ? obj.avatar = 'data:image/png;base64,' + obj.avatar : obj.avatar = sails.config.url + '/images/formation.logo.jpg';
+    }catch(err){
+      cb(err);
+    }
     var promises = [];
     if(obj.previous){
       obj.previous.forEach(function(formation){
@@ -104,11 +112,8 @@ module.exports = {
      .findOne({id:obj.id})
      .populate('next')
      .populate('previous')
-     .populate('image')
      .populate('trainers')
      .then(function(result) {
-        result.image ? result.image = 'data:image/png;base64,'+result.image.file : result.image = '/images/formation.logo.jpg';
-
        return pdfGenerator
            .fromEjs('formation', result, result.slug);
      })

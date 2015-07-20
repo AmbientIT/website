@@ -14,7 +14,6 @@ module.exports = {
             .find()
             .sort(req.query._sortField + ' '+req.query._sortDir)
             .paginate({page: req.query._page , limit: req.query._perPage })
-            .populate('image')
             .populate('category')
             .populate('next')
             .populate('previous')
@@ -33,12 +32,8 @@ module.exports = {
       .populate('category')
       .populate('next')
       .populate('previous')
-      .populate('image')
       .populate('trainers')
       .then(function(result){
-        result.forEach(function(formation){
-          formation.image ? formation.image = 'data:image/png;base64,'+formation.image.file : formation.image = '/images/formation.logo.jpg';
-        });
         return res.json(result);
       })
       .catch(res.serverError);
@@ -53,6 +48,26 @@ module.exports = {
         return res.json(result);
       })
       .catch(res.serverError);
+  },
+  transformAvatar: function (req, res) {
+    return req.file('file').upload(function (err, data) {
+      if (err) {
+        return res.serverError(err);
+      }
+      var size;
+      return imageManip.resizeAvatar(data[0])
+        .then(function (result) {
+          size = result.size;
+          return imageManip
+            .toBase64(result.path);
+        })
+        .then(function (base64) {
+          res.json({
+            base64: base64
+          });
+        })
+        .catch(res.serverError)
+    })
   }
 };
 
