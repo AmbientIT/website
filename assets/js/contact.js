@@ -2,14 +2,26 @@ angular.module('contact', ['ngMessages','ngAnimate','ui.select','ui.bootstrap'])
   .config(['$sceProvider',function($sceProvider){
     $sceProvider.enabled(false);
   }])
-  .controller('ContactFormController', ['$http','$modal',function ($http, $modal) {
+  .controller('ContactFormController', ['$http','$modal','$window',function ($http, $modal,$window) {
     var ctrl = this;
     ctrl.formations = [];
+
 
     $http
       .get('/api/formation')
       .success(function(formations){
         ctrl.formations = formations;
+        if($window.location.search){
+          ctrl.formData = {
+            formations: []
+          };
+          angular.forEach(formations,function(formation){
+            if($window.location.search.substr(11) === formation.slug){
+              console.log(formation);
+              ctrl.formData.formations.push(formation);
+            }
+          })
+        }
       });
 
     ctrl.formData = {};

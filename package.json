@@ -46,8 +46,8 @@
     "supertest": "^1.0.1"
   },
   "scripts": {
-    "preinstall": "sh ./.admin/prepareServer.sh",
-    "start": "nodemon app.js  --ignore package.json --ignore node_modules/* --ignore assets/admin/jspm_packages",
+    "preinstall": "sh ./.shellscript/prepareServer.sh",
+    "start": "nodemon app.js  --ignore package.json --ignore node_modules/* --ignore assets/**/* --ignore .tmp/*",
     "postinstall": "jspm install "
   },
   "main": "app.js",

@@ -78,7 +78,7 @@ module.exports = {
         });
         return Promise.all(promises);
       })
-      .then(function(result){
+      .then(function(){
         return cb(null,obj);
       })
       .catch(function(err){
@@ -86,8 +86,6 @@ module.exports = {
       })
   },
   afterCreate: function(obj,cb){
-    console.log('after create');
-
     return Category
       .findOne({id: obj.category})
       .then(function(result) {
@@ -102,8 +100,6 @@ module.exports = {
       })
   },
   afterUpdate: function(obj, cb){
-    console.log('after update', obj);
-
     return  Formation
      .findOne({id:obj.id})
      .populate('next')
@@ -128,9 +124,12 @@ module.exports = {
      })
   },
   afterDestroy: function(obj,cb){
-    console.log(obj);
-    return fs
-      .unlink(__dirname + '/../../assets/pdf/' + obj[0].slug + '.pdf')
+    return Promise.all([
+      fs
+        .unlink(__dirname + '/../../assets/pdf/' + obj[0].slug + '.pdf'),
+      fs
+        .unlink(__dirname + '/../../.tmp/public/pdf/' + obj[0].slug + '.pdf')
+    ])
       .then(function(){
         return cb(null);
       })
