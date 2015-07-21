@@ -29,8 +29,29 @@ module.exports = {
       })
       .catch(res.serverError)
   },
+  findOne: function(req, res){
+    return User.findOne({ slug: req.params.id })
+      .then(function(result){
+        return res.json(result);
+      })
+      .catch(res.serverError);
+  },
+  update: function(req, res){
+    return User.update({slug: req.params.id},req.body)
+      .then(function(result){
+        return res.json(result);
+      })
+      .catch(res.serverError);
+  },
+  destroy: function(req,res){
+    return User.destroy({slug:req.params.id})
+      .then(function(){
+        return res.send();
+      })
+      .catch(res.serverError);
+  },
   me: function(req, res){
-    res.json(req.user);
+    return res.json(req.user);
   },
   googleAuth: function(req,res){
     googleAuth.getProfileInfo(req.body.code,req.body.clientId,req.body.redirectUri)

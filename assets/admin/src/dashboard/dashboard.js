@@ -1,7 +1,7 @@
 import './dashboard.css!';
 
 import angular from 'angular';
-import directives from './directives/directives';
+import components from './components/components';
 import filters from './filters/filters';
 
 import categoryUi from './entities/category';
@@ -14,7 +14,7 @@ import projectUi from './entities/project';
 
 export default angular.module('ai.dashboard',[
   'ng-admin',
-  directives.name,
+  components.name,
   filters.name
 ])
   .config((NgAdminConfigurationProvider)=>{
@@ -25,28 +25,25 @@ export default angular.module('ai.dashboard',[
       .baseApiUrl('/api/');
 
     let contact = nga.entity('contact')
-      .identifier(nga.field('id'));
+      .identifier(nga.field('slug'));
 
     let formation = nga.entity('formation')
-      .identifier(nga.field('id'));
+      .identifier(nga.field('slug'));
 
     let category = nga.entity('category')
-      .identifier(nga.field('id'));
+      .identifier(nga.field('slug'));
 
     let user = nga.entity('user')
-      .identifier(nga.field('id'));
+      .identifier(nga.field('slug'));
 
     let media = nga.entity('media')
-      .identifier(nga.field('id'));
-
-    let avatar = nga.entity('avatar')
-      .identifier(nga.field('id'));
+      .identifier(nga.field('slug'));
 
     let trainer = nga.entity('trainer')
-      .identifier(nga.field('id'));
+      .identifier(nga.field('slug'));
 
     let project = nga.entity('project')
-      .identifier(nga.field('id'));
+      .identifier(nga.field('slug'));
 
     // set the application entities
     admin

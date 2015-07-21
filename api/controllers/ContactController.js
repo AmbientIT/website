@@ -28,10 +28,17 @@ module.exports = {
       .catch(res.serverError);
   },
   findOne: function(req, res){
-    return Contact.findOne({ id : req.params.id })
+    return Contact.findOne({ slug : req.params.id })
       .populate('formations')
       .then(function(result){
         return res.json(result);
+      })
+      .catch(res.serverError);
+  },
+  destroy: function(req,res){
+    return Contact.destroy({slug:req.params.id})
+      .then(function(){
+        return res.send();
       })
       .catch(res.serverError);
   }

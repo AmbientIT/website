@@ -5,6 +5,9 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
+var fs = require('fs-promise');
+var path = require('path');
+
 module.exports = {
 	homePage: function(req,res){
     return Promise.all([
@@ -67,6 +70,13 @@ module.exports = {
         })
       })
       .catch(res.serverError)
+  },
+  admin: function(req,res){
+    return fs.readFile(path.resolve(__dirname,'../../assets/admin/index.html'))
+      .then(function(html){
+        res.header('Content-Type', 'text/html');
+        res.send(html);
+      })
   }
 };
 

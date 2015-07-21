@@ -49,8 +49,12 @@ module.exports = {
     }else{
       obj.displayName =obj.lastName;
     }
-
-    cb(null);
+    try{
+      obj.slug = obj.name.toLowerCase().replace(/ /g,'');
+      return cb(null,obj);
+    }catch(err){
+      return cb(err);
+    }
   },
   afterCreate: function(obj,cb){
     return User.find()

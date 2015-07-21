@@ -5,6 +5,8 @@ export default (nga, formation, category)=>{
     .sortDir('DESC')
     .perPage(5)
     .fields([
+      nga.field('avatar','template')
+        .template('<admin-picture url="{{ entry.values.avatar }}" height="50px"></admin-picture>'),
       nga.field('name')
         .label('Nom')
         .attributes({placeholder: 'Le nom de la formation'})
@@ -49,6 +51,8 @@ export default (nga, formation, category)=>{
     .title('Formation {{ entry.values.name }}')
     .actions(['list','edit', 'delete'])
     .fields([
+      nga.field('avatar','template')
+        .template('<admin-picture url="{{ entry.values.avatar }}" height="50px"></admin-picture>'),
       nga.field('name')
         .label('Nom')
         .attributes({placeholder: 'Le nom de la formation'})

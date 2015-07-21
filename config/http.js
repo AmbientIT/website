@@ -39,8 +39,8 @@ module.exports.http = {
        'methodOverride',
        'poweredBy',
        '$custom',
-       'router',
        'www',
+       'router',
        'favicon',
        '404',
        '500'

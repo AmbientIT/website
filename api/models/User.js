@@ -39,6 +39,14 @@ module.exports = {
         throw err;
       }
     }
+  },
+  beforeCreate: function(obj, cb){
+    try{
+      obj.slug = obj.displayName.toLowerCase().replace(/ /g,'');
+      return cb(null,obj);
+    }catch(err){
+      return cb(err);
+    }
   }
 };
 

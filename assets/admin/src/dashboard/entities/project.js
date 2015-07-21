@@ -18,14 +18,18 @@ export default (nga, project, media, user)=>{
     .sortField('name')
     .sortDir('ASC')
     .fields([
-      project.dashboardView().fields()
+      project.dashboardView().fields(),
+      nga.field('user', 'reference')
+        .label('Chef de projet')
+        .targetEntity(user)
+        .targetField(nga.field('displayName'))
     ])
     .listActions(['show', 'edit', 'delete']);
 
   project.creationView()
     .title('Ajout d\'un nouveau formateur')
     .fields([
-      project.dashboardView().fields()
+      project.listView().fields()
     ]);
 
   project.editionView()

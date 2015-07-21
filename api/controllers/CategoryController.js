@@ -28,12 +28,26 @@ module.exports = {
       .catch(res.serverError);
   },
   findOne: function(req, res){
-    return Category.findOne({ id : req.params.id })
+    return Category.findOne({ slug : req.params.id })
       .populate('formations')
       .then(function(result){
         return res.json(result);
       })
       .catch(res.serverError);
-  }
+  },
+  update: function(req, res){
+    return Category.update({slug: req.params.id},req.body)
+      .then(function(result){
+        res.json(result);
+      })
+      .catch(res.serverError);
+  },
+  destroy: function(req,res){
+    return Category.destroy({slug:req.params.id})
+      .then(function(){
+        res.send();
+      })
+      .catch(res.serverError);
+  },
 };
 

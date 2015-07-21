@@ -36,6 +36,9 @@ module.exports = {
     },
     home: {
       type: 'boolean'
+    },
+    slug: {
+      type:'string'
     }
   },
   beforeCreate: function(obj,cb){
@@ -43,9 +46,16 @@ module.exports = {
       return User.findOne({id:obj.user})
         .then(function(user){
           if(user){
-            obj.displayName = user.displayName;
-            obj.email = user.email;
-            return cb(null,obj);
+            try{
+              obj.displayName = user.displayName;
+              obj.email = user.email;
+              obj.slug = obj.displayName.toLowerCase().replace(/ /g,'');
+              return cb(null,obj);
+            }catch(err){
+              return cb(err);
+            }
+          }else{
+            cb(new Error('unknown user'));
           }
         })
         .catch(function(err){
@@ -55,8 +65,13 @@ module.exports = {
       if(!obj.firstName || !obj.lastName){
        return cb(new Error('missing firstName or lastName attribute'));
       }
-      obj.displayName = obj.firstName +' '+ obj.lastName;
-      return cb(null,obj);
+      try{
+        obj.displayName = obj.firstName +' '+ obj.lastName;
+        obj.slug = obj.displayName.toLowerCase().replace(/ /g,'');
+        return cb(null,obj);
+      }catch(err){
+        return cb(err);
+      }
     }
   }
 };

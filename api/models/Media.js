@@ -26,10 +26,14 @@ module.exports = {
     },
     description: {
       type: 'string'
+    },
+    slug: {
+      type: 'string'
     }
   },
   beforeCreate: function(obj, cb){
     try{
+      obj.slug = obj.name.toLowerCase().replace(/ /g,'');
       obj.type = mime.lookup(obj.url);
     }catch(err){
       cb(err);
@@ -37,7 +41,7 @@ module.exports = {
     return fs
       .rename(obj.url, path.resolve(__dirname, '../../assets/images/upload/' + obj.name + '.' + mime.extension(obj.type)))
       .then(function(){
-        obj.url = sails.config.url + '/assets/images/upload/'+ obj.name + '.' + mime.extension(obj.type);
+        obj.url = sails.config.url + '/images/upload/'+ obj.name + '.' + mime.extension(obj.type);
         return cb(null, obj);
       })
       .catch(function(err){

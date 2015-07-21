@@ -86,12 +86,10 @@ module.exports.routes = {
   // ADMIN //
   //////////////
 
-  //'/admin': {
-  //  view: 'admin/dashboard',
-  //  locals: {
-  //    layout: 'layouts/admin'
-  //  }
-  //},
+  '/admin/*': {
+    controller: 'Site',
+    action: 'admin'
+  },
 
   //////////
   // API //

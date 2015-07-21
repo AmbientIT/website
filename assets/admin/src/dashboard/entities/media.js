@@ -1,12 +1,12 @@
 export default (nga, media)=>{
   media.dashboardView()
-    .title('derniers uploads')
+    .title('derniers uploads multimedia')
     .sortField('createdAt')
     .sortDir('DESC')
     .perPage(5)
     .fields([
-      nga.field('file','template')
-        .template('<admin-picture base64="{{ entry.values.file }}" height="50px"></admin-picture>'),
+      nga.field('url','template')
+        .template('<admin-picture url="{{ entry.values.url }}" height="50px"></admin-picture>'),
       nga.field('name'),
       nga.field('size','template')
         .label('taille')
@@ -15,19 +15,15 @@ export default (nga, media)=>{
     ]);
 
   media.listView()
-    .title('Bibliothèque de multimédia')
+    .title('Bibliothèque multimédia')
     .description('List of media')
     .sortField('name')
     .sortDir('ASC')
     .infinitePagination(true)
     .fields([
-      nga.field('file','template')
-        .template('<admin-picture base64="{{ entry.values.file }}" height="50px"></admin-picture>'),
-      nga.field('name')
-        .label('nom du média'),
-      nga.field('size','template')
-        .label('taille')
-        .template('<span>{{ entry.values.size | size }}</span>')
+      media.dashboardView().fields(),
+      nga.field('resize_image', 'template')
+      .template('<resize-button></resize-button>')
     ])
     .listActions(['show', 'edit', 'delete']);
 
@@ -40,18 +36,17 @@ export default (nga, media)=>{
         .attributes({placeholder: 'le nom du média'})
         .validation({ required: true, maxlength:30}),
       nga.field('description')
-        .label('Descriion')
+        .label('Descripion')
         .attributes({placeholder: 'la description du média'})
-        .validation({ maxlength:200})
+        .validation({ maxlength:200}),
+      nga.field('url','file')
+        .label('avatar')
+        .uploadInformation({ 'url': '/api/upload/media', 'fileFormDataName': 'file', 'accept': 'image/*' ,'apifilename': 'picturePath'})
     ]);
 
   media.creationView()
     .title('upload un nouveau fichier')
-    .description('Pour pouvoir utiliser le fichiers il faudra ensuite le modifier et lui ajouter un nom')
     .fields([
-      nga.field('url','file')
-        .label('avatar')
-        .uploadInformation({ 'url': '/api/upload/media', 'fileFormDataName': 'file', 'accept': 'image/*' ,'apifilename': 'picturePath'}),
       media.editionView().fields()
     ]);
 
@@ -68,7 +63,7 @@ export default (nga, media)=>{
         .template('<span>{{ entry.values.size | size }}</span>'),
       nga.field('file','template')
         .label('sans modif')
-        .template('<admin-picture base64="{{ entry.values.file }}"  ></admin-picture>')
+        .template('<admin-picture url="{{ entry.values.url }}"  ></admin-picture>')
     ]);
 
   media.deletionView()

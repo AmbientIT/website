@@ -28,6 +28,28 @@ module.exports = {
         return res.json(result);
       })
       .catch(res.serverError);
+  },
+  findOne: function(req,res){
+    return Project.findOne({ slug: req.params.id })
+      .populate('formations')
+      .then(function(trainer){
+        return res.json(trainer);
+      })
+      .catch(res.serverError);
+  },
+  update: function(req, res){
+    return Project.update({slug: req.params.id},req.body)
+      .then(function(result){
+        return res.json(result);
+      })
+      .catch(res.serverError);
+  },
+  destroy: function(req,res){
+    return Project.destroy({slug:req.params.id})
+      .then(function(){
+        return res.send();
+      })
+      .catch(res.serverError);
   }
 };
 

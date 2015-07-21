@@ -20,7 +20,7 @@ module.exports = {
           trainer.price = parseInt(trainer.price);
         });
         res.set('X-Total-Count',results[1]);
-        res.json(results[0]);
+        return res.json(results[0]);
       })
       .catch(res.serverError);
     }
@@ -28,16 +28,29 @@ module.exports = {
     return Trainer.find(req.query)
       //.populate('formations')
       .then(function(result){
-        console.log(result);
         return res.json(result);
       })
       .catch(res.serverError)
   },
   findOne: function(req,res){
-    return Trainer.findOne({ id: req.params.id })
+    return Trainer.findOne({ slug: req.params.id })
       .populate('formations')
       .then(function(trainer){
         return res.json(trainer);
+      })
+      .catch(res.serverError);
+  },
+  update: function(req, res){
+    return Trainer.update({slug: req.params.id},req.body)
+      .then(function(result){
+        return res.json(result);
+      })
+      .catch(res.serverError);
+  },
+  destroy: function(req,res){
+    return Trainer.destroy({slug:req.params.id})
+      .then(function(){
+        return res.send();
       })
       .catch(res.serverError);
   }

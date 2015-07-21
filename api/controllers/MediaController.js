@@ -20,11 +20,33 @@ module.exports = {
         res.set('X-Total-Count',results[1])
         return res.json(results[0]);
       })
+      .catch(res.serverError);
     }
 
     return Media.find(req.query)
       .then(function(result){
         return res.json(result);
+      })
+      .catch(res.serverError);
+  },
+  findOne: function(req, res){
+    return Media.findOne({ slug: req.params.id })
+      .then(function(result){
+        return res.json(result);
+      })
+    .catch(res.serverError);
+  },
+  update: function(req, res){
+    return Media.update({slug: req.params.id},req.body)
+      .then(function(result){
+        return res.json(result);
+      })
+    .catch(res.serverError);
+  },
+  destroy: function(req,res){
+    return Media.destroy({slug:req.params.id})
+      .then(function(){
+        return res.send();
       })
       .catch(res.serverError);
   },

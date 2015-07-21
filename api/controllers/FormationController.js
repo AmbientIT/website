@@ -40,12 +40,26 @@ module.exports = {
   },
   findOne: function(req, res){
     return Formation
-      .findOne({ id : req.params.id })
+      .findOne({ slug : req.params.id })
       .populate('next')
       .populate('previous')
       .populate('trainers')
       .then(function(result){
         return res.json(result);
+      })
+      .catch(res.serverError);
+  },
+  update: function(req, res){
+    return Formation.update({slug: req.params.id},req.body)
+      .then(function(result){
+        res.json(result);
+      })
+      .catch(res.serverError);
+  },
+  destroy: function(req,res){
+    return Formation.destroy({slug:req.params.id})
+      .then(function(){
+        res.send();
       })
       .catch(res.serverError);
   },
