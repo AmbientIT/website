@@ -74,6 +74,7 @@ module.exports = {
   admin: function(req,res){
     return fs.readFile(path.resolve(__dirname,'../../assets/admin/index.html'))
       .then(function(html){
+        console.log(req.header('Content-Type'));
         res.header('Content-Type', 'text/html');
         res.send(html);
       })

@@ -3,6 +3,7 @@ import './dashboard.css!';
 import angular from 'angular';
 import components from './components/components';
 import filters from './filters/filters';
+import custom from './custom/custom';
 
 import categoryUi from './entities/category';
 import trainerUi from './entities/trainer';
@@ -12,10 +13,13 @@ import mediaUi from './entities/media';
 import userUi from './entities/user';
 import projectUi from './entities/project';
 
+import customLayoutTemplate from './custom/views/layout.tpl.html!text';
+
 export default angular.module('ai.dashboard',[
   'ng-admin',
   components.name,
-  filters.name
+  filters.name,
+  custom.name
 ])
   .config((NgAdminConfigurationProvider)=>{
     let nga = NgAdminConfigurationProvider;
@@ -23,6 +27,9 @@ export default angular.module('ai.dashboard',[
 
     let admin = nga.application('AmbientIT Back-Office')
       .baseApiUrl('/api/');
+
+    admin.layout(customLayoutTemplate);
+
 
     let contact = nga.entity('contact')
       .identifier(nga.field('slug'));

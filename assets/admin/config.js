@@ -17,7 +17,7 @@ System.config({
   "map": {
     "FezVrasta/bootstrap-material-design": "github:FezVrasta/bootstrap-material-design@0.3.0",
     "angular": "github:angular/bower-angular@1.4.3",
-    "angular-material": "github:angular/bower-material@0.10.0",
+    "angular-material": "github:angular/bower-material@0.10.1-rc2-master-eaa3324",
     "angular-ui-select": "github:angular-ui/ui-select@0.12.0",
     "babel": "npm:babel-core@5.7.4",
     "babel-runtime": "npm:babel-runtime@5.7.0",
@@ -38,6 +38,12 @@ System.config({
       "angular": "github:angular/bower-angular@1.4.3"
     },
     "github:angular/bower-material@0.10.0": {
+      "angular": "github:angular/bower-angular@1.4.3",
+      "angular-animate": "github:angular/bower-angular-animate@1.4.3",
+      "angular-aria": "github:angular/bower-angular-aria@1.4.3",
+      "css": "github:systemjs/plugin-css@0.1.13"
+    },
+    "github:angular/bower-material@0.10.1-rc2-master-eaa3324": {
       "angular": "github:angular/bower-angular@1.4.3",
       "angular-animate": "github:angular/bower-angular-animate@1.4.3",
       "angular-aria": "github:angular/bower-angular-aria@1.4.3",

@@ -9,9 +9,11 @@
 
 import 'github:marmelab/ng-admin@0.7.0/build/ng-admin.min.css!';
 import 'github:angular-ui/ui-select@0.12.0/dist/select.min.css!';
-import 'github:FezVrasta/bootstrap-material-design@0.3.0/dist/css/material-fullpalette.min.css!';
-
+import 'angular-material/angular-material.css!'
+//import 'github:FezVrasta/bootstrap-material-design@0.3.0/dist/css/material-fullpalette.min.css!';
+import ngMaterial from 'angular-material';
 import angular from 'angular';
+
 
 import 'github:sahat/satellizer@0.11.2'
 import 'github:marmelab/ng-admin@0.7.0';
@@ -25,6 +27,7 @@ angular.module('ai.admin', [
   'ng-admin',
   'satellizer',
   'ui.select',
+  ngMaterial,
   login.name,
   dashboard.name,
   resize.name
@@ -39,11 +42,16 @@ angular.module('ai.admin', [
     //  $rootScope.displayBanner = $location.$$path === '/dashboard';
     //});
   })
-  .config((RestangularProvider, $locationProvider)=> {
+  .config((RestangularProvider, $locationProvider, $mdThemingProvider)=> {
     $locationProvider.html5Mode({
       enabled: true,
       requireBase:true
     });
+
+    $mdThemingProvider.theme('default')
+      .primaryPalette('teal')
+      .accentPalette('orange');
+
       // use the custom query parameters function to format the API request correctly
       //RestangularProvider.addFullRequestInterceptor(function (element, operation, what, url, headers, params) {
       //  if (operation == "getList") {

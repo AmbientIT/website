@@ -1,6 +1,6 @@
 <ul style="list-style: none">
 	<li>
-		<a ng-href="/admin#/{{ entityName }}/show/{{item.id}}" class="btn btn-primary btn-xs item"
-		   ng-repeat="item in data">{{item.name || item.displayName}}</a>
+		<md-button ng-href="/admin/{{ entityName }}/show/{{item.id}}" class="md-primary md-raised"
+		   ng-repeat="item in data">{{item.name || item.displayName}}</md-button>
 	</li>
 </ul>

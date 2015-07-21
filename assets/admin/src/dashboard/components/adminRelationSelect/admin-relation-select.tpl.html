@@ -1,20 +1,10 @@
-<ui-select multiple ng-model="data[attrName]"  style="width: 100%;" ng-if="::entities">
-	<ui-select-match placeholder="Choisissez parmis nos {{ relationName }}...">{{$item.name || $item.displayName}}</ui-select-match>
-	<ui-select-choices repeat="item in entities | propsFilter: {name: $select.search, displayName: $select.search }">
-		<div class="list-group">
-			<div class="list-group-item">
-				<div class="row-picture" ng-if="item.image">
-					<img class="circle" ng-src="{{ item.image }}"  alt="{{ item.name || item.displayName }} logo">
-				</div>
-				<div class="row-content">
-					<h4 class="list-group-item-heading">
-						{{ item.name || item.displayName}}
-					</h4>
-					<p class="list-group-item-text" ng-if="item.description">
-						{{ item.description }}
-					</p>
-				</div>
-			</div>
-		</div>
-	</ui-select-choices>
-</ui-select>
+<md-contact-chips
+        ng-model="ctrl.data[ctrl.attrName]"
+        md-contacts="ctrl.querySearch($query)"
+        md-contact-name="name"
+        md-contact-image="avatar"
+        md-contact-email="description"
+        md-require-match
+        filter-selected="ctrl.filterSelected"
+        placeholder="To">
+</md-contact-chips>

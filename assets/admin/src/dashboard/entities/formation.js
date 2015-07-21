@@ -103,8 +103,8 @@ export default (nga, formation, category)=>{
         .label('Description')
         .attributes({placeholder: 'description de la fomation'})
         .validation({ minlength: 10, maxlength: 200}),
-      nga.field('price', 'number')
-        .label('Le prix de la formation')
+      nga.field('duration', 'number')
+        .label('durée de la formation')
         .format('0 jours'),
       nga.field('price', 'number')
         .label('Le prix de la formation')
