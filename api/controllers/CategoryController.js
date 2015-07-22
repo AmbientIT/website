@@ -7,7 +7,8 @@
 
 module.exports = {
   find: function(req, res){
-    if(req.query._page){
+    console.log('ici')
+    if(req.query._page && req.query._sortDir){
       return Promise.all([
         Category.find()
           .sort(req.query._sortField + ' '+req.query._sortDir)

@@ -49,7 +49,7 @@
   },
   "scripts": {
     "preinstall": "sh ./.shellscript/prepareServer.sh",
-    "start": "nodemon app.js  --ignore package.json --ignore node_modules/* --ignore assets/**/* --ignore .tmp/*",
+    "start": "sails lift --prod",
     "postinstall": "jspm install "
   },
   "main": "app.js",
@@ -58,27 +58,6 @@
     "url": "git://github.com/AmbientIT/website.git"
   },
   "authors": [
-    "charl <charles.jacquin@ambient-it.org>"
-  ],
-  "jspm": {
-    "directories": {
-      "baseURL": "assets/admin"
-    },
-    "dependencies": {
-      "FezVrasta/bootstrap-material-design": "github:FezVrasta/bootstrap-material-design@^0.3.0",
-      "angular": "github:angular/bower-angular@^1.4.3",
-      "angular-material": "github:angular/bower-material@^0.10.1-rc2",
-      "angular-ui-select": "github:angular-ui/ui-select@^0.12.0",
-      "css": "npm:jspm-loader-css@^0.1.6",
-      "driftyco/ionicons": "github:driftyco/ionicons@^2.0.1",
-      "marmelab/ng-admin": "github:marmelab/ng-admin@^0.7.0",
-      "sahat/satellizer": "github:sahat/satellizer@^0.11.2",
-      "text": "github:systemjs/plugin-text@^0.0.2"
-    },
-    "devDependencies": {
-      "babel": "npm:babel-core@^5.1.13",
-      "babel-runtime": "npm:babel-runtime@^5.1.13",
-      "core-js": "npm:core-js@^0.9.4"
-    }
-  }
+    "charl <charles.jacquin@ambient-it.net>"
+  ]
 }

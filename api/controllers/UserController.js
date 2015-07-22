@@ -51,7 +51,12 @@ module.exports = {
       .catch(res.serverError);
   },
   me: function(req, res){
-    return res.json(req.user);
+    return User.findOne({ id : req.user })
+      .then(function(result){
+        return res.json(result);
+      })
+    .catch(res.serverError);
+
   },
   googleAuth: function(req,res){
     googleAuth.getProfileInfo(req.body.code,req.body.clientId,req.body.redirectUri)
