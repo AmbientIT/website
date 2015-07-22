@@ -4,6 +4,7 @@ var fs = require('fs');
 var exec = require('gulp-exec');
 var runSequence = require('run-sequence');
 var GulpSSH = require('gulp-ssh');
+var growl = require('notify-send');
 
 
 gulp.task('serveur:rsync', function(done){
@@ -15,20 +16,11 @@ gulp.task('deploy', function(done) {
   runSequence('server:rsync','server:install-dep','server:restart',done)
 });
 
-//todo error with ng-admin :'(
-gulp.task('build-admin', function(){
-  gulp.src('./')
-    .pipe(exec('jspm bundle-sfx src/main main.js', {
-      continueOnError: false,
-      pipeStdout: false,
-      customTemplatingThing: "test"
-    }))
-    .pipe(exec.reporter({
-      err: true,
-      stderr: true,
-      stdout: true
-    }));
+
+gulp.task('nodemon-notif', function(){
+  growl.normal.timeout(3000).icon('/usr/share/pixmaps/nodemon.png').category('nodemon').notify('Nodemon restart sails app', 'nodemon detect one or more file have changed');
 });
+
 
 var config = {
   host: '40.114.241.204',

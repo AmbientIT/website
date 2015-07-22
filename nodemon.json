@@ -1,0 +1,34 @@
+{
+  "restartable": "rs",
+  "ignore": [
+    ".git",
+    ".gitignore",
+    "deployConfig.json",
+    "deployConfigExample.json",
+    "GruntFile.js",
+    "gulpfile.js",
+    "nodemon.png",
+    "package.json",
+    "README.md",
+    "node_modules/**/node_modules",
+    "assets",
+    ".tmp",
+    "tasks",
+    "logs"
+  ],
+  "verbose": true,
+  "execMap": {
+    "js": "node --harmony"
+  },
+  "events": {
+    "restart": "gulp nodemon-notif"
+  },
+  "watch": [
+    "./"
+  ],
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "ext": "js json",
+  "delay": 3
+}

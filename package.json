@@ -25,6 +25,7 @@
     "jwt-simple": "^0.3.0",
     "mime": "^1.3.4",
     "moment": "^2.10.3",
+    "nodemon": "^1.3.8",
     "rc": "~0.5.0",
     "request-promise": "^0.4.2",
     "rimraf": "*",
@@ -45,11 +46,14 @@
     "gulp-ssh": "^0.5.0",
     "mocha": "^2.2.5",
     "nodemon": "^1.3.7",
+    "notify-send": "^0.1.2",
     "supertest": "^1.0.1"
   },
   "scripts": {
+    "dev": "node node_modules/.bin/nodemon app.js",
+    "deploy": "node node_modules/.bin/gulp deploy",
     "preinstall": "sh ./.shellscript/prepareServer.sh",
-    "start": "sails lift --prod",
+    "start": "pm2 start app",
     "postinstall": "jspm install "
   },
   "main": "app.js",
