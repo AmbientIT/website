@@ -2,6 +2,9 @@
   "restartable": "rs",
   "ignore": [
     ".git",
+    ".shellscript",
+    ".tmp",
+    ".idea/**",
     ".gitignore",
     "deployConfig.json",
     "deployConfigExample.json",
@@ -10,15 +13,14 @@
     "nodemon.png",
     "package.json",
     "README.md",
-    "node_modules/**/node_modules",
+    "node_modules",
     "assets",
-    ".tmp",
     "tasks",
     "logs"
   ],
   "verbose": true,
   "execMap": {
-    "js": "node --harmony"
+    "js": "node"
   },
   "events": {
     "restart": "gulp nodemon-notif"

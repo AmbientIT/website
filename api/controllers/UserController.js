@@ -9,23 +9,30 @@ var jwt = require('jwt-simple');
 
 module.exports = {
   find: function(req, res){
-    if(req.query._page){
-      return Promise.all([
-        User.find()
-          .sort(req.query._sortField + ' '+req.query._sortDir)
-          .paginate({page: req.query._page , limit: req.query._perPage }),
-        User.count()
-      ])
-      .then(function(results) {
-        res.set('X-Total-Count',results[1])
-        return res.json(results[0]);
-      })
-      .catch(res.serverError)
+    var UserPromise;
+
+    if(!req.query._page && !req.query._sortDir){
+      UserPromise = User.find()
     }
 
-    return User.find(req.query)
-      .then(function(result){
-        return res.json(result)
+    if(req.query._page && !req.query._sortDir){
+      UserPromise = User.find()
+        .paginate({page: req.query._page , limit: req.query._perPage })
+    }
+
+    if(req.query._sortDir){
+      UserPromise = User.find()
+        .sort(req.query._sortField + ' '+req.query._sortDir)
+        .paginate({page: req.query._page , limit: req.query._perPage })
+    }
+
+    return Promise.all([
+      UserPromise,
+      User.count()
+    ])
+      .then(function(results) {
+        res.set('X-Total-Count',results[1]);
+        return res.json(results[0]);
       })
       .catch(res.serverError)
   },
@@ -51,12 +58,7 @@ module.exports = {
       .catch(res.serverError);
   },
   me: function(req, res){
-    return User.findOne({ id : req.user })
-      .then(function(result){
-        return res.json(result);
-      })
-    .catch(res.serverError);
-
+    req.user ? res.json(req.user) : res.forbidden();
   },
   googleAuth: function(req,res){
     googleAuth.getProfileInfo(req.body.code,req.body.clientId,req.body.redirectUri)
@@ -74,13 +76,13 @@ module.exports = {
                 return res.serverError(e);
               }
 
-              return User.findOne({id:payload.sub})
+              return User.findOne({slug:payload.sub})
             })
             .then(function(user) {
               if (!user) {
                 return res.status(400).send({ message: 'User not found' });
               }
-              return User.update({id:user.id},{
+              return User.update({slug:user.slug},{
                 google : profile.sub,
                 picture: user.picture || profile.picture.replace('sz=50', 'sz=200'),
                 displayName : user.displayName || profile.name,
@@ -88,12 +90,15 @@ module.exports = {
               })
             })
             .then(function(updatedUser){
+              console.log(updatedUser);
               res.json({ token:updatedUser.tokenify() })
             });
         } else {
           // Step 3b. Create a new user account or return an existing one.
+          console.log('ouiouioui')
           User.findOne({ google: profile.sub })
             .then(function(existingUser) {
+              console.log(existingUser);
               if (existingUser) {
                 return res.send({ token: existingUser.tokenify() });
               }else{

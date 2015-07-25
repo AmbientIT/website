@@ -7,27 +7,32 @@
 
 module.exports = {
   find: function(req, res){
-    if(req.query._page){
-      return Promise
-        .all([
-          Project
-            .find()
-            .sort(req.query._sortField + ' '+req.query._sortDir)
-            .paginate({page: req.query._page , limit: req.query._perPage }),
-          Project.count()
-        ])
-        .then(function(results) {
-          res.set('X-Total-Count',results[1])
-          return res.json(results[0]);
-        })
+    var ProjectPromise;
+
+    if(!req.query._page && !req.query._sortDir){
+      ProjectPromise = Project.find()
     }
 
-    return Project
-      .find(req.query)
-      .then(function(result){
-        return res.json(result);
+    if(req.query._page && !req.query._sortDir){
+      ProjectPromise = Project.find()
+        .paginate({page: req.query._page , limit: req.query._perPage })
+    }
+
+    if(req.query._sortDir){
+      ProjectPromise = Project.find()
+        .sort(req.query._sortField + ' '+req.query._sortDir)
+        .paginate({page: req.query._page , limit: req.query._perPage })
+    }
+
+    return Promise.all([
+      ProjectPromise,
+      Project.count()
+    ])
+      .then(function(results) {
+        res.set('X-Total-Count',results[1]);
+        return res.json(results[0]);
       })
-      .catch(res.serverError);
+      .catch(res.serverError)
   },
   findOne: function(req,res){
     return Project.findOne({ slug: req.params.id })

@@ -28,7 +28,10 @@ module.exports = {
       type: 'string'
     },
     slug: {
-      type: 'string'
+      type: 'string',
+      primaryKey: true,
+      unique: true,
+      index: true
     }
   },
   beforeCreate: function(obj, cb){
@@ -50,7 +53,7 @@ module.exports = {
   },
   afterDestroy: function(obj,cb){
     return  fs
-      .unlink(obj[0].url.replace(sails.config.url, path.resolve(__dirname,'../../')))
+      .unlink(obj[0].url.replace(sails.config.url, path.resolve(__dirname,'../../assets/')))
       .then(function(){
         return cb(null);
       })

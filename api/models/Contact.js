@@ -24,6 +24,12 @@ module.exports = {
     displayName: {
       type: 'string'
     },
+    slug: {
+      type: 'string',
+      primaryKey: true,
+      unique: true,
+      index: true
+    },
     email: {
       type: 'string',
       required: true
@@ -36,7 +42,8 @@ module.exports = {
     },
     formations : {
       collection: 'formation',
-      via: 'id'
+      via: 'slug',
+      dominant: true
     },
     message : {
       type : 'string',

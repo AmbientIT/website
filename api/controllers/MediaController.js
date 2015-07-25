@@ -9,6 +9,7 @@ var fs = require('fs-promise');
 
 module.exports = {
   find: function(req, res){
+
     if(req.query._page){
       return Promise.all([
         Media.find()

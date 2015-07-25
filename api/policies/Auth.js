@@ -57,6 +57,15 @@ module.exports =  function (req, res, next) {
   if (payload.exp <= moment().unix()) {
     return res.forbidden('Token has expired');
   }
-  req.user = payload.sub;
-    return next();
+  User.findOne()
+    .where({slug : payload.sub})
+    .then(function(result){
+      if(result){
+        req.user = result;
+        return next();
+      }else{
+        res.forbidden('unknown user');
+      }
+    })
+    .catch(res.serverError);
 };

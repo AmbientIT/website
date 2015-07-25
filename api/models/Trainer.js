@@ -38,12 +38,15 @@ module.exports = {
       type: 'boolean'
     },
     slug: {
-      type:'string'
+      type: 'string',
+      primaryKey: true,
+      unique: true,
+      index: true
     }
   },
   beforeCreate: function(obj,cb){
     if(obj.user){
-      return User.findOne({id:obj.user})
+      return User.findOne({slug:obj.user})
         .then(function(user){
           if(user){
             try{

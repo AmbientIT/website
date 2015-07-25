@@ -86,10 +86,6 @@ module.exports.routes = {
   // ADMIN //
   //////////////
 
-  '/admin/*': {
-    controller: 'Site',
-    action: 'admin'
-  },
 
   //////////
   // API //

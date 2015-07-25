@@ -7,26 +7,32 @@
 
 module.exports = {
   find: function(req, res){
-    console.log('ici')
-    if(req.query._page && req.query._sortDir){
-      return Promise.all([
-        Category.find()
-          .sort(req.query._sortField + ' '+req.query._sortDir)
-          .paginate({page: req.query._page , limit: req.query._perPage }),
-        Category.count()
-      ])
-      .then(function(results) {
-        res.set('X-Total-Count',results[1]);
-        return res.json(results[0]);
-      })
-      .catch(res.serverError)
+    var CategoryPromise;
+
+    if(!req.query._page && !req.query._sortDir){
+      CategoryPromise = Category.find()
     }
 
-    return Category.find(req.query)
-      .then(function(result){
-        return res.json(result);
-      })
-      .catch(res.serverError);
+    if(req.query._page && !req.query._sortDir){
+      CategoryPromise = Category.find()
+        .paginate({page: req.query._page , limit: req.query._perPage })
+    }
+
+    if(req.query._sortDir){
+      CategoryPromise = Category.find()
+        .sort(req.query._sortField + ' '+req.query._sortDir)
+        .paginate({page: req.query._page , limit: req.query._perPage })
+    }
+
+    return Promise.all([
+      CategoryPromise,
+      Category.count()
+    ])
+    .then(function(results) {
+      res.set('X-Total-Count',results[1]);
+      return res.json(results[0]);
+    })
+    .catch(res.serverError)
   },
   findOne: function(req, res){
     return Category.findOne({ slug : req.params.id })

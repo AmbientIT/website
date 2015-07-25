@@ -7,36 +7,43 @@
 
 module.exports = {
   find: function(req, res){
-    if(req.query._page){
-      return Promise
-        .all([
-          Formation
-            .find()
-            .sort(req.query._sortField + ' '+req.query._sortDir)
-            .paginate({page: req.query._page , limit: req.query._perPage })
-            .populate('category')
-            .populate('next')
-            .populate('previous')
-            .populate('trainers'),
-          Formation.count()
-        ])
-          .then(function(results) {
-            res.set('X-Total-Count',results[1]);
-            return res.json(results[0]);
-          })
-        .catch(res.serverError);
+    var FormationPromise;
+
+    if(!req.query._page && !req.query._sortDir){
+      FormationPromise = Formation.find()
+        .populate('next')
+        .populate('previous')
+        .populate('trainers')
     }
 
-    return Formation
-      .find(req.query)
-      .populate('category')
-      .populate('next')
-      .populate('previous')
-      .populate('trainers')
-      .then(function(result){
-        return res.json(result);
+    if(req.query._page && !req.query._sortDir){
+      FormationPromise = Formation.find()
+        .populate('next')
+        .populate('previous')
+        .populate('trainers')
+        .paginate({page: req.query._page , limit: req.query._perPage })
+    }
+
+    if(req.query._sortDir){
+      FormationPromise = Formation.find()
+        .populate('next')
+        .populate('previous')
+        .populate('trainers')
+        .sort(req.query._sortField + ' '+req.query._sortDir)
+        .paginate({page: req.query._page , limit: req.query._perPage })
+    }
+
+    return Promise.all([
+      FormationPromise,
+      Formation.count()
+    ])
+      .then(function(results) {
+        res.set('X-Total-Count',results[1]);
+        return res.json(results[0]);
       })
-      .catch(res.serverError);
+      .catch(res.serverError)
+
+
   },
   findOne: function(req, res){
     return Formation
@@ -45,6 +52,7 @@ module.exports = {
       .populate('previous')
       .populate('trainers')
       .then(function(result){
+        console.log(result);
         return res.json(result);
       })
       .catch(res.serverError);
@@ -77,7 +85,7 @@ module.exports = {
         })
         .then(function (base64) {
           res.json({
-            base64: base64
+            base64: 'data:image/png;base64,'+base64
           });
         })
         .catch(res.serverError)

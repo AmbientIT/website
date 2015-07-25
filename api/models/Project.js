@@ -28,7 +28,10 @@ module.exports = {
       required: true
     },
     slug: {
-      type: 'string'
+      type: 'string',
+      primaryKey: true,
+      unique: true,
+      index: true
     }
   },
   beforeCreate: function(obj,cb){

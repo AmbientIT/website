@@ -16,10 +16,14 @@ module.exports = {
       required: true
     },
     slug: {
-      type: 'string'
+      type: 'string',
+      primaryKey: true,
+      unique: true,
+      index: true
     },
     category: {
-      model: 'category'
+      model: 'category',
+      required: true
     },
     avatar: {
       type: 'string'
@@ -66,38 +70,45 @@ module.exports = {
   beforeCreate: function(obj,cb){
     try{
       obj.slug = obj.name.toLowerCase().replace(/ /g,'');
-      obj.avatar ? obj.avatar = 'data:image/png;base64,' + obj.avatar : obj.avatar = sails.config.url + '/images/formation.logo.jpg';
+      obj.avatar ? obj.avatar = 'data:image/png;base64,' + obj.avatar : obj.avatar = sails.config.url + '/images/formation/logo.jpg';
     }catch(err){
       cb(err);
     }
+    console.log(obj)
     var promises = [];
     if(obj.previous){
       obj.previous.forEach(function(formation){
-        promises.push(Formation.findOne({id:formation.id}).populate('next'))
+        promises.push(Formation.findOne({slug:formation}).populate('next'))
       });
+    }else{
+      obj.previous = [];
     }
     return Promise
       .all(promises)
       .then(function(result){
+        console.log('1   ', result)
         promises = [];
         result.forEach(function(formation){
-          formation.next.push(obj.id);
+          formation.next ? formation.next.push(obj.slug) : formation.next = [];
           promises.push(formation.save());
         });
         return Promise.all(promises);
       })
       .then(function(){
+        console.log('olé',obj)
         return cb(null,obj);
       })
       .catch(function(err){
+        console.error(err);
         return cb(err);
       })
   },
   afterCreate: function(obj,cb){
     return Category
-      .findOne({id: obj.category})
+      .findOne({slug: obj.category})
+      .populate('formations')
       .then(function(result) {
-        result.formations.push(obj);
+        result.formations ? result.formations.push(obj.slug) : result.formations = [obj.slug];
         return result.save();
       })
       .then(function(){
@@ -108,23 +119,28 @@ module.exports = {
       })
   },
   afterUpdate: function(obj, cb){
+    console.log('after UUU', obj)
     return  Formation
-     .findOne({id:obj.id})
+     .findOne({slug:obj.slug})
      .populate('next')
      .populate('previous')
      .populate('trainers')
      .then(function(result) {
+        console.log('3      ' ,result)
        return pdfGenerator
            .fromEjs('formation', result, result.slug);
      })
      .then(function(){
+        console.log('4  ')
        return fs
          .copy(path.resolve(__dirname,'../../assets/pdf/'+obj.slug+'.pdf'), path.resolve( __dirname,'../../.tmp/public/pdf/'+obj.slug+'.pdf'));
      })
      .then(function(){
+        console.log('wtfffff ???????', obj)
        return cb(null,obj);
      })
      .catch(function(err){
+        console.log(err);
        return cb(err);
      })
   },

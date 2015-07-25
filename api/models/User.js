@@ -27,13 +27,19 @@ module.exports = {
     google:{
       type: 'string'
     },
+    slug: {
+      type: 'string',
+      primaryKey: true,
+      unique: true,
+      index: true
+    },
     tokenify: function(){
-      var payload = {
-        sub: this.id,
-        iat: moment().unix(),
-        exp: moment().add(14, 'days').unix()
-      };
       try{
+        var payload = {
+          sub: this.slug,
+          iat: moment().unix(),
+          exp: moment().add(14, 'days').unix()
+        };
         return jwt.encode(payload, sails.config.TOKEN_SECRET);
       }catch(err){
         throw err;

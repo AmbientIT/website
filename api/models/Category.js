@@ -15,7 +15,10 @@ module.exports = {
       type : 'string'
     },
     slug: {
-      type: 'string'
+      type: 'string',
+      primaryKey: true,
+      unique: true,
+      index: true
     },
     formations: {
       collection: 'formation',

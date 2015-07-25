@@ -40,7 +40,7 @@ module.exports.policies = {
     'find': true
   },
   CategoryController: {
-    '*': 'auth'
+    '*': true
   },
   UserController: {
     '*': 'auth',

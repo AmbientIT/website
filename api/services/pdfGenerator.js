@@ -7,6 +7,9 @@ module.exports = {
     return new Promise(function(resolve, reject){
       try{
         var file = fs.readFileSync(__dirname + '/../../views/pdf/'+template+'.ejs','utf-8');
+        if(!data.program){
+          data.program = '';
+        }
         var html = ejs.render(file, {locals: data});
         return wkhtmltopdf(html,{ output: 'assets/pdf/' + output + '.pdf', encoding: 'utf-8' }, function(){
           return resolve();
