@@ -6,6 +6,8 @@
  */
 
 var fs = require('fs-promise');
+var path = require('path');
+var mime = require('mime');
 
 module.exports = {
   find: function(req, res){
@@ -56,9 +58,26 @@ module.exports = {
       if(err){
         return res.serverError(err);
       }
-      return res.json({
-        picturePath: data[0].fd
-      });
+      var tempFile = path.resolve(__dirname,'../../')+'/.tmp/public/temp/temp.'+mime.extension(data[0].type);
+      return fs.exists(tempFile)
+        .then(function(exist){
+          if(exist){
+            return fs.unlink(path.resolve(__dirname,'../../')+'/.tmp/public/temp/temp.'+mime.extension(data[0].type))
+          }else {
+            return '';
+          }
+        })
+        .then(function(){
+          return fs.move(data[0].fd,tempFile)
+        })
+        .then(function(){
+          var url = sails.config.url+tempFile.replace(path.resolve(__dirname,'../../.tmp/public'), '')
+          res.json({
+            picturePath: url
+          })
+        })
+        .catch(res.serverError)
+
     })
   }
 };

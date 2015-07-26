@@ -70,23 +70,20 @@ module.exports = {
   beforeCreate: function(obj,cb){
     try{
       obj.slug = obj.name.toLowerCase().replace(/ /g,'');
-      obj.avatar ? obj.avatar = 'data:image/png;base64,' + obj.avatar : obj.avatar = sails.config.url + '/images/formation/logo.jpg';
+      if(!obj.avatar)
+        obj.avatar = sails.config.url + '/images/formation/logo.jpg';
     }catch(err){
       cb(err);
     }
-    console.log(obj)
     var promises = [];
     if(obj.previous){
       obj.previous.forEach(function(formation){
         promises.push(Formation.findOne({slug:formation}).populate('next'))
       });
-    }else{
-      obj.previous = [];
     }
     return Promise
       .all(promises)
       .then(function(result){
-        console.log('1   ', result)
         promises = [];
         result.forEach(function(formation){
           formation.next ? formation.next.push(obj.slug) : formation.next = [];
@@ -95,7 +92,6 @@ module.exports = {
         return Promise.all(promises);
       })
       .then(function(){
-        console.log('olé',obj)
         return cb(null,obj);
       })
       .catch(function(err){

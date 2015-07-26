@@ -41,8 +41,9 @@ module.exports = {
     }catch(err){
       cb(err);
     }
-    return fs
-      .rename(obj.url, path.resolve(__dirname, '../../assets/images/upload/' + obj.name + '.' + mime.extension(obj.type)))
+    var url = path.resolve(__dirname, '../../.tmp/public/'+obj.url.replace(sails.config.url,''));
+    console.log(url);
+    return fs.move(url, path.resolve(__dirname, '../../assets/images/upload/' + obj.name + '.' + mime.extension(obj.type)))
       .then(function(){
         obj.url = sails.config.url + '/images/upload/'+ obj.name + '.' + mime.extension(obj.type);
         return cb(null, obj);

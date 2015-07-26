@@ -58,6 +58,7 @@ module.exports = {
       .catch(res.serverError);
   },
   update: function(req, res){
+    console.log(req.params,req.body);
     return Formation.update({slug: req.params.id},req.body)
       .then(function(result){
         res.json(result);

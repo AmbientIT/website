@@ -106,5 +106,9 @@ module.exports.routes = {
   'post /api/upload/media': {
     controller: 'Media',
     action: 'upload'
+  },
+  'put /api/formation/:id': {
+    controller: 'Formation',
+    action: 'update'
   }
 };
