@@ -11,26 +11,32 @@ var mime = require('mime');
 
 module.exports = {
   find: function(req, res){
+    var MediaPromise;
 
-    if(req.query._page){
-      return Promise.all([
-        Media.find()
-          .sort(req.query._sortField + ' '+req.query._sortDir)
-          .paginate({page: req.query._page , limit: req.query._perPage }),
-        Media.count()
-      ])
-      .then(function(results) {
-        res.set('X-Total-Count',results[1])
-        return res.json(results[0]);
-      })
-      .catch(res.serverError);
+    if(!req.query._page && !req.query._sortDir){
+      MediaPromise = Media.find()
     }
 
-    return Media.find(req.query)
-      .then(function(result){
-        return res.json(result);
+    if(req.query._page && !req.query._sortDir){
+      MediaPromise = Media.find()
+        .paginate({page: req.query._page , limit: req.query._perPage })
+    }
+
+    if(req.query._sortDir){
+      MediaPromise = Media.find()
+        .sort(req.query._sortField + ' '+req.query._sortDir)
+        .paginate({page: req.query._page , limit: req.query._perPage })
+    }
+
+    return Promise.all([
+      MediaPromise,
+      Media.count()
+    ])
+      .then(function(results) {
+        res.set('X-Total-Count',results[1]);
+        return res.json(results[0]);
       })
-      .catch(res.serverError);
+      .catch(res.serverError)
   },
   findOne: function(req, res){
     return Media.findOne({ slug: req.params.id })

@@ -54,7 +54,7 @@
     "deploy": "node node_modules/.bin/gulp deploy",
     "preinstall": "sh ./.shellscript/prepareServer.sh",
     "start": "pm2 start app",
-    "postinstall": "jspm install "
+    "postinstall": "npm start"
   },
   "main": "app.js",
   "repository": {

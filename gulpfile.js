@@ -7,7 +7,7 @@ var GulpSSH = require('gulp-ssh');
 var growl = require('notify-send');
 
 
-gulp.task('serveur:rsync', function(done){
+gulp.task('server:rsync', function(done){
   gulp.src(["."])
     .pipe(rsync(require('./deployconfig.json')));
 });
@@ -22,20 +22,20 @@ gulp.task('nodemon-notif', function(){
 });
 
 
-var config = {
-  host: '40.114.241.204',
-  port: 25015,
-  username: 'SitePreProd',
-  privateKey: fs.readFileSync('/home/charl/.ssh/AmbientPreProd')
-};
+var config = require('./deployconfig.json');
 
 gulp.task('server:install-dep',function () {
   var gulpSSH = new GulpSSH({
     ignoreErrors: false,
-    sshConfig: config
+    sshConfig: {
+      host: config.hostname,
+      port: config.port,
+      username: config.username,
+      privateKey: fs.readFileSync('/home/charl/.ssh/AmbientPreProd')
+    }
   });
   return gulpSSH
-    .shell(['cd /home/SitePreProd/ambient-it-website', 'npm install', 'npm update'], {filePath: 'shell.log'})
+    .shell(['cd /home/SitePreProd/ambient-it-website', 'npm install'], {filePath: 'shell.log'})
     .pipe(gulp.dest('logs'));
 });
 

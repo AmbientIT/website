@@ -115,28 +115,23 @@ module.exports = {
       })
   },
   afterUpdate: function(obj, cb){
-    console.log('after UUU', obj)
     return  Formation
      .findOne({slug:obj.slug})
      .populate('next')
      .populate('previous')
      .populate('trainers')
      .then(function(result) {
-        console.log('3      ' ,result)
        return pdfGenerator
            .fromEjs('formation', result, result.slug);
      })
      .then(function(){
-        console.log('4  ')
        return fs
          .copy(path.resolve(__dirname,'../../assets/pdf/'+obj.slug+'.pdf'), path.resolve( __dirname,'../../.tmp/public/pdf/'+obj.slug+'.pdf'));
      })
      .then(function(){
-        console.log('wtfffff ???????', obj)
        return cb(null,obj);
      })
      .catch(function(err){
-        console.log(err);
        return cb(err);
      })
   },
