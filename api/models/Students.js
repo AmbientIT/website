@@ -1,5 +1,5 @@
 /**
-* Project.js
+* Students.js
 *
 * @description :: TODO: You might write a short summary of how this model works and what it represents here.
 * @docs        :: http://sailsjs.org/#!documentation/models
@@ -8,36 +8,35 @@
 module.exports = {
 
   attributes: {
-    name:  {
-      type: 'string',
-      required: true
+    firstName: {
+      type: 'string'
     },
-    description: {
-      type: 'string',
-      required: true
+    lastName: {
+      type: 'string'
     },
-    content: {
-      type: 'string',
-      required: true
+    displayName: {
+      type: 'string'
     },
-    picture: {
-      model: 'media'
+    email: {
+      type: 'string'
     },
-    creator: {
-      model: 'user',
-      required: true
+    sessions: {
+      collection: 'session',
+      via: 'students'
     },
     slug: {
       type: 'string',
       primaryKey: true,
       unique: true,
       index: true
-    },
-    published: {
-      type: 'boolean'
     }
   },
   beforeCreate: function(obj,cb){
+    if(obj.firstName){
+      obj.displayName = obj.firstName + ' ' + obj.lastName;
+    }else{
+      obj.displayName =obj.lastName;
+    }
     try{
       obj.slug = obj.name.toLowerCase().replace(/ /g,'');
       return cb(null,obj);

@@ -1,32 +1,32 @@
 /**
- * ProjectController
+ * StudentsController
  *
- * @description :: Server-side logic for managing projects
+ * @description :: Server-side logic for managing students
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
 module.exports = {
   find: function(req, res){
-    var ProjectPromise;
+    var studentPromise;
 
     if(!req.query._page && !req.query._sortDir){
-      ProjectPromise = Project.find()
+      studentPromise = Student.find()
     }
 
     if(req.query._page && !req.query._sortDir){
-      ProjectPromise = Project.find()
+      studentPromise = Student.find()
         .paginate({page: req.query._page , limit: req.query._perPage })
     }
 
     if(req.query._sortDir){
-      ProjectPromise = Project.find()
+      studentPromise = Student.find()
         .sort(req.query._sortField + ' '+req.query._sortDir)
         .paginate({page: req.query._page , limit: req.query._perPage })
     }
 
     return Promise.all([
-      ProjectPromise,
-      Project.count()
+      studentPromise,
+      Student.count()
     ])
       .then(function(results) {
         res.set('X-Total-Count',results[1]);
@@ -35,21 +35,21 @@ module.exports = {
       .catch(res.serverError)
   },
   findOne: function(req,res){
-    return Project.findOne({ slug: req.params.id })
+    return Student.findOne({ slug: req.params.id })
       .then(function(trainer){
         return res.json(trainer);
       })
       .catch(res.serverError);
   },
   update: function(req, res){
-    return Project.update({slug: req.params.id},req.body)
+    return Student.update({slug: req.params.id},req.body)
       .then(function(result){
         return res.json(result);
       })
       .catch(res.serverError);
   },
   destroy: function(req,res){
-    return Project.destroy({slug:req.params.id})
+    return Student.destroy({slug:req.params.id})
       .then(function(){
         return res.send();
       })
