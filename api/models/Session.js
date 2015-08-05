@@ -33,6 +33,9 @@ module.exports = {
     },
     contact: {
       model: 'Contact'
+    },
+    generateDocuments: function(){
+
     }
   }
 };
