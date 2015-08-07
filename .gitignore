@@ -70,7 +70,7 @@ node_modules
 assets/admin/jspm_packages
 logs
 assets/pdf/*
-!assets/pdf/demo.pdf
+assets/upload/*
 
 ################################################
 # Sails.js / Waterline / Grunt
