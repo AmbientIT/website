@@ -1,4 +1,5 @@
 {
+  "localKey": "/home/foo/.ssh/barKey",
   "hostname": "",
   "username": "",
   "port": "",

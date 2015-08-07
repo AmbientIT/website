@@ -28,13 +28,13 @@
           </span>
             <input type="text" name="lastName" ng-model="ctrl.formData.lastName" required ng-minlength="3"
                    class="form-control floating-label"
-                   placeholder="Nom *">
+                   placeholder="Votre nom *">
             <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-show="contactForm.lastName.$valid && (contactForm.lastName.$touched || contactForm.$submitted)"></i>
             <i class="ion-close-round form-control-feedback" aria-hidden="true" ng-show="contactForm.lastName.$invalid && (contactForm.lastName.$touched || contactForm.$submitted)"></i>
           </div>
 
           <div ng-messages="contactForm.lastName.$error" class="help-block" ng-show="contactForm.lastName.$touched || contactForm.$submitted">
-            <span class="toto" ng-message="required">Le nom est obligatoire</span>
+            <span class="toto" ng-message="required">Merci de renseigner votre nom</span>
             <span class="toto" ng-message="minlength">Merci de renseigner un nom d'au moins 3 caractères</span>
           </div>
         </div>
@@ -47,7 +47,7 @@
           </span>
             <input type="text" name="firstName" ng-model="ctrl.formData.firstName"
                    class="form-control floating-label"
-                   placeholder="Prénom">
+                   placeholder="votre prénom">
             <i class="ion-checkmark-round form-control-feedback"  aria-hidden="true" ng-show="contactForm.firstName.$valid && (contactForm.firstName.$touched || contactForm.$submitted)"></i>
             <i class="ion-close-round form-control-feedback"  aria-hidden="true" ng-show="contactForm.firstName.$invalid && (contactForm.firstName.$touched || contactForm.$submitted)"></i>
           </div>
@@ -65,13 +65,13 @@
             <i class="ion-email"></i>
           </span>
           <input type="email" name="email" ng-model="ctrl.formData.email" required class="form-control floating-label"
-                 placeholder="Renseignez votre email pour que nous puissions vous recontacter">
+                 placeholder="Renseignez votre email pour que nous puissions vous recontacter *">
           <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-show="contactForm.email.$valid && (contactForm.email.$touched || contactForm.$submitted)"></i>
           <i class="ion-close-round form-control-feedback" aria-hidden="true" ng-show="contactForm.email.$invalid && (contactForm.email.$touched || contactForm.$submitted)"></i>
         </div>
 
         <div ng-messages="contactForm.email.$error" class="help-block" ng-show="contactForm.email.$touched || contactForm.$submitted">
-          <span ng-message="required">Merci de nous indiquer votre adresse email pour que nous puissions vous recontacter</span>
+          <span ng-message="required">Merci de renseigner votre adresse email pour que nous puissions vous recontacter</span>
           <span ng-message="email">Le format de votre adresse email n'est pas valide</span>
         </div>
       </div>
@@ -90,7 +90,7 @@
           <i class="ion-close-round form-control-feedback" aria-hidden="true" ng-show="contactForm.phone.$invalid && (contactForm.phone.$touched || contactForm.$submitted)"></i>
         </div>
         <div ng-messages="contactForm.phone.$error" class="help-block" ng-show="contactForm.phone.$touched || contactForm.$submitted">
-          <span ng-message="pattern">Merci de rentrer un numéro de téléphone français valide</span>
+          <span ng-message="pattern">Merci de renseigner un numéro de téléphone français valide</span>
         </div>
       </div>
 
@@ -104,13 +104,13 @@
         </span>
           <input type="text" name="company" ng-model="ctrl.formData.company" required ng-minlength="2"
                  class="form-control floating-label"
-                 placeholder="Entrez le nom de votre société">
+                 placeholder="Entrez le nom de votre société *">
           <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-show="contactForm.company.$valid && (contactForm.company.$touched || contactForm.$submitted)"></i>
           <i class="ion-close-round form-control-feedback" aria-hidden="true" ng-show="contactForm.company.$invalid && (contactForm.company.$touched || contactForm.$submitted)"></i>
         </div>
 
         <div ng-messages="contactForm.company.$error" class="help-block" ng-show="contactForm.company.$touched || contactForm.$submitted">
-          <span ng-message="required">La société est obligatoire</span>
+          <span ng-message="required">Merci de rensigner le nom de votre société</span>
           <span ng-message="minlength">Merci de renseigner un nom de société d'au moins 2 caractères</span>
         </div>
       </div>
@@ -123,16 +123,13 @@
         <span class="input-group-addon">
           <i class="ion-university"></i>
         </span>
-          <!--<input type="text" name="formations" ng-model="ctrl.formData.formations" class="form-control"-->
-          <!--placeholder="Entrez la liste des formations qui peuvent vous intéresser">-->
-          <!--</div>-->
           <ui-select multiple ng-model="ctrl.formData.formations"  style="width: 100%;">
             <ui-select-match placeholder="Choisissez parmis nos formations...">{{$item.name}}</ui-select-match>
             <ui-select-choices repeat="formation in ctrl.formations | propsFilter: {name: $select.search, description: $select.search}">
               <div class="list-group">
                 <div class="list-group-item">
                   <div class="row-picture">
-                    <img class="circle" ng-src="{{ formation.image }}"  alt="{{ formation.name }} logo">
+                    <img class="circle" ng-src="{{ formation.avatar }}"  alt="{{ formation.name }} logo">
                   </div>
                   <div class="row-content">
                     <h4 class="list-group-item-heading">
@@ -162,7 +159,6 @@
           <i class="ion-information"></i>
         </span>
         <textarea rows="10" name="message" ng-model="ctrl.formData.message" class="form-control" required
-                  ng-minlength="10"
                   placeholder="Décrivez votre besoin, ou tout autre sujet sur lequel vous désirez communiquer avec nous">
         </textarea>
           <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-show="contactForm.message.$valid && (contactForm.message.$touched || contactForm.$submitted)"></i>
@@ -172,7 +168,6 @@
 
         <div ng-messages="contactForm.message.$error" class="help-block" ng-show="contactForm.message.$touched || contactForm.$submitted">
           <span ng-message="required">Merci de décrire la raison pour laquelle vous désirez nous contacter</span>
-          <span ng-message="minlength">Minimum 10 caractères</span>
         </div>
       </div>
 
