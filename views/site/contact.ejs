@@ -14,13 +14,13 @@
             Mme
           </label>
         </div>
-        <div ng-messages="contactForm.gender.$error" class="help-block" style="text-align: left;" ng-show=" contactForm.$submitted">
+        <div ng-messages="contactForm.gender.$error" class="help-block" style="text-align: left;" ng-if=" contactForm.$submitted">
           <span class="toto" ng-message="required">Veuillez préciser votre civilité </span>
         </div>
       </div>
-      <div class="row">
+      <div class="row" style="margin-top: 15px;">
         <div class="form-group col-xs-12 col-md-6"
-             ng-class="{ 'has-error': contactForm.lastName.$invalid && (contactForm.lastName.$touched || contactForm.$submitted),'has-success': contactForm.lastName.$valid}">
+             ng-class="{ 'has-error': contactForm.lastName.$invalid && (contactForm.lastName.$touched || contactForm.$submitted),'has-success': contactForm.lastName.$valid}" style="padding-right:0;">
           <!--<label>Nom *</label>-->
           <div class="input-group">
           <span class="input-group-addon">
@@ -29,17 +29,18 @@
             <input type="text" name="lastName" ng-model="ctrl.formData.lastName" required ng-minlength="3"
                    class="form-control floating-label"
                    placeholder="Votre nom *">
-            <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-show="contactForm.lastName.$valid && (contactForm.lastName.$touched || contactForm.$submitted)"></i>
-            <i class="ion-close-round form-control-feedback" aria-hidden="true" ng-show="contactForm.lastName.$invalid && (contactForm.lastName.$touched || contactForm.$submitted)"></i>
+            <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-if="contactForm.lastName.$valid && (contactForm.lastName.$touched || contactForm.$submitted)"></i>
+            <i class="ion-close-round form-control-feedback" aria-hidden="true" ng-if="contactForm.lastName.$invalid && (contactForm.lastName.$touched || contactForm.$submitted)"></i>
           </div>
 
-          <div ng-messages="contactForm.lastName.$error" class="help-block" ng-show="contactForm.lastName.$touched || contactForm.$submitted">
+          <div ng-messages="contactForm.lastName.$error" class="help-block" ng-if="contactForm.lastName.$touched || contactForm.$submitted">
             <span class="toto" ng-message="required">Merci de renseigner votre nom</span>
             <span class="toto" ng-message="minlength">Merci de renseigner un nom d'au moins 3 caractères</span>
           </div>
         </div>
 
         <div class="form-group col-xs-12 col-md-6"
+             style="padding-right: 0;"
              ng-class="{ 'has-error': contactForm.firstname.$invalid && (contactForm.firstName.$touched || contactForm.$submitted),'has-success': contactForm.firstName.$valid && contactForm.firstName.$touched}">
           <div class="input-group">
           <span class="input-group-addon">
@@ -48,8 +49,8 @@
             <input type="text" name="firstName" ng-model="ctrl.formData.firstName"
                    class="form-control floating-label"
                    placeholder="votre prénom">
-            <i class="ion-checkmark-round form-control-feedback"  aria-hidden="true" ng-show="contactForm.firstName.$valid && (contactForm.firstName.$touched || contactForm.$submitted)"></i>
-            <i class="ion-close-round form-control-feedback"  aria-hidden="true" ng-show="contactForm.firstName.$invalid && (contactForm.firstName.$touched || contactForm.$submitted)"></i>
+            <i class="ion-checkmark-round form-control-feedback"  aria-hidden="true" ng-if="contactForm.firstName.$valid && (contactForm.firstName.$touched || contactForm.$submitted)"></i>
+            <i class="ion-close-round form-control-feedback"  aria-hidden="true" ng-if="contactForm.firstName.$invalid && (contactForm.firstName.$touched || contactForm.$submitted)"></i>
           </div>
         </div>
       </div>
@@ -66,11 +67,11 @@
           </span>
           <input type="email" name="email" ng-model="ctrl.formData.email" required class="form-control floating-label"
                  placeholder="Renseignez votre email pour que nous puissions vous recontacter *">
-          <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-show="contactForm.email.$valid && (contactForm.email.$touched || contactForm.$submitted)"></i>
-          <i class="ion-close-round form-control-feedback" aria-hidden="true" ng-show="contactForm.email.$invalid && (contactForm.email.$touched || contactForm.$submitted)"></i>
+          <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-if="contactForm.email.$valid && (contactForm.email.$touched || contactForm.$submitted)"></i>
+          <i class="ion-close-round form-control-feedback" aria-hidden="true" ng-if="contactForm.email.$invalid && (contactForm.email.$touched || contactForm.$submitted)"></i>
         </div>
 
-        <div ng-messages="contactForm.email.$error" class="help-block" ng-show="contactForm.email.$touched || contactForm.$submitted">
+        <div ng-messages="contactForm.email.$error" class="help-block" ng-if="contactForm.email.$touched || contactForm.$submitted">
           <span ng-message="required">Merci de renseigner votre adresse email pour que nous puissions vous recontacter</span>
           <span ng-message="email">Le format de votre adresse email n'est pas valide</span>
         </div>
@@ -86,10 +87,10 @@
           <input type="text" name="phone" ng-model="ctrl.formData.phone" class="form-control floating-label"
                  pattern="^(?:0|\(?\+33\)?\s?|0033\s?)[1-79](?:[\.\-\s]?\d\d){4}$"
                  placeholder="Si vous désirez être recontacté par téléphone">
-          <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-show="contactForm.phone.$valid && contactForm.phone.$touched"></i>
-          <i class="ion-close-round form-control-feedback" aria-hidden="true" ng-show="contactForm.phone.$invalid && (contactForm.phone.$touched || contactForm.$submitted)"></i>
+          <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-if="contactForm.phone.$valid && contactForm.phone.$touched"></i>
+          <i class="ion-close-round form-control-feedback" aria-hidden="true" ng-if="contactForm.phone.$invalid && (contactForm.phone.$touched || contactForm.$submitted)"></i>
         </div>
-        <div ng-messages="contactForm.phone.$error" class="help-block" ng-show="contactForm.phone.$touched || contactForm.$submitted">
+        <div ng-messages="contactForm.phone.$error" class="help-block" ng-if="contactForm.phone.$touched || contactForm.$submitted">
           <span ng-message="pattern">Merci de renseigner un numéro de téléphone français valide</span>
         </div>
       </div>
@@ -105,11 +106,11 @@
           <input type="text" name="company" ng-model="ctrl.formData.company" required ng-minlength="2"
                  class="form-control floating-label"
                  placeholder="Entrez le nom de votre société *">
-          <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-show="contactForm.company.$valid && (contactForm.company.$touched || contactForm.$submitted)"></i>
-          <i class="ion-close-round form-control-feedback" aria-hidden="true" ng-show="contactForm.company.$invalid && (contactForm.company.$touched || contactForm.$submitted)"></i>
+          <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-if="contactForm.company.$valid && (contactForm.company.$touched || contactForm.$submitted)"></i>
+          <i class="ion-close-round form-control-feedback" aria-hidden="true" ng-if="contactForm.company.$invalid && (contactForm.company.$touched || contactForm.$submitted)"></i>
         </div>
 
-        <div ng-messages="contactForm.company.$error" class="help-block" ng-show="contactForm.company.$touched || contactForm.$submitted">
+        <div ng-messages="contactForm.company.$error" class="help-block" ng-if="contactForm.company.$touched || contactForm.$submitted">
           <span ng-message="required">Merci de rensigner le nom de votre société</span>
           <span ng-message="minlength">Merci de renseigner un nom de société d'au moins 2 caractères</span>
         </div>
@@ -161,12 +162,12 @@
         <textarea rows="10" name="message" ng-model="ctrl.formData.message" class="form-control" required
                   placeholder="Décrivez votre besoin, ou tout autre sujet sur lequel vous désirez communiquer avec nous">
         </textarea>
-          <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-show="contactForm.message.$valid && (contactForm.message.$touched || contactForm.$submitted)"></i>
-          <i class="ion-close-round form-control-feedback" aria-hidden="true" ng-show="contactForm.message.$invalid && (contactForm.message.$touched || contactForm.$submitted)"></i>
+          <i class="ion-checkmark-round form-control-feedback" aria-hidden="true" ng-if="contactForm.message.$valid && (contactForm.message.$touched || contactForm.$submitted)"></i>
+          <i class="ion-close-round form-control-feedback" aria-hidden="true" ng-if="contactForm.message.$invalid && (contactForm.message.$touched || contactForm.$submitted)"></i>
         </div>
 
 
-        <div ng-messages="contactForm.message.$error" class="help-block" ng-show="contactForm.message.$touched || contactForm.$submitted">
+        <div ng-messages="contactForm.message.$error" class="help-block" ng-if="contactForm.message.$touched || contactForm.$submitted">
           <span ng-message="required">Merci de décrire la raison pour laquelle vous désirez nous contacter</span>
         </div>
       </div>
@@ -176,7 +177,7 @@
         <span ng-hide="ctrl.isPending">
           Envoyer
         </span>
-          <i class="ion-load-c" style="font-size:1.5em;" ng-class="{ 'rotate-icon': ctrl.isPending }" ng-show="ctrl.isPending"></i>
+          <i class="ion-load-c" style="font-size:1.5em;" ng-class="{ 'rotate-icon': ctrl.isPending }" ng-if="ctrl.isPending"></i>
         </button>
 
       </div>
