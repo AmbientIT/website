@@ -71,7 +71,7 @@ module.exports = {
         var usersMail = users.map(function(user){
           return user.email;
         });
-        var file = fs.readFileSync(__dirname + '/../../views/email/contact.ejs', 'ascii');
+        var file = fs.readFileSync(__dirname + '/../../views/email/contact/'+obj.type+'.ejs', 'ascii');
         var html = ejs.render(file, { locals: obj });
         var options = {
           to: usersMail,

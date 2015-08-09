@@ -14,13 +14,16 @@ angular.module('contact')
       })
     }
 
-    ctrl.afterCreationDialog = function(message){
+    ctrl.afterCreationDialog = function(message,isError){
       return  $modal.open({
         animation: true,
         templateUrl: '../templates/contact/dialog/after-contact.tpl.html',
         resolve: {
           message: function(){
             return message;
+          },
+          isError: function(){
+            return isError;
           }
         },
         controller: 'DialogController',
@@ -45,19 +48,19 @@ angular.module('contact')
         if(ctrl.contactForm.$valid){
           ctrl.isPending = true;
 
-          contact.type = $location.path().replace('/','');
+          data.type = $location.path().replace('/','');
 
           contactService
             .create(data)
             .then(function(){
               ctrl.isPending = false;
-              return ctrl.afterCreationDialog('Nous avons bien reçus votre demande, nous vous recontacterons dans les plus bref delais.')
+              return ctrl.afterCreationDialog('Nous avons bien reçus votre demande, nous vous recontacterons dans les plus bref delais.', false);
             })
             .then(function(){
               window.location.href = 'http://ambientpreprod.cloudapp.net/';
             })
             .catch(function(err){
-              return ctrl.afterCreationDialog('Nous sommes désolé une erreur est survenue');
+              return ctrl.afterCreationDialog('Nous sommes désolé une erreur est survenue', true);
             })
             .then(function(){
               window.location.href = 'http://ambientpreprod.cloudapp.net/';
