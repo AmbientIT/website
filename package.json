@@ -50,11 +50,14 @@
     "supertest": "^1.0.1"
   },
   "scripts": {
+    "predev": "npm update",
     "dev": "node node_modules/.bin/nodemon app.js",
+    "predeploy": "sh ./.shellscript/uploadSSH.sh",
     "deploy": "node node_modules/.bin/gulp deploy",
-    "preStart": "sh ./.shellscript/prepareServer.sh",
-    "start": "nopm install",
-    "postinstall": "node node_modules/.bin/pm2 start app"
+    "postdeploy": "node node_modules/.bin/gulp start-server",
+    "preinstall": "sudo sh ./.shellscript/prepareServer.sh",
+    "prestart": "npm install",
+    "start": "node node_modules/.bin/pm2 start app"
   },
   "main": "app.js",
   "repository": {

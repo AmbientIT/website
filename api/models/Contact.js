@@ -26,8 +26,6 @@ module.exports = {
     },
     slug: {
       type: 'string',
-      primaryKey: true,
-      unique: true,
       index: true
     },
     email: {
@@ -48,6 +46,10 @@ module.exports = {
     message : {
       type : 'string',
       required: true
+    },
+    type: {
+      type: 'string',
+      required: true
     }
   },
   beforeCreate: function(obj,cb){
@@ -57,7 +59,7 @@ module.exports = {
       obj.displayName =obj.lastName;
     }
     try{
-      obj.slug = obj.name.toLowerCase().replace(/ /g,'');
+      obj.slug = obj.displayName.toLowerCase().replace(/ /g,'');
       return cb(null,obj);
     }catch(err){
       return cb(err);

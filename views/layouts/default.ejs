@@ -69,7 +69,7 @@
           <a href="/blog">Blog</a>
         </li>
         <li class="item">
-          <a href="/contact">Nous contacter</a>
+          <a href="/contact/#/formations">Nous contacter</a>
         </li>
       </ul>
     </div>
@@ -92,7 +92,7 @@
 
 <footer class="main-footer">
   <nav>
-    <a href="/contact">Nous contacter</a>
+    <a href="/contact/#/formations">Nous contacter</a>
     <span> | </span>
     <a href="/formations">Nos Formations</a>
     <span>|</span>
@@ -173,14 +173,23 @@
 <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/material.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/api-check/7.5.0/api-check.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.js"></script>
 <script src="https://code.angularjs.org/1.4.2/angular-animate.min.js"></script>
 <script src="https://code.angularjs.org/1.4.2/angular-messages.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.12.0/select.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-formly/6.21.1/formly.js"></script>
 
 <!--SCRIPTS-->
+<script src="/js/dependencies/angular-formly-templates-bootstrap.js"></script>
 <script src="/js/dependencies/bootstrap.min.js"></script>
-<script src="/js/contact.js"></script>
+<script src="/js/contact/app.js"></script>
+<script src="/js/contact/controllers/ContactController.js"></script>
+<script src="/js/contact/controllers/DialogController.js"></script>
+<script src="/js/contact/filters/propsFilter.js"></script>
+<script src="/js/contact/services/contactService.js"></script>
+<script src="/js/contact/services/formationService.js"></script>
 <script src="/js/formation.js"></script>
 <script src="/js/home.js"></script>
 <script src="/js/main.js"></script>
