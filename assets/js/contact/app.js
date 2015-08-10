@@ -16,9 +16,9 @@ angular.module('contact', [
         url: '',
         templateUrl: '../templates/contact/form/nav.tpl.html',
         resolve: {
-          formation: function(formationService){
+          formation: ['formationService',function(formationService){
             return formationService.findAll();
-          }
+          }]
         }
       })
       .state('contact.formations', {
@@ -38,8 +38,8 @@ angular.module('contact', [
       })
 
   }])
-  .run(function($rootScope){
+  .run(['$rootScope',function($rootScope){
     $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){
       throw error;
     })
-  });
+  }]);

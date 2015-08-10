@@ -52,7 +52,7 @@
   "scripts": {
     "predev": "npm update",
     "dev": "node node_modules/.bin/nodemon app.js",
-    "predeploy": "sh ./.shellscript/uploadSSH.sh",
+    "prepare": "sh ./.shellscript/uploadSSH.sh",
     "deploy": "node node_modules/.bin/gulp deploy",
     "postdeploy": "node node_modules/.bin/gulp start-server",
     "preinstall": "sudo sh ./.shellscript/prepareServer.sh",

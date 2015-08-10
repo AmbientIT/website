@@ -1,5 +1,5 @@
 angular.module('contact')
-.factory('formationService', function($http){
+.factory('formationService', ['$http',function($http){
     var cache = [];
     return {
       findAll: function(){
@@ -14,4 +14,4 @@ angular.module('contact')
         return cache;
       }
     }
-  });
+  }]);

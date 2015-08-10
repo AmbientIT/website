@@ -1,5 +1,5 @@
 angular.module('contact')
-  .factory('contactService', function($http){
+  .factory('contactService', ['$http',function($http){
     return {
       create: function(contact){
         return $http
@@ -9,4 +9,4 @@ angular.module('contact')
           });
       }
     }
-  });
+  }]);

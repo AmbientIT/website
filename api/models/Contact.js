@@ -50,6 +50,9 @@ module.exports = {
     type: {
       type: 'string',
       required: true
+    },
+    prestation: {
+      type: 'string'
     }
   },
   beforeCreate: function(obj,cb){

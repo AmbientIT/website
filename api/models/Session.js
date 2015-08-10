@@ -8,9 +8,6 @@
 module.exports = {
 
   attributes: {
-    type: {
-      type: 'string'
-    },
     start: {
       type: 'date'
     },
@@ -24,15 +21,12 @@ module.exports = {
       model: 'Trainer'
     },
     client: {
-      model: 'contact'
+      model: 'Client'
     },
     students: {
       collection: 'student',
       via: 'sessions',
       dominant: true
-    },
-    contact: {
-      model: 'Contact'
     },
     generateDocuments: function(){
 

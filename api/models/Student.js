@@ -26,8 +26,6 @@ module.exports = {
     },
     slug: {
       type: 'string',
-      primaryKey: true,
-      unique: true,
       index: true
     }
   },
