@@ -26,7 +26,7 @@ module.exports.policies = {
    *                                                                          *
    ***************************************************************************/
 
-  // '*': true,
+   '*': 'auth',
 
   /***************************************************************************
    *                                                                          *
@@ -34,18 +34,15 @@ module.exports.policies = {
    * and its actions                                                          *
    *                                                                          *
    ***************************************************************************/
-  FormationController: {
-    '*': 'auth',
-    'toPdf':true,
-    'find': true
-  },
-  CategoryController: {
-    '*': true
-  },
   UserController: {
-    '*': 'auth',
-    'googleAuth': true,
-    'me': 'auth',
-    'remove': 'admin'
+    googleAuth: true
+  },
+  SiteController: {
+    homePage: true,
+    formationsPage: true,
+    formationPage: true
+  },
+  FormationController: {
+    find: true
   }
 };

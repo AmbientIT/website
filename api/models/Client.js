@@ -15,8 +15,8 @@ module.exports = {
       index: true
     },
     sessions: {
-      collection: 'session',
-      via: 'Client'
+      collection: 'Session',
+      via: 'client'
     },
     contact: {
       model: 'Contact'

@@ -43,7 +43,7 @@ module.exports =  function (req, res, next) {
 
   } else {
     sails.log(req.socket.handshake);
-    return res.json(401, {err: 'No Authorization header was found'});
+    return res.forbidden();
   }
 
   var payload = null;
@@ -51,7 +51,7 @@ module.exports =  function (req, res, next) {
     payload = jwt.decode(token, sails.config.TOKEN_SECRET);
   }
   catch (err) {
-    return res.status(401).send({ message: err.message });
+    return res.forbidden();
   }
 
   if (payload.exp <= moment().unix()) {
