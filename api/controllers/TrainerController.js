@@ -10,7 +10,7 @@ module.exports = {
     var TrainerPromise;
 
     if(!req.query._page && !req.query._sortDir){
-      TrainerPromise = Trainer.find()
+      TrainerPromise = Trainer.find(req.query)
     }
 
     if(req.query._page && !req.query._sortDir){
@@ -35,22 +35,86 @@ module.exports = {
       .catch(res.serverError)
   },
   findOne: function(req,res){
-    return Trainer.findOne({ slug: req.params.id })
+    return Trainer.findOne({ id: req.params.id })
       .populate('formations')
       .then(function(trainer){
         return res.json(trainer);
       })
       .catch(res.serverError);
   },
-  update: function(req, res){
-    return Trainer.update({slug: req.params.id},req.body)
+  create: function(req, res){
+    if(req.body.user){
+      return User.findOne({id:req.body.user})
+        .then(function(user){
+          if(user){
+            req.body.firstName = user.firstName;
+            req.body.lastName = user.lastName;
+            req.body.displayName = user.displayName;
+            req.body.email = user.email;
+            return Trainer.create(req.body)
+              .then(function(result){
+                return res.json(result);
+              })
+              .catch(res.serverError)
+          }else{
+            cb(new Error('unknown user'));
+          }
+        })
+        .catch(function(err){
+          return cb(err);
+        });
+    }else if(req.body.contact){
+      return Contact.findOne({ id : req.body.contact})
+        .populate('formations')
+        .then(function(contact){
+          if(contact){
+            var promises  = [];
+            req.body.firstName = contact.firstName;
+            req.body.lastName = contact.lastName;
+            req.body.displayName = contact.displayName;
+            req.body.formations = contact.formations.map(function(formation){
+              return formation.slug;
+            });
+            console.log(req.body);
+            req.body.email = contact.email;
+            return Trainer.create(req.body)
+              .then(function(result){
+                return res.json(result);
+              })
+              .catch(res.serverError)
+          }else{
+            res.badRequest(new Error('This contact does not exist anymore !'));
+          }
+        })
+        .catch(function(err){
+          console.log(err)
+          return res.badRequest(err);
+        });
+    }
+    else{
+      if(!req.body.firstName || !req.body.lastName){
+        return res.badRequest(new Error('missing firstName or lastName attribute'));
+      }
+      req.body.displayName = req.body.firstName +' '+ req.body.lastName;
+      return Trainer.create(req.body)
+        .then(function(result){
+          return res.json(result);
+        })
+        .catch(res.serverError)
+    }
+    if(!req.body.formations[0]){
+      req.body.formations = [];
+    }
+
+  },update: function(req, res){
+    return Trainer.update({id: req.params.id},req.body)
       .then(function(result){
         return res.json(result);
       })
       .catch(res.serverError);
   },
   destroy: function(req,res){
-    return Trainer.destroy({slug:req.params.id})
+    return Trainer.destroy({id:req.params.id})
       .then(function(){
         return res.send();
       })

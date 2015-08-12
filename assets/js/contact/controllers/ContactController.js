@@ -2,13 +2,13 @@ angular.module('contact')
   .controller('ContactController', ['$http','$modal','$window','formationService','contactService','$location', function ($http, $modal,$window, formationService, contactService,$location) {
     var ctrl = this;
     ctrl.formations = formationService.get();
-    if($window.location.search){
+    console.log($location.search());
+    if($location.search().formation){
       ctrl.contact = {
         formations: []
       };
-      angular.forEach(formations,function(formation){
-        if($window.location.search.substr(11) === formation.slug){
-          console.log(formation);
+      angular.forEach(ctrl.formations,function(formation){
+        if($location.search().formation === formation.slug){
           ctrl.contact.formations.push(formation);
         }
       })

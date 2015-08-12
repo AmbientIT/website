@@ -10,7 +10,7 @@ module.exports = {
     var FormationPromise;
 
     if(!req.query._page && !req.query._sortDir){
-      FormationPromise = Formation.find()
+      FormationPromise = Formation.find(req.query)
         .populate('next')
         .populate('previous')
         .populate('trainers')

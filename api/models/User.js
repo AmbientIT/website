@@ -27,12 +27,6 @@ module.exports = {
     google:{
       type: 'string'
     },
-    slug: {
-      type: 'string',
-      primaryKey: true,
-      unique: true,
-      index: true
-    },
     tokenify: function(){
       try{
         var payload = {
@@ -44,14 +38,6 @@ module.exports = {
       }catch(err){
         throw err;
       }
-    }
-  },
-  beforeCreate: function(obj, cb){
-    try{
-      obj.slug = obj.displayName.toLowerCase().replace(/ /g,'');
-      return cb(null,obj);
-    }catch(err){
-      return cb(err);
     }
   }
 };

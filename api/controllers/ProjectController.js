@@ -10,7 +10,7 @@ module.exports = {
     var ProjectPromise;
 
     if(!req.query._page && !req.query._sortDir){
-      ProjectPromise = Project.find()
+      ProjectPromise = Project.find(req.query)
     }
 
     if(req.query._page && !req.query._sortDir){

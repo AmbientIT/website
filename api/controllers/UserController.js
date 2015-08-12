@@ -12,7 +12,7 @@ module.exports = {
     var UserPromise;
 
     if(!req.query._page && !req.query._sortDir){
-      UserPromise = User.find()
+      UserPromise = User.find(req.query)
     }
 
     if(req.query._page && !req.query._sortDir){

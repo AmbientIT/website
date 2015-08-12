@@ -24,10 +24,6 @@ module.exports = {
     displayName: {
       type: 'string'
     },
-    slug: {
-      type: 'string',
-      index: true
-    },
     email: {
       type: 'string',
       required: true
@@ -53,6 +49,9 @@ module.exports = {
     },
     prestation: {
       type: 'string'
+    },
+    client: {
+      model: 'Client'
     }
   },
   beforeCreate: function(obj,cb){
@@ -61,12 +60,7 @@ module.exports = {
     }else{
       obj.displayName =obj.lastName;
     }
-    try{
-      obj.slug = obj.displayName.toLowerCase().replace(/ /g,'');
-      return cb(null,obj);
-    }catch(err){
-      return cb(err);
-    }
+    cb(null);
   },
   afterCreate: function(obj,cb){
     return User.find()

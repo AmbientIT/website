@@ -35,21 +35,21 @@ module.exports = {
       .catch(res.serverError)
   },
   findOne: function(req,res){
-    return Student.findOne({ slug: req.params.id })
+    return Student.findOne({ id: req.params.id })
       .then(function(trainer){
         return res.json(trainer);
       })
       .catch(res.serverError);
   },
   update: function(req, res){
-    return Student.update({slug: req.params.id},req.body)
+    return Student.update({id: req.params.id},req.body)
       .then(function(result){
         return res.json(result);
       })
       .catch(res.serverError);
   },
   destroy: function(req,res){
-    return Student.destroy({slug:req.params.id})
+    return Student.destroy({id:req.params.id})
       .then(function(){
         return res.send();
       })

@@ -10,7 +10,7 @@ module.exports = {
     var sessionPromise;
 
     if(!req.query._page && !req.query._sortDir){
-      sessionPromise = Session.find()
+      sessionPromise = Session.find(req.query)
     }
 
     if(req.query._page && !req.query._sortDir){

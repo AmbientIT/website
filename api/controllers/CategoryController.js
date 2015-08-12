@@ -10,7 +10,7 @@ module.exports = {
     var CategoryPromise;
 
     if(!req.query._page && !req.query._sortDir){
-      CategoryPromise = Category.find()
+      CategoryPromise = Category.find(req.query)
     }
 
     if(req.query._page && !req.query._sortDir){

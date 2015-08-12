@@ -23,23 +23,13 @@ module.exports = {
     sessions: {
       collection: 'session',
       via: 'students'
-    },
-    slug: {
-      type: 'string',
-      index: true
     }
   },
   beforeCreate: function(obj,cb){
     if(obj.firstName){
       obj.displayName = obj.firstName + ' ' + obj.lastName;
     }else{
-      obj.displayName =obj.lastName;
-    }
-    try{
-      obj.slug = obj.name.toLowerCase().replace(/ /g,'');
-      return cb(null,obj);
-    }catch(err){
-      return cb(err);
+      obj.displayName = obj.lastName;
     }
   }
 };

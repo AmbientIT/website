@@ -28,53 +28,10 @@ module.exports = {
     },
     formations: {
       collection: 'formation',
-      via: 'trainers',
-      dominant: true
-    },
-    external: {
-      type: 'boolean'
+      via: 'trainers'
     },
     home: {
       type: 'boolean'
-    },
-    slug: {
-      type: 'string',
-      primaryKey: true,
-      unique: true,
-      index: true
-    }
-  },
-  beforeCreate: function(obj,cb){
-    if(obj.user){
-      return User.findOne({slug:obj.user})
-        .then(function(user){
-          if(user){
-            try{
-              obj.displayName = user.displayName;
-              obj.email = user.email;
-              obj.slug = obj.displayName.toLowerCase().replace(/ /g,'');
-              return cb(null,obj);
-            }catch(err){
-              return cb(err);
-            }
-          }else{
-            cb(new Error('unknown user'));
-          }
-        })
-        .catch(function(err){
-          return cb(err);
-        });
-    }else{
-      if(!obj.firstName || !obj.lastName){
-       return cb(new Error('missing firstName or lastName attribute'));
-      }
-      try{
-        obj.displayName = obj.firstName +' '+ obj.lastName;
-        obj.slug = obj.displayName.toLowerCase().replace(/ /g,'');
-        return cb(null,obj);
-      }catch(err){
-        return cb(err);
-      }
     }
   }
 };

@@ -18,8 +18,9 @@ module.exports = {
       collection: 'Session',
       via: 'client'
     },
-    contact: {
-      model: 'Contact'
+    contacts: {
+      collection: 'Contact',
+      via: 'client'
     },
     site: {
       type: 'string'

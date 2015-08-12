@@ -42,6 +42,9 @@ module.exports.policies = {
     formationsPage: true,
     formationPage: true
   },
+  ContactController: {
+    create: true
+  },
   FormationController: {
     find: true
   }

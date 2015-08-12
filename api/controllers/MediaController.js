@@ -14,7 +14,7 @@ module.exports = {
     var MediaPromise;
 
     if(!req.query._page && !req.query._sortDir){
-      MediaPromise = Media.find()
+      MediaPromise = Media.find(req.query)
     }
 
     if(req.query._page && !req.query._sortDir){

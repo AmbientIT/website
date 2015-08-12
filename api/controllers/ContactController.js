@@ -10,7 +10,7 @@ module.exports = {
     var ContactPromise;
 
     if(!req.query._page && !req.query._sortDir){
-      ContactPromise = Contact.find()
+      ContactPromise = Contact.find(req.query)
     }
 
     if(req.query._page && !req.query._sortDir){
@@ -35,7 +35,7 @@ module.exports = {
       .catch(res.serverError)
   },
   findOne: function(req, res){
-    return Contact.findOne({ slug : req.params.id })
+    return Contact.findOne({ id : req.params.id })
       .populate('formations')
       .then(function(result){
         return res.json(result);
@@ -43,7 +43,7 @@ module.exports = {
       .catch(res.serverError);
   },
   destroy: function(req,res){
-    return Contact.destroy({slug:req.params.id})
+    return Contact.destroy({id:req.params.id})
       .then(function(){
         return res.send();
       })

@@ -10,7 +10,7 @@ module.exports = {
     var clientPromise;
 
     if(!req.query._page && !req.query._sortDir){
-      clientPromise = Client.find()
+      clientPromise = Client.find(req.query)
     }
 
     if(req.query._page && !req.query._sortDir){
@@ -35,7 +35,7 @@ module.exports = {
       .catch(res.serverError)
   },
   findOne: function(req,res){
-    return Client.findOne({ slug: req.params.id })
+    return Client.findOne({ id: req.params.id })
       .populate('students')
       .then(function(trainer){
         return res.json(trainer);
@@ -43,14 +43,14 @@ module.exports = {
       .catch(res.serverError);
   },
   update: function(req, res){
-    return Client.update({slug: req.params.id},req.body)
+    return Client.update({id: req.params.id},req.body)
       .then(function(result){
         return res.json(result);
       })
       .catch(res.serverError);
   },
   destroy: function(req,res){
-    return Client.destroy({slug:req.params.id})
+    return Client.destroy({id:req.params.id})
       .then(function(){
         return res.send();
       })
