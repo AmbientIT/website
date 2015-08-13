@@ -36,6 +36,7 @@ module.exports = {
   },
   findOne: function(req,res){
     return Student.findOne({ id: req.params.id })
+      .populate('sessions')
       .then(function(trainer){
         return res.json(trainer);
       })

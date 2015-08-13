@@ -25,7 +25,7 @@ module.exports = {
     }
 
     return Promise.all([
-      TrainerPromise,
+      TrainerPromise.populate('formations'),
       Trainer.count()
     ])
       .then(function(results) {
@@ -87,7 +87,6 @@ module.exports = {
           }
         })
         .catch(function(err){
-          console.log(err)
           return res.badRequest(err);
         });
     }

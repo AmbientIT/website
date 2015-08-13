@@ -31,6 +31,7 @@ module.exports = {
     }else{
       obj.displayName = obj.lastName;
     }
+    cb(null,obj);
   }
 };
 

@@ -14,6 +14,9 @@ module.exports = {
     end: {
       type: 'date'
     },
+    name: {
+      type:'string'
+    },
     formation: {
       model: 'Formation'
     },
@@ -31,6 +34,10 @@ module.exports = {
     generateDocuments: function(){
 
     }
+  },
+  beforeCreate: function(obj,cb){
+    obj.name = obj.formation + ' ' +obj.start;
+    cb(null,obj);
   }
 };
 

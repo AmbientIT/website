@@ -52,13 +52,11 @@ module.exports = {
       .populate('previous')
       .populate('trainers')
       .then(function(result){
-        console.log(result);
         return res.json(result);
       })
       .catch(res.serverError);
   },
   update: function(req, res){
-    console.log(req.params,req.body);
     return Formation.update({slug: req.params.id},req.body)
       .then(function(result){
         res.json(result);

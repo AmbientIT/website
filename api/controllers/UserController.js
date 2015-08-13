@@ -37,21 +37,21 @@ module.exports = {
       .catch(res.serverError)
   },
   findOne: function(req, res){
-    return User.findOne({ slug: req.params.id })
+    return User.findOne({ id: req.params.id })
       .then(function(result){
         return res.json(result);
       })
       .catch(res.serverError);
   },
   update: function(req, res){
-    return User.update({slug: req.params.id},req.body)
+    return User.update({id: req.params.id},req.body)
       .then(function(result){
         return res.json(result);
       })
       .catch(res.serverError);
   },
   destroy: function(req,res){
-    return User.destroy({slug:req.params.id})
+    return User.destroy({id:req.params.id})
       .then(function(){
         return res.send();
       })
@@ -76,13 +76,13 @@ module.exports = {
                 return res.serverError(e);
               }
 
-              return User.findOne({slug:payload.sub})
+              return User.findOne({id:payload.sub})
             })
             .then(function(user) {
               if (!user) {
                 return res.status(400).send({ message: 'User not found' });
               }
-              return User.update({slug:user.slug},{
+              return User.update({id:user.id},{
                 google : profile.sub,
                 picture: user.picture || profile.picture.replace('sz=50', 'sz=200'),
                 displayName : user.displayName || profile.name,

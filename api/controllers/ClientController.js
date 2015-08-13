@@ -25,7 +25,7 @@ module.exports = {
     }
 
     return Promise.all([
-      clientPromise,
+      clientPromise.populate('contacts'),
       Client.count()
     ])
       .then(function(results) {
@@ -36,7 +36,8 @@ module.exports = {
   },
   findOne: function(req,res){
     return Client.findOne({ id: req.params.id })
-      .populate('students')
+      .populate('contacts')
+      .populate('sessions')
       .then(function(trainer){
         return res.json(trainer);
       })
