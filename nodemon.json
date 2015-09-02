@@ -4,7 +4,7 @@
     ".git",
     ".shellscript",
     ".tmp",
-    ".idea/**",
+    ".idea",
     ".gitignore",
     "deployConfig.json",
     "deployConfigExample.json",

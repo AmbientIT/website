@@ -11,7 +11,7 @@ module.exports = {
           data.program = '';
         }
         var html = ejs.render(file, {locals: data});
-        return wkhtmltopdf(html,{ output: 'assets/pdf/' + output + '.pdf', encoding: 'utf-8' }, function(){
+        return wkhtmltopdf(html,{ output: 'assets/pdf/' + output + '.pdf', encoding: 'utf-8' }, function(err){
           return resolve();
         });
       }catch(err){

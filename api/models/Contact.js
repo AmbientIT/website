@@ -7,6 +7,7 @@
 
 var ejs = require('ejs');
 var fs = require('fs');
+var clone = require('node-clone');
 
 module.exports = {
   attributes: {
@@ -63,24 +64,33 @@ module.exports = {
     cb(null);
   },
   afterCreate: function(obj,cb){
+    var usersMail;
     return User.find()
       .then(function(users){
-        var usersMail = users.map(function(user){
+        usersMail = users.map(function(user){
           return user.email;
         });
+        return Contact.findOne({ id : obj.id })
+          .populate('formations')
+      })
+      .then(function(contact){
         var file = fs.readFileSync(__dirname + '/../../views/email/contact/'+obj.type+'.ejs', 'ascii');
-        var html = ejs.render(file, { locals: obj });
+        var html = ejs.render(file, { locals: {
+          contact: contact,
+          config: sails.config
+        }});
         var options = {
           to: usersMail,
           subject: "Nouveau contact sur le site",
           html: html
         };
-        return mailer.send(options)
+        return mailer.send(options);
       })
       .then(function(result){
         return cb(null,result)
       })
       .catch(function(err){
+        console.log(err);
         return cb(err);
       });
   }

@@ -19,13 +19,11 @@ module.exports = {
   TOKEN_SECRET: process.env.TOKEN_SECRET || 'A hard to guess string',
   GOOGLE_SECRET: process.env.GOOGLE_SECRET || 'lh-ml0swLWA05UW2qUG-s1Dm',
   email: {
-    service: 'Gmail',
-    auth:{
-      user: 'foo@bar.foo',
-      pass: 'foobar'
-    },
-    from: 'no-reply@foo.bar'
-  }
+    service: 'SMTP',
+    from: 'no-reply@toto.com',
+    port: 25,
+    host: 'localhost'
+  },
   // models: {
   //   connection: 'someMongodbServer'
   // }

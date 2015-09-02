@@ -12,18 +12,22 @@ var mime = require('mime');
 module.exports = {
   find: function(req, res){
     var MediaPromise;
+    var search = {};
+    if(req.query._filters){
+      search = JSON.parse(req.query._filters);
+    }
 
     if(!req.query._page && !req.query._sortDir){
-      MediaPromise = Media.find(req.query)
+      MediaPromise = Media.find(search)
     }
 
     if(req.query._page && !req.query._sortDir){
-      MediaPromise = Media.find()
+      MediaPromise = Media.find(search)
         .paginate({page: req.query._page , limit: req.query._perPage })
     }
 
     if(req.query._sortDir){
-      MediaPromise = Media.find()
+      MediaPromise = Media.find(search)
         .sort(req.query._sortField + ' '+req.query._sortDir)
         .paginate({page: req.query._page , limit: req.query._perPage })
     }

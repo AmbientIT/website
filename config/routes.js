@@ -107,8 +107,8 @@ module.exports.routes = {
     controller: 'Media',
     action: 'upload'
   },
-  'put /api/formation/:id': {
-    controller: 'Formation',
-    action: 'update'
+  'get /api/calendar/events':{
+    controller: 'Calendar',
+    action: 'getCalEvents'
   }
 };

@@ -10,18 +10,22 @@ var jwt = require('jwt-simple');
 module.exports = {
   find: function(req, res){
     var UserPromise;
+    var search = {};
+    if(req.query._filters){
+      search = JSON.parse(req.query._filters);
+    }
 
     if(!req.query._page && !req.query._sortDir){
-      UserPromise = User.find(req.query)
+      UserPromise = User.find(search)
     }
 
     if(req.query._page && !req.query._sortDir){
-      UserPromise = User.find()
+      UserPromise = User.find(search)
         .paginate({page: req.query._page , limit: req.query._perPage })
     }
 
     if(req.query._sortDir){
-      UserPromise = User.find()
+      UserPromise = User.find(search)
         .sort(req.query._sortField + ' '+req.query._sortDir)
         .paginate({page: req.query._page , limit: req.query._perPage })
     }
@@ -61,7 +65,11 @@ module.exports = {
     req.user ? res.json(req.user) : res.forbidden();
   },
   googleAuth: function(req,res){
-    googleAuth.getProfileInfo(req.body.code,req.body.clientId,req.body.redirectUri)
+    return googleAPI.getAccessToken(req.body.code,req.body.clientId,req.body.redirectUri)
+    .then(function(token){
+        googleAPI.initCal(token);
+        return googleAPI.getProfileInfo(token);
+      })
       .then(function(profile) {
         if (req.headers.authorization) {
           User.findOne({ google: profile.sub })
@@ -95,7 +103,6 @@ module.exports = {
             });
         } else {
           // Step 3b. Create a new user account or return an existing one.
-          console.log('ouiouioui')
           User.findOne({ google: profile.sub })
             .then(function(existingUser) {
               console.log(existingUser);

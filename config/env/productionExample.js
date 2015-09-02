@@ -38,12 +38,10 @@ module.exports = {
   TOKEN_SECRET: process.env.TOKEN_SECRET || 'A hard to guess string',
   GOOGLE_SECRET: process.env.GOOGLE_SECRET || 'qsdqs54sd5fsd4fsdf',
   email: {
-    service: 'Gmail',
-    auth:{
-      user: 'foo@bar.net',
-      pass: 'foobar'
-    },
-    from: 'no-reply@bar.net'
+    service: 'SMTP',
+    from: 'no-reply@toto.com',
+    port: 25,
+    host: 'localhost'
   }
 
 };

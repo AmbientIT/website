@@ -8,18 +8,22 @@
 module.exports = {
   find: function(req, res){
     var clientPromise;
+    var search = {};
+    if(req.query._filters){
+      search = JSON.parse(req.query._filters);
+    }
 
     if(!req.query._page && !req.query._sortDir){
-      clientPromise = Client.find(req.query)
+      clientPromise = Client.find(search)
     }
 
     if(req.query._page && !req.query._sortDir){
-      clientPromise = Client.find()
+      clientPromise = Client.find(search)
         .paginate({page: req.query._page , limit: req.query._perPage })
     }
 
     if(req.query._sortDir){
-      clientPromise = Client.find()
+      clientPromise = Client.find(search)
         .sort(req.query._sortField + ' '+req.query._sortDir)
         .paginate({page: req.query._page , limit: req.query._perPage })
     }

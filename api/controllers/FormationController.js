@@ -8,16 +8,20 @@
 module.exports = {
   find: function(req, res){
     var FormationPromise;
+    var search = {};
+    if(req.query._filters){
+      search = JSON.parse(req.query._filters);
+    }
 
     if(!req.query._page && !req.query._sortDir){
-      FormationPromise = Formation.find(req.query)
+      FormationPromise = Formation.find(search)
         .populate('next')
         .populate('previous')
         .populate('trainers')
     }
 
     if(req.query._page && !req.query._sortDir){
-      FormationPromise = Formation.find()
+      FormationPromise = Formation.find(search)
         .populate('next')
         .populate('previous')
         .populate('trainers')
@@ -25,7 +29,7 @@ module.exports = {
     }
 
     if(req.query._sortDir){
-      FormationPromise = Formation.find()
+      FormationPromise = Formation.find(search)
         .populate('next')
         .populate('previous')
         .populate('trainers')

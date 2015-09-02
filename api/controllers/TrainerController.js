@@ -8,18 +8,21 @@
 module.exports = {
   find: function(req, res){
     var TrainerPromise;
-
+    var search = {};
+    if(req.query._filters){
+      search = JSON.parse(req.query._filters);
+    }
     if(!req.query._page && !req.query._sortDir){
-      TrainerPromise = Trainer.find(req.query)
+      TrainerPromise = Trainer.find(search)
     }
 
     if(req.query._page && !req.query._sortDir){
-      TrainerPromise = Trainer.find()
+      TrainerPromise = Trainer.find(search)
         .paginate({page: req.query._page , limit: req.query._perPage })
     }
 
     if(req.query._sortDir){
-      TrainerPromise = Trainer.find()
+      TrainerPromise = Trainer.find(search)
         .sort(req.query._sortField + ' '+req.query._sortDir)
         .paginate({page: req.query._page , limit: req.query._perPage })
     }

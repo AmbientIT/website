@@ -3,16 +3,24 @@
   <title>Nouveau contact via le site</title>
 </head>
 <body>
-<header style="background-image: url('http://ambientpreprod.cloudapp.net/images/logo/logos web-03.png');">
+<header style="background-image: url('<%= config.url %>/images/logo.png');">
 
 </header>
 <p>
-  <%= displayName %> de l'entreprise <%= company %>, est intéresser par les formations suivantes :
-
-  <%= message %>
+  <%= contact.displayName %> de l'entreprise <%= contact.company %>, est intéresser par les formations suivantes :
 </p>
+<br/>
+<ul>
+  <% contact.formations.forEach(function(formation){ %>
+  <li><%= formation.name %></li>
+  <% }) %>
+</ul>
 <p>
-  Vous pouvez retrouver tous les details en cliquant <a href="http://ambientpreprod.cloudapp.net/admin/#/contact/show/<%= id %>">ici</a>
+  <%= contact.message %>
+</p>
+<br/>
+<p>
+  Vous pouvez retrouver tous les details en cliquant <a href="<%= config.url %>/admin/#/contact/show/<%= contact.id %>">ici</a>
 </p>
 </body>
 </html>

@@ -57,13 +57,13 @@ angular.module('contact')
               return ctrl.afterCreationDialog('Nous avons bien reçus votre demande, nous vous recontacterons dans les plus bref delais.', false);
             })
             .then(function(){
-              window.location.href = 'http://ambientpreprod.cloudapp.net/';
+              window.location.href = 'http://ambient-it.net/';
             })
             .catch(function(err){
               return ctrl.afterCreationDialog('Nous sommes désolé une erreur est survenue', true);
             })
             .then(function(){
-              window.location.href = 'http://ambientpreprod.cloudapp.net/';
+              window.location.href = 'http://ambient-it.net/';
             })
         }
       }

@@ -30,7 +30,7 @@ module.exports = {
       .catch(res.serverError);
   },
   formationsPage: function(req,res) {
-    return Formation.find()
+    return Formation.find({published : true })
       .populate('category')
       .then(function(result){
         var categories = [];

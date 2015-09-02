@@ -7,12 +7,12 @@
 
 </header>
 <p>
-  <%= displayName %> viens de s'inscrire via le formulaire du site, pour assurer un dev de type <%= type %>
+  <%= contact.displayName %> viens de s'inscrire via le formulaire du site, pour assurer un dev de type <%= contact.type %>
 
-  <%= message %>
+  <%= contact.message %>
 </p>
 <p>
-  Vous pouvez retrouver tous les details en cliquant <a href="http://ambientpreprod.cloudapp.net/admin/#/contact/show/<%= id %>">ici</a>
+  Vous pouvez retrouver tous les details en cliquant <a href="<%= config.url %>/admin/#/contact/show/<%= contact.id %>">ici</a>
 </p>
 </body>
 </html>

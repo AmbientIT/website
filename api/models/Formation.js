@@ -73,7 +73,7 @@ module.exports = {
       if(!obj.avatar)
         obj.avatar = sails.config.url + '/images/formation/logo.jpg';
     }catch(err){
-      cb(err);
+      cb(err)
     }
     var promises = [];
     if(obj.previous){
@@ -121,18 +121,24 @@ module.exports = {
      .populate('previous')
      .populate('trainers')
      .then(function(result) {
+        console.log('---------- after update ----------', result)
        return pdfGenerator
            .fromEjs('formation', result, result.slug);
      })
      .then(function(){
-       return fs
+        console.log('---------- after pdf generation ----------')
+        console.log('---------- before copy to tmp ----------')
+        return fs
          .copy(path.resolve(__dirname,'../../assets/pdf/'+obj.slug+'.pdf'), path.resolve( __dirname,'../../.tmp/public/pdf/'+obj.slug+'.pdf'));
      })
      .then(function(){
-       return cb(null,obj);
+        console.log('---------- good !!! ----------')
+        return cb(null,obj);
      })
      .catch(function(err){
-       return cb(err);
+        console.log('---------- bad :( ----------')
+        console.log(err);
+        return cb(err);
      })
   },
   afterDestroy: function(obj,cb){
@@ -146,6 +152,7 @@ module.exports = {
         return cb(null);
       })
       .catch(function(err){
+        console.log(err);
         return cb(err);
       })
   }
