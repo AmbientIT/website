@@ -1,0 +1,91 @@
+@bgColor : #34495e;
+@headerColor: #2c3e50;
+@mainColor: #95a5a6;
+@asideColor: #7f8c8d;
+@footerColor: white;
+
+@fontSize : 0.7em;
+@fontColor : white;
+
+@borderRadius: 10px;
+
+@iconSize :1.5em;
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  background-color: @bgColor;
+  color:white;
+}
+body {
+  //position: relative;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 15px;
+}
+header {
+  width: 100%;
+  background-color: @headerColor;
+  border-radius: @borderRadius;
+}
+header h1 {
+  width: 100%;
+  text-align: center;
+}
+
+footer{
+  width:100%;
+  padding-top: 25px;
+  height: 100px;
+  background-color: @footerColor;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  img{
+    height: 50%;
+  }
+}
+
+main{
+  margin-top: 50px;
+}
+
+.main-section{
+  height: 800px;
+  background-color: @mainColor;
+  border-radius: @borderRadius @borderRadius 0 0;
+  font-size: @fontSize !important;
+  padding-top:40px;
+}
+
+.well{
+  background-color: @asideColor !important;
+  border-radius: @borderRadius !important;
+  font-size: @fontSize !important;
+  color: @fontColor !important;
+  i{
+    font-size:@iconSize;
+    color: @bgColor;
+  }
+}
+
+.bg-color{
+  color: @bgColor;
+}
+
+.list-group-item{
+  height: 40px !important;
+}
+
+.list-group-item-heading{
+  font-size: @fontSize !important;
+  color: @fontSize !important;
+}
+
+.list-group-item-text{
+  font-size:@fontSize !important;
+  opacity:0.8 !important;
+  color: @fontColor !important;
+}

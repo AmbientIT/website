@@ -37,10 +37,7 @@ module.exports.routes = {
     action: 'homePage'
   },
   '/403': {
-    view: 'error/403',
-    locals: {
-      layout: false
-    }
+    view: 'error/403'
   },
 
   /***************************************************************************
@@ -110,5 +107,9 @@ module.exports.routes = {
   'get /api/calendar/events':{
     controller: 'Calendar',
     action: 'getCalEvents'
+  },
+  'get /api/page/:title': {
+    controller: 'Page',
+    action: 'findOne'
   }
 };

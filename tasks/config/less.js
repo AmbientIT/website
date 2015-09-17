@@ -17,10 +17,16 @@ module.exports = function(grunt) {
 			files: [{
 				expand: true,
 				cwd: 'assets/styles/',
-				src: ['importer.less'],
+				src: ['site.less'],
 				dest: '.tmp/public/styles/',
 				ext: '.css'
-			}]
+			},{
+        expand: true,
+        cwd: 'assets/styles/',
+        src: ['pdf.less'],
+        dest: '.tmp/public/styles/',
+        ext: '.css'
+      }]
 		}
 	});
 

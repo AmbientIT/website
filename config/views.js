@@ -30,7 +30,7 @@ module.exports.views = {
   *                                                                           *
   ****************************************************************************/
 
-  engine: 'ejs',
+  engine: 'swig',
 
 
   /****************************************************************************
@@ -74,9 +74,7 @@ module.exports.views = {
   * layout: 'layouts/internal'                                                *
   *                                                                           *
   ****************************************************************************/
-
-  layout: 'layouts/default',
-
+  layout: false,
   /****************************************************************************
   *                                                                           *
   * Partials are simply top-level snippets you can leverage to reuse template *

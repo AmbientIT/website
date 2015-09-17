@@ -1,0 +1,280 @@
+{% extends  '../layout/site.swig' %}
+
+{% block title %}
+Ambient-IT Formations Acceuil
+{% endblock %}
+
+{% block style %}
+{% parent %}
+{% endblock %}
+
+<!--{% block header %}-->
+<!--{% include 'partials/header-fullscreen.swig' %}-->
+<!--{% endblock %}-->
+
+{% block content %}
+{% parent %}
+
+<main>
+  <section class="services">
+    <article class="container">
+      <header class="text-center">
+        <h1>Nos services</h1>
+      </header>
+      <br/>
+
+      <div class="text-center">
+        <span class="sexy-span big-span"> </span>
+      </div>
+      <div class="row text-center">
+        <div class="col-md-4">
+          <div class="service-grid wow bounceIn" data-wow-delay="0.4s">
+            <i class="ion-university"></i>
+
+            <h4><a href="/formations">Formation & Pédagogie</a></h4>
+
+            <p>Avec sa communauté d'experts, Ambient IT vous met à disposition son réseau de formateurs spécialisés dans
+              les nouvelles technologies</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="service-grid wow bounceIn" data-wow-delay="0.4s">
+            <i class="ion-cube"></i>
+
+            <h4><a href="#">Developpement d'application sur mesure</a></h4>
+
+            <p>Ambient IT vous propose une démarche rigoureuse et structurée afin de vous délivrer des sites ou
+              applications Internet & Mobiles</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="service-grid wow bounceIn" data-wow-delay="0.4s">
+            <i class="ion-paintbrush"></i>
+
+            <h4><a href="#">Design, WebDesign et Graphisme</a></h4>
+
+            <p>Ambient IT vous accompagne avec une offre de service centrée sur la communication visuelle</p>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </article>
+  </section>
+  <section class="home-page-panel row">
+    <article class="wow fadeInLeft col-md-8" data-wow-delay="0.4s">
+      <header>
+        <img class="media-object" style="max-height:100px;" src="/images/logo.png" alt="Ambient-it logo"/>
+      </header>
+      <div class="brief">
+        <p>
+          Créée en 2015, par 3 associés issus du monde du numérique, avec l’objectif de répondre aux besoins
+          croissants
+          des entreprises dans les technologies de demain.
+        </p>
+        <p>
+          Ambient IT est une société de consulting spécialisée dans les nouvelles technologies. Afin de répondre
+          efficacement à la demande du marché, nous avons constitué un réseau qualifié de collaborateurs,
+          d’ingénieurs,
+          de développeurs et de graphistes, dans le but de fournir un service qui conjugue réactivité et qualité.
+        </p>
+      </div>
+      <br/>
+      <div class="text-center">
+        <span class="sexy-span big-span"></span>
+      </div>
+      <div class="row">
+        <h2>L'équipe</h2>
+
+        <div class="col-xs-12 col-sm-6">
+          <h3>Fondateurs associés</h3>
+
+          <div class="list-group">
+            {% for user in users %}
+            <div class="list-group-item">
+              <div class="row-picture">
+                <img class="circle" src="{{ user.picture }}" alt="{{ user.name }}">
+              </div>
+              <div class="row-content">
+                <h4 class="list-group-item-heading">
+                  {{ user.displayName }}
+                </h4>
+
+                <p class="list-group-item-text">
+                  {{ user.description | safe }}
+                </p>
+              </div>
+            </div>
+            <div class="list-group-separator"></div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <h3>Graphistes</h3>
+
+          <div class="list-group">
+            <div class="list-group-item">
+              <div class="row-picture">
+                <img class="circle"
+                     src="/images/home/avatar.png"
+                     alt="avatar">
+              </div>
+              <div class="row-content">
+                <h4 class="list-group-item-heading">
+                  Téa DAPAS
+                </h4>
+
+                <p class="list-group-item-text">
+                  Freelance, Graphiste
+                </p>
+              </div>
+            </div>
+            <div class="list-group-separator"></div>
+            <div class="list-group-item">
+              <div class="row-picture">
+                <img class="circle"
+                     src="/images/home/avatar.png"
+                     alt="avatar">
+              </div>
+              <div class="row-content">
+                <h4 class="list-group-item-heading">
+                  Elsa SURIEUX
+                </h4>
+
+                <p class="list-group-item-text">
+                  Freelance, Graphiste
+                </p>
+              </div>
+            </div>
+            <div class="list-group-separator"></div>
+          </div>
+        </div>
+      </div>
+    </article>
+    <div class="col-md-4 well wow fadeInRight img hidden-sm hidden-xs" data-wow-delay="0.4s"
+         style="background: url(images/home/port-right-divice.png) no-repeat 0px 0px;background-size: cover;">
+    </div>
+    <div class="clearfix"></div>
+  </section>
+  <section class="home-page-panel row" >
+    <div class="col-md-4 wow fadeInLeft img well"
+         style="background: url(images/home/expert.jpg) no-repeat 0px 0px;background-size: cover;"
+         data-wow-delay="0.4s">
+    </div>
+    <article class="col-md-8 wow fadeInRight" data-wow-delay="0.4s" style="padding-top:1em;">
+      <header>
+        <h1>Formations et pédagogie</h1>
+      </header>
+      <h2>
+        Animation de formation intra-entreprise ou inter-entreprises.
+      </h2>
+      <section class="brief">
+        <p>
+          Tous nos supports, example et exercices sont maintenus à
+          jour réguliérement et avec le plus grand soin.
+        </p>
+        <p>
+          Nos formateurs sont des professionnels aguerri, qui travaillent généralement en tant que freelances.
+        </p>
+        <p>
+          De plus ils ont tous une longue experience de la formation, ils ont en effet animer des formations pour des grands groupes de formations.
+        </p>
+      </section>
+      <div class="text-center">
+        <span class="sexy-span big-span"></span>
+      </div>
+      <div class="row">
+        <h2 style="font-size:0.8em; font-weight: normal; ">
+          <i>Formation éligible au dif, renseignez vous auprés de votre R.H.</i>
+        </h2>
+
+        <div class="col-sm-6 col-xs-12">
+          <h3>
+            Nos Formations :
+          </h3>
+
+          <div class="list-group">
+            {% for formation in formations %}
+            <div class="list-group-item">
+              <div class="row-picture">
+                <img class="circle" src="{{ formation.avatar }}"
+                     alt="{{ formation.name }} logo">
+              </div>
+              <div class="row-content">
+                <a href="/formation/{{ formation.slug }}">
+                  <h4 class="list-group-item-heading">
+                    {{ formation.name  }}
+                  </h4>
+                </a>
+
+                <p class="list-group-item-text">
+                  {{ formation.description }}
+                </p>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <a class="btn btn-primary" href="/formations">
+            En savoir plus
+          </a>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-xs-12">
+          <h3>
+            Notre équipe de formateurs:
+          </h3>
+          soon...
+          <!--<div class="list-group">-->
+            <!--<% formations.forEach(function(formation){ %>-->
+            <!--<div class="list-group-item">-->
+              <!--<div class="row-picture">-->
+                <!--<img class="circle" src="<%= formation.image || '/images/formation/logo.jpg' %>"-->
+                     <!--alt="<%= formation.name %> logo">-->
+              <!--</div>-->
+              <!--<div class="row-content">-->
+                <!--<a href="/formation/<%= formation.slug %>">-->
+                  <!--<h4 class="list-group-item-heading">-->
+                    <!--<%= formation.name %>-->
+                  <!--</h4>-->
+                <!--</a>-->
+
+                <!--<p class="list-group-item-text">-->
+                  <!--<%= formation.description %>-->
+                <!--</p>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<% }) %>-->
+          <!--</div>-->
+        </div>
+      </div>
+    </article>
+    <div class="clearfix"></div>
+  </section>
+</main>
+<footer class="social text-center" style="margin-top:15px;">
+  <span  class="sexy-span big-span"></span>
+  <br/>
+  <h3>
+    Vous pouvez nous retrouver sur :
+  </h3>
+  <div class="row">
+    <div class="social-item wow fadeInLeft col-xs-4" data-wow-delay="0.4s">
+      <a href="https://github.com/AmbientIT" target="_blank">
+        <i class="ion-social-github"></i>
+      </a>
+    </div>
+    <div class="social-item wow fadeInUp col-xs-4" data-wow-delay="0.4s">
+      <a href="https://github.com/AmbientIT" target="_blank">
+        <i class="ion-social-googleplus"></i>
+      </a>
+    </div>
+    <div class="social-item wow fadeInRight col-xs-4" data-wow-delay="0.4s">
+      <a href="http://codepen.io/Ambient-IT/" target="_blank">
+        <i class="ion-social-codepen"></i>
+      </a>
+    </div>
+  </div>
+</footer>
+{% endblock %}
+
+{% block script %}
+{% parent %}
+{% endblock %}

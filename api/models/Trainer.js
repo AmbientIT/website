@@ -11,6 +11,9 @@ module.exports = {
     firstName: {
       type: 'string'
     },
+    avatar: {
+      type: 'string'
+    },
     lastName: {
       type: 'string'
     },

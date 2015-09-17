@@ -1,5 +1,5 @@
 <form name="ctrl.contactForm" ng-submit="ctrl.submit(ctrl.contact)" novalidate>
-    <section class="col-xs-12 col-md-7" style="margin-top:50px;">
+    <section style="padding-left:0;" class="col-xs-12 col-md-7" style="margin-top:50px;">
         <div class="form-group" ng-class="{'radio-success' : ctrl.contactForm.gender.$valid, 'has-error': ctrl.contactForm.gender.$invalid && (ctrl.contactForm.gender.$touched || ctrl.contactForm.$submitted)}">
             <div class="radio"  style="display:inline-block;">
                 <label>
@@ -172,12 +172,12 @@
         </div>
 
         <div class="row text-center">
-            <button type="submit" class="btn btn-primary btn-block" value="Envoyer">
+            <a type="submit" class="btn btn-color">
         <span ng-hide="ctrl.isPending">
           Envoyer
         </span>
                 <i class="ion-load-c" style="font-size:1.5em;" ng-class="{ 'rotate-icon': ctrl.isPending }" ng-if="ctrl.isPending"></i>
-            </button>
+            </a>
 
         </div>
 

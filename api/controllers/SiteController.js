@@ -9,7 +9,7 @@ var fs = require('fs-promise');
 var path = require('path');
 
 module.exports = {
-	homePage: function(req,res){
+  homePage: function(req,res){
     return Promise.all([
       Formation.find({
         home: true,
@@ -18,7 +18,6 @@ module.exports = {
       User.find()
     ])
       .then(function(result){
-        res.locals.layout = 'layouts/default';
         return res.view('site/home',{
           content: {
             title: 'Centre de formation, Délégation de formateurs, Developpement d\'applications sur mesures'
@@ -72,4 +71,3 @@ module.exports = {
       .catch(res.serverError)
   }
 };
-

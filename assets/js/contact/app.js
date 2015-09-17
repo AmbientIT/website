@@ -3,16 +3,13 @@ angular.module('contact', [
   'ngAnimate',
   'ui.select',
   'ui.bootstrap',
-  'ui.router',
-  'formly',
-  'formlyBootstrap'
+  'ui.router'
 ])
   .config(['$sceProvider','$locationProvider','$stateProvider',function($sceProvider, $locationProvider, $stateProvider){
     $sceProvider.enabled(false);
 
     $stateProvider
       .state('contact', {
-        abstract:'true',
         url: '',
         templateUrl: '../templates/contact/form/nav.tpl.html',
         resolve: {

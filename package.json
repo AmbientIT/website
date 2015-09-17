@@ -38,6 +38,7 @@
     "sails-mongo": "^0.11.2",
     "sails-service-mailer": "^2.0.1",
     "skipper": "^0.5.5",
+    "swig": "^1.4.2",
     "underscore": "^1.8.3",
     "wkhtmltopdf": "^0.1.5"
   },
@@ -53,7 +54,6 @@
   },
   "scripts": {
     "postinstall": "npm update",
-    "predev": "npm install",
     "dev": "node node_modules/.bin/nodemon app.js",
     "deploy": "node node_modules/.bin/gulp deploy",
     "postdeploy": "node node_modules/.bin/gulp start",

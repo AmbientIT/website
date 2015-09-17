@@ -28,7 +28,19 @@ module.exports = {
     avatar: {
       type: 'string'
     },
+    targetAudience : {
+      type: 'string'
+    },
+    objectives: {
+      type: 'string'
+    },
+    requiredSkills: {
+      type: 'string'
+    },
     description : {
+      type: 'string'
+    },
+    introduction: {
       type: 'string'
     },
     program : {
@@ -123,7 +135,7 @@ module.exports = {
      .then(function(result) {
         console.log('---------- after update ----------', result)
        return pdfGenerator
-           .fromEjs('formation', result, result.slug);
+           .fromSwig('formation', result, result.slug);
      })
      .then(function(){
         console.log('---------- after pdf generation ----------')

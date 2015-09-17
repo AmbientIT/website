@@ -1,16 +1,22 @@
 var wkhtmltopdf = require('wkhtmltopdf');
-var ejs = require('ejs');
+var swig = require('swig');
 var fs = require('fs');
+var path  = require('path');
 
 module.exports = {
-  fromEjs: function (template, data, output) {
+  fromSwig: function (name, data, output) {
+    console.log(name,data,output);
     return new Promise(function(resolve, reject){
       try{
-        var file = fs.readFileSync(__dirname + '/../../views/pdf/'+template+'.ejs','utf-8');
         if(!data.program){
           data.program = '';
         }
-        var html = ejs.render(file, {locals: data});
+        var template = swig.compileFile(path.join(__dirname,'/../../views/pdf/'+name+'.swig'));
+        var html = template({
+          formation: data,
+          config: sails.config
+        });
+        console.log(html);
         return wkhtmltopdf(html,{ output: 'assets/pdf/' + output + '.pdf', encoding: 'utf-8' }, function(err){
           return resolve();
         });
