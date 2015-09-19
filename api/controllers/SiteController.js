@@ -7,7 +7,7 @@
 
 var fs = require('fs-promise');
 var path = require('path');
-
+var swig = require('swig');
 module.exports = {
   homePage: function(req,res){
     return Promise.all([
@@ -15,15 +15,22 @@ module.exports = {
         home: true,
         published: true
       }),
-      User.find()
+      User.find(),
+      Page.findOne({ title: 'home' }).populate('components')
     ])
       .then(function(result){
+
         return res.view('site/home',{
           content: {
             title: 'Centre de formation, Délégation de formateurs, Developpement d\'applications sur mesures'
           },
-          formations : result[0],
-          users : result[1]
+          config: sails.config,
+          users : result[1],
+          intro : result[2].components[0].content,
+          us : result[2].components[1].content,
+          formations : swig.compile(result[2].components[2].content)({
+            formations: result[0]
+          })
         })
       })
       .catch(res.serverError);

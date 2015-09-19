@@ -11,4 +11,4 @@ insert_final_newline = true
 
 [*.swig]
 indent_style = tab
-indent_size = 4
+indent_size = 2
