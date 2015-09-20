@@ -1,4 +1,4 @@
-{% extends  '../layouts/site.swig' %}
+{% extends  '../layout/site.swig' %}
 
 {% block title %}
 Ambient-IT 404

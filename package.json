@@ -55,10 +55,10 @@
   "scripts": {
     "postinstall": "npm update",
     "dev": "node node_modules/.bin/nodemon app.js",
+    "debug": "PORT=8181 node-debug app.js",
     "deploy": "node node_modules/.bin/gulp deploy",
-    "postdeploy": "node node_modules/.bin/gulp start",
     "prestart": "npm install",
-    "start": "NODE_ENV=production node node_modules/.bin/pm2 restart site"
+    "start": "NODE_ENV=production pm2 start app.js --name=site"
   },
   "main": "app.js",
   "repository": {

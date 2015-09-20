@@ -12,6 +12,7 @@ var jwt = require('jwt-simple');
 var moment =require('moment');
 module.exports =  function (req, res, next) {
   var token;
+  console.log(req.headers);
   if (req.headers && req.headers.authorization) {
 
     var parts = req.headers.authorization.split(' ');

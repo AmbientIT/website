@@ -19,6 +19,8 @@ module.exports = {
       Page.findOne({ title: 'home' }).populate('components')
     ])
       .then(function(result){
+        console.log(result[2].components[2].content);
+        var formationTpl = result[2].components[2].content.replace('%7B%7Bformation.avatar%7D%7D', '{{ formation.avatar }}');
 
         return res.view('site/home',{
           content: {
@@ -28,7 +30,7 @@ module.exports = {
           users : result[1],
           intro : result[2].components[0].content,
           us : result[2].components[1].content,
-          formations : swig.compile(result[2].components[2].content)({
+          formations : swig.compile(formationTpl)({
             formations: result[0]
           })
         })

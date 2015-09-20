@@ -27,5 +27,21 @@ module.exports = {
       .then(function(file) {
         return new Buffer(file).toString('base64');
       })
+  },
+  thumbnailize: function(src, dest){
+    return new Promise(function(resolve, reject){
+      easyimg
+        .resize({
+          src: src,
+          dst: dest,
+          width: sails.config.image.thumb.width,
+        }, function(err, data){
+          if(err){
+            reject(err);
+          }else{
+            resolve(data);
+          }
+        })
+    })
   }
 };
